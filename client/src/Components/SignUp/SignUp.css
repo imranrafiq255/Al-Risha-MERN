@@ -1,0 +1,22 @@
+.border-width-custom {
+  border-width: 1px;
+  border-radius: 5px;
+}
+input[type="checkbox"] {
+  accent-color: rgb(250, 123, 145);
+  width: 20px;
+  height: 20px;
+}
+.btn-radius-custom {
+  border-radius: 5px;
+}
+.custom-sky-background {
+  background-color: #3ac5c7;
+}
+
+.custom-yellow-color {
+  color: #3ac5c7;
+}
+.custom-yellow-background {
+  background-color: #e7873b;
+}

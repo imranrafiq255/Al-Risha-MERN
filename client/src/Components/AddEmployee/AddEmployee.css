@@ -1,0 +1,18 @@
+.border-custom-class
+{
+    border: none;
+    border-bottom: 0.6px solid #E7873B;
+    background: transparent;
+    color: #e99c61;
+}
+.border-custom-class::placeholder{
+color: #f09850;
+}
+.submit-btn{
+    background-color: #E7873B;
+    
+}
+.submit-btn:hover
+{
+    background-color: #eb710c;
+}

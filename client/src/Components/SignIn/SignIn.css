@@ -1,0 +1,17 @@
+.height-custom {
+  height: 55%;
+  border-radius: 20px;
+}
+.width-custom {
+  width: 90%;
+}
+.background-custom {
+  background-color: #3ac5c7;
+}
+
+.custom-yellow-color {
+  color: #3ac5c7;
+}
+.custom-yellow-background {
+  background-color: #e7873b;
+}

@@ -1,0 +1,53 @@
+.custom-home-background {
+  background-color: #eff2f5;
+}
+.home-sidebar-selected-item-bg-color {
+  background: #e7873b;
+}
+.sidebar-bottom-upgrade-btn-bg-color {
+  background-color: #e7873b;
+}
+.sidebar-bottom-btn-border-color {
+  border: 1px solid #e7873b;
+}
+.custom-home-color {
+  color: #e7873b;
+}
+
+.documentation-btn-custom-css:hover {
+  background-color: #e7873b;
+  color: white;
+}
+.upgrade-btn-custom-css:hover {
+  background-color: transparent;
+  border: 1px solid #e7873b;
+  color: #e7873b;
+}
+
+.header-input-border-custom {
+  border: 0.4px solid #b6b6c2;
+  border-radius: 5px;
+  background: transparent;
+}
+.header-btn-builder-custom {
+  background: transparent;
+  border: 1px solid #e7873b;
+  border-radius: 5px;
+  color: #e7873b;
+}
+.rating-left-custom-css {
+  border: 0.4px solid #b6b6c2;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.rating-right-custom-css {
+  border: 0.4px solid #b6b6c2;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background-color: white;
+}
+
+.card-bottom-line {
+  height: 0.1px;
+  background-color: black;
+}
