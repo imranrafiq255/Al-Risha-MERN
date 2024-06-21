@@ -1,0 +1,57 @@
+.custom-home-background {
+  background-color: #f0f4f7;
+}
+
+.employees-container {
+  padding-bottom: 1rem;
+}
+
+.custom-employees-bg {
+  background: #e7873b;
+}
+
+.employee-bottom-line {
+  border-bottom: 1px solid #ccc;
+  background: #dadada;
+  height: 0.2px;
+}
+
+.border-custom-class {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.submit-btn {
+  background-color: #3b82f6;
+}
+
+.vender-bottom-line {
+  background: #dadada;
+  height: 0.2px;
+}
+.search-box {
+  width: 100%;
+  height: 3rem;
+  outline: none;
+  border: 1px solid #d1d5db;
+  padding-left: 2.5rem; /* Adjusted to make room for the icon */
+  padding-right: 1rem;
+  font-size: 1rem;
+  color: #6b7280;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.search-box::placeholder {
+  color: #9ca3af;
+}
+
+.search-box:focus {
+  border-color: #3b82f6;
+  box-shadow: 0px 0px 10px rgba(59, 130, 246, 0.3);
+}

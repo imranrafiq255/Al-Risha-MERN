@@ -184,7 +184,7 @@ const SideBar = () => {
             onClick={displayEmployeeNavigator}
           >
             <img src={Project} alt="" className="w-6 h-6 invert" />
-            <h1 className=" text-white">Display Employee</h1>
+            <h1 className=" text-white">Search Employee</h1>
           </div>
           <div
             className={`${

@@ -1,309 +1,150 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { FaSearch } from "react-icons/fa";
 import SideBar from "../SideBar/SideBar";
 import Header from "../Header/Header";
-import axios from "axios";
+import "./DisplayEmployee.css"; 
+import PencilIcon from "../../Assets/pencil.png";
+import TrashIcon from "../../Assets/trash.png";
+
 const DisplayEmployee = () => {
-  const [employeeDetails, setEmployeeDetails] = useState(null);
+  const [employeeDetails, setEmployeeDetails] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     const fetchEmployeeDetailsData = async () => {
       try {
-        const response = await axios.get(
-          "/api/v1/employee/loadallemployeesdetails"
-        );
-        setEmployeeDetails(await response?.data);
+        const response = await axios.get("/api/v1/employee/loadallemployeesdetails");
+        setEmployeeDetails(response?.data?.employeesDetailsData || []);
       } catch (error) {
-        console.log(error);
+        setError("Failed to fetch employee details");
+        console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchEmployeeDetailsData();
   }, []);
-  console.log(employeeDetails?.emplyeesDetailsData);
-  return (
-    <>
-      <div className="home-container custom-home-background w-screen h-full p-4 flex">
-        <SideBar />
-        <div className="right-sidebar-container w-10/12">
-          <Header />
-          <div className="venders-container h-full bg-white mt-14 pb-1 rounded-lg relative shadow-lg">
-            <div className="h-20 w-11/12 custom-venders-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
-              <h1 className="text-white text-2xl font-bold">
-                Display Employees Data
-              </h1>
-            </div>
-            {Array.isArray(employeeDetails?.emplyeesDetailsData) &&
-            employeeDetails?.emplyeesDetailsData.length > 0
-              ? employeeDetails?.emplyeesDetailsData.map((detail) => (
-                  <div className="flex gap-4 mt-10">
-                    <div className=" mb-20 w-full h-full flex justify-center">
-                      <div className="projects-list flex flex-col pt-20 px-10 mb-10 w-4/12">
-                        <div className="form-field mb-4">
-                          <label
-                            htmlFor="employeeID"
-                            className="font-semibold block mb-2"
-                          >
-                            Emp_ID
-                          </label>
-                          <h1 className="border-custom-class">{detail?._id}</h1>
-                        </div>
-                        <div className="form-field mb-4">
-                          <label
-                            htmlFor="emiratesID"
-                            className="font-semibold block mb-2"
-                          >
-                            Emirates ID
-                          </label>
-                          <h1 className="border-custom-class">
-                            {detail?.emEmiratesId}
-                          </h1>
-                        </div>
-                        <div className="form-field mb-4">
-                          <label
-                            htmlFor="firstName"
-                            className="font-semibold block mb-2"
-                          >
-                            First Name
-                          </label>
-                          <h1 className="border-custom-class">
-                            {detail?.emFirstName}
-                          </h1>
-                        </div>
-                        <div className="form-field mb-4">
-                          <label
-                            htmlFor="lastName"
-                            className="font-semibold block mb-2"
-                          >
-                            Last Name
-                          </label>
-                          <h1 className="border-custom-class">
-                            {detail?.emLastName}
-                          </h1>
-                        </div>
-                        <div className="form-field mb-4">
-                          <label
-                            htmlFor="currentAddress"
-                            className="font-semibold block mb-2"
-                          >
-                            Current Address
-                          </label>
-                          <h1 className="border-custom-class">
-                            {detail?.emCurrentAddress}
-                          </h1>
-                        </div>
-                        <div className="form-field mb-4">
-                          <label
-                            htmlFor="nationality"
-                            className="font-semibold block mb-2"
-                          >
-                            Nationality & Date of Birth
-                          </label>
-                          <h1 className="border-custom-class">
-                            {detail?.emDOB}
-                          </h1>
-                        </div>
-                        <div className="form-field mb-4">
-                          <label
-                            htmlFor="gender"
-                            className="font-semibold block mb-2"
-                          >
-                            Gender
-                          </label>
-                          <h1 className="border-custom-class">
-                            {detail?.emGender}
-                          </h1>
-                        </div>
-                        <div className="form-field mb-4">
-                          <label
-                            htmlFor="alRishaCharges"
-                            className="font-semibold block mb-2"
-                          >
-                            Al Risha Charges
-                          </label>
-                          <h1 className="border-custom-class">
-                            {detail?.alRishaChargesManual}
-                          </h1>
-                        </div>
-                      </div>
-                      <div className="projects-list flex flex-col pt-20 px-10 w-4/12">
-                        <div className="form-field mb-4">
-                          <label
-                            htmlFor="emailAddress"
-                            className="font-semibold block mb-2"
-                          >
-                            Email Address
-                          </label>
-                          <h1 className="border-custom-class">
-                            {detail?.emEmail}
-                          </h1>
-                        </div>
-                        <div className="form-field mb-4">
-                          <label
-                            htmlFor="bankAccount"
-                            className="font-semibold block mb-2"
-                          >
-                            Bank A/c if any
-                          </label>
-                          <h1 className="border-custom-class">
-                            {detail?.emBankAccount}
-                          </h1>
-                        </div>
-                        <div className="form-field mb-4">
-                          <label
-                            htmlFor="nativeBankAccount"
-                            className="font-semibold block mb-2"
-                          >
-                            Bank A/c in Native Country if any
-                          </label>
-                          <h1 className="border-custom-class">
-                            {detail?.emBankAccountNative}
-                          </h1>
-                        </div>
-                        <div className="form-field mb-4">
-                          <label
-                            htmlFor="licenseNumber"
-                            className="font-semibold block mb-2"
-                          >
-                            Driver’s License#
-                          </label>
-                          <h1 className="border-custom-class">
-                            {detail?.emDrivingLicense}
-                          </h1>
-                        </div>
-                        <div className="form-field mb-4">
-                          <label
-                            htmlFor="stateOfIssuance"
-                            className="font-semibold block mb-2"
-                          >
-                            State of Issuance
-                          </label>
-                          <h1 className="border-custom-class">
-                            {detail?.emStateOfIssuance}
-                          </h1>
-                        </div>
-                        <div className="form-field mb-4">
-                          <label
-                            htmlFor="licenseIssuance"
-                            className="font-semibold block mb-2"
-                          >
-                            License Issuance
-                          </label>
-                          <h1 className="border-custom-class">
-                            {detail?.emLicenseIssueDate}
-                          </h1>
-                        </div>
-                        <div className="form-field mb-4">
-                          <label
-                            htmlFor="licenseExpiry"
-                            className="font-semibold block mb-2"
-                          >
-                            License Expiry
-                          </label>
-                          <h1 className="border-custom-class">
-                            {detail?.emLicenseExpiryDate}
-                          </h1>
-                        </div>
-                        <div className="form-field mb-4">
-                          <label
-                            htmlFor="workStartDate"
-                            className="font-semibold block mb-2"
-                          >
-                            Since:
-                          </label>
-                          <h1 className="border-custom-class">
-                            {detail?.emSince}
-                          </h1>
-                        </div>
-                      </div>
 
-                      <div className="projects-list flex flex-col pt-20 px-10 w-4/12">
-                        <div className="form-field mb-4">
-                          <label
-                            htmlFor="passportNumber"
-                            className="font-semibold block mb-2"
-                          >
-                            Passport Number
-                          </label>
-                          <h1 className="border-custom-class">
-                            {detail?.emPassportNo}
-                          </h1>
-                        </div>
-                        <div className="form-field mb-4">
-                          <label
-                            htmlFor="passportExpiry"
-                            className="font-semibold block mb-2"
-                          >
-                            Passport Expiry
-                          </label>
-                          <h1 className="border-custom-class">
-                            {detail?.emPassportExpiry}
-                          </h1>
-                        </div>
-                        <div className="form-field mb-4">
-                          <label
-                            htmlFor="phoneNumber"
-                            className="font-semibold block mb-2"
-                          >
-                            Phone#
-                          </label>
-                          <h1 className="border-custom-class">
-                            {detail?.emPhone}
-                          </h1>
-                        </div>
-                        <div className="form-field mb-4">
-                          <label
-                            htmlFor="emergencyNumber"
-                            className="font-semibold block mb-2"
-                          >
-                            Emergence #
-                          </label>
-                          <h1 className="border-custom-class">
-                            {detail?.emEmergence}
-                          </h1>
-                        </div>
-                        <div className="form-field mb-4">
-                          <label
-                            htmlFor="salary"
-                            className="font-semibold block mb-2"
-                          >
-                            Salary
-                          </label>
-                          <h1 className="border-custom-class">
-                            {detail?.emFixSalary}
-                          </h1>
-                        </div>
-                        <div className="form-field mb-4">
-                          <label
-                            htmlFor="receivableFromCareem"
-                            className="font-semibold block mb-2"
-                          >
-                            Receivable From Careem
-                          </label>
-                          <h1 className="border-custom-class">
-                            {detail?.receiveableFromCareem}
-                          </h1>
-                        </div>
-                        <div className="form-field mb-4">
-                          <label
-                            htmlFor="payableToVendor"
-                            className="font-semibold block mb-2"
-                          >
-                            Payable to Vendor
-                          </label>
-                          <h1 className="border-custom-class">
-                            {detail?.payableToVender}
-                          </h1>
-                        </div>
-                        <div className="flex justify-end">
-                          <button className="submit-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl">
-                            Edit
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))
-              : "No data to display"}
+  const filteredEmployees = employeeDetails.filter((employee) =>
+    employee._id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (employee.emFirstName + " " + employee.emLastName).toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  return (
+    <div className="home-container custom-home-background w-screen h-full p-4 flex">
+      <SideBar />
+      <div className="right-sidebar-container w-10/12">
+        <Header />
+        <div className="employees-container h-full bg-white mt-14 rounded-lg relative shadow-lg">
+          <div className="h-20 w-11/12 custom-employees-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
+            <h1 className="text-white text-2xl font-bold">Employees</h1>
+          </div>
+          <div className="employees-list flex flex-col pt-20 px-10">
+            <div className="search-box-container flex justify-start items-center mb-4">
+              <div className="relative w-4/12">
+                <FaSearch className="absolute left-3 top-3 text-gray-500" />
+                <input
+                  type="text"
+                  placeholder="Search Employees..."
+                  className="w-full h-12 outline-none header-input-border-custom pl-10 pr-4 search-box"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="flex mt-4 font-bold">
+              <div className="w-1/12">ID</div>
+              <div className="w-2/12">NAME</div>
+              <div className="w-2/12">DESIGNATION</div>
+              <div className="w-3/12">EMAIL</div>
+              <div className="w-2/12">MOBILE</div>
+              <div className="w-1/12">STATUS</div>
+              <div className="w-1/12">ACTIONS</div>
+            </div>
+            <div className="line w-full mt-4">
+              <div className="employee-bottom-line w-full"></div>
+            </div>
+            {loading ? (
+              <div className="text-center mt-10">Loading...</div>
+            ) : error ? (
+              <div className="text-center mt-10 text-red-500">{error}</div>
+            ) : filteredEmployees.length > 0 ? (
+              filteredEmployees.map((detail) => (
+                <EmployeeRow
+                  key={detail._id}
+                  id={detail._id}
+                  name={detail.emFirstName + " " + detail.emLastName}
+                  designation={detail.emDesignation || "N/A"}
+                  email={detail.emEmail}
+                  mobile={detail.emMobile || "N/A"}
+                  status={detail.status || "Offline"}
+                />
+              ))
+            ) : (
+              <div className="text-center mt-10">No data to display</div>
+            )}
           </div>
         </div>
+      </div>
+    </div>
+  );
+};
+
+const EmployeeRow = ({ id, name, designation, email, mobile, status }) => {
+  const handleEdit = (id) => {
+    // Handle edit action for the specific employee
+    console.log(`Editing employee: ${id}`);
+  };
+
+  const handleDelete = (id) => {
+    // Handle delete action for the specific employee
+    console.log(`Deleting employee: ${id}`);
+  };
+
+  return (
+    <>
+      <div className="flex mt-4 items-center">
+        <div className="w-1/12">{id}</div>
+        <div className="w-2/12 flex items-center">
+          <img
+            src="../../Assets/user-avatar.png" // Update with the correct path if necessary
+            alt="Avatar"
+            className="w-10 h-10 rounded-full mr-2"
+          />
+          <div className="flex flex-col justify-center">
+            <h1>{name}</h1>
+          </div>
+        </div>
+        <div className="w-2/12">{designation}</div>
+        <div className="w-3/12">{email}</div>
+        <div className="w-2/12">{mobile}</div>
+        <div className="w-1/12">
+          <div
+            className={`${status === "Active" ? "bg-green-400" : "bg-gray-400"} text-white w-16 h-7 flex justify-center items-center rounded-lg shadow-lg`}
+          >
+            {status}
+          </div>
+        </div>
+        <div className="w-1/12 flex">
+          <img
+            src="../../Assets/pencil.png" // Update with the correct path if necessary
+            alt="Edit"
+            className="w-6 h-6 cursor-pointer mr-2"
+            onClick={() => handleEdit(id)}
+          />
+          <img
+            src="../../Assets/trash.png" // Update with the correct path if necessary
+            alt="Delete"
+            className="w-6 h-6 cursor-pointer"
+            onClick={() => handleDelete(id)}
+          />
+        </div>
+      </div>
+      <div className="line w-full mt-4">
+        <div className="employee-bottom-line w-full"></div>
       </div>
     </>
   );

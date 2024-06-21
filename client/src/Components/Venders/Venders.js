@@ -39,6 +39,7 @@ const Vendors = () => {
             <div className="venders-list flex flex-col pt-20 px-10">
               <div className="flex mt-4 font-bold">
                 <div className="w-5/12">Vendors</div>
+                
                 <div className="w-7/12 flex justify-between items-center">
                   <h1>FUNCTION</h1>
                   <h1>STATUS</h1>
@@ -59,23 +60,23 @@ const Vendors = () => {
                 employedDate="12 Dec 2014"
               />
               {/* Second user data */}
-              <VendorRow
+              {/* <VendorRow
                 image={Speedo}
                 name="Speedo"
                 email="Speedo01@gmail.com"
                 functionType="Manager"
                 status="Offline"
                 employedDate="10 Jan 2014"
-              />
+              /> */}
               {/* Third user data */}
-              <VendorRow
+              {/* <VendorRow
                 image={Fixtime}
                 name="Fix-Time"
                 email="Fixtime@gmail.com"
                 functionType="Supervisor"
                 status="Online"
                 employedDate="19 Oct 2014"
-              />
+              /> */}
             </div>
             {isShowing ? (
               <div className="venders-to-add-list absolute top-14 right-16 w-72 h-96 bg-slate-300 rounded-b-lg shadow-lg"></div>

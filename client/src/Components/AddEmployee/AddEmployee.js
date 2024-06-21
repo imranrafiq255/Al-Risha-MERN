@@ -41,18 +41,20 @@ const AddEmployee = () => {
                         <div className="form-container w-full h-full flex 6/12">
                             <div className="projects-list flex flex-col pt-20 px-10 w-full">
                                 <div className="form-field mb-4 flex w-full items-center gap-10">
-                                    <label htmlFor="Company Name" className="font-semibold block mb-2 w-1/12">
+                                    <label htmlFor="companyName" className="font-semibold block mb-2 w-1/12">
                                         Company Name:
                                     </label>
                                     <select
-                                        id="Company Name"
+                                        id="companyName"
                                         className="input-field px-3 py-2 outline-none border-custom-class w-3/12"
+                                        style={{ color: 'black' }} // Added inline style to set text color to black
                                     >
                                         <option value="Al-Risha">Al-Najaf</option>
                                         <option value="Al-Risha">Al-Risha</option>
                                         {/* Add more options as needed */}
                                     </select>
                                 </div>
+
                                 <div className="form-field mb-4 flex w-full items-center gap-10">
                                     <label htmlFor="Vendors" className="font-semibold block mb-2 w-1/12">
                                         Vendors Name:
@@ -60,6 +62,7 @@ const AddEmployee = () => {
                                     <select
                                         id="Vendors"
                                         className="input-field px-3 py-2 outline-none border-custom-class w-3/12"
+                                        style={{ color: 'black' }} // Added inline style to set text color to black
                                     >
                                         <option value="Al-Najaf">Al-Najaf</option>
                                         <option value="Speedo">Speedo</option>
@@ -76,6 +79,7 @@ const AddEmployee = () => {
                                     <select
                                         id="Projects"
                                         className="input-field px-3 py-2 outline-none border-custom-class w-3/12"
+                                        style={{ color: 'black' }} // Added inline style to set text color to black
                                     >
                                         <option value="McDonald's">McDonald's</option>
                                         <option value="American Bar & Grill">American Bar & Grill</option>
@@ -118,6 +122,7 @@ const AddEmployee = () => {
                                 <div className="form-field mb-4">
                                     <label htmlFor="nationality" className="font-semibold block mb-2">Nationality</label>
                                     <select id="nationality" className="input-field px-3 py-2 w-full outline-none border-custom-class">
+
                                         <option value="pakistan">Pakistan</option>
                                         <option value="india">India</option>
                                         <option value="abudhabi">Abu Dhabi</option>

@@ -16,7 +16,7 @@ const Header = () => {
         <div className="right-header flex basis-1/2 gap-2">
           <input
             type="text"
-            className="w-4/12 h-full outline-none header-input-border-custom px-4"
+            className="w-5/12 h-full outline-none header-input-border-custom px-4"
             placeholder="Type something ..."
           />
           <button className="w-3/12 h-full outline-none header-btn-builder-custom px-4">
