@@ -4,14 +4,16 @@ import Home from "./Components/Home/Home";
 import SignIn from "./Components/SignIn/SignIn";
 import SignUp from "./Components/SignUp/SignUp";
 import Venders from "./Components/Venders/Venders";
-import Project from "./Components/Project/Project.js";
+import Project from "./Components/Project/Project";
 import Notification from "./Components/Notification/Notification";
 import Maintain from "./Components/Maintain/Maintain";
-import Salary from "./Components/Salary/Salary.js";
-import Vehicle from "./Components/Vehicle/Vehicle.js";
-import Profile from "./Components/Profile/Profile.js";
-import AddEmployee from "./Components/AddEmployee/AddEmployee.js";
-import DisplayEmployee from "./Components/DisplayEmployee/DisplayEmployee.js";
+import Salary from "./Components/Salary/Salary";
+import Vehicle from "./Components/Vehicle/Vehicle";
+import Profile from "./Components/Profile/Profile";
+import AddEmployee from "./Components/AddEmployee/AddEmployee";
+import DisplayEmployee from "./Components/DisplayEmployee/DisplayEmployee";
+import EditEmployee from "./Components/EditEmployee/EditEmployee"; // Ensure this path is correct
+
 const App = () => {
   return (
     <>
@@ -25,10 +27,11 @@ const App = () => {
           <Route path="/vehicle" element={<Vehicle />} />
           <Route path="/salary" element={<Salary />} />
           <Route path="/notification" element={<Notification />} />
-          <Route path="/Maintain" element={<Maintain/>} />
+          <Route path="/maintain" element={<Maintain />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/addemployee" element={<AddEmployee/>} />
-          <Route path="/displayemployee" element={<DisplayEmployee/>} />
+          <Route path="/addemployee" element={<AddEmployee />} />
+          <Route path="/displayemployee" element={<DisplayEmployee />} />
+          <Route path="/edit-employee/:id" element={<EditEmployee />} /> {/* Correct path */}
         </Routes>
       </Router>
     </>
