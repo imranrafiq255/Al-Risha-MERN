@@ -3,9 +3,26 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const EmployeeRow = ({
-  id, name, vendor, project, designation, email, mobile, status, careemID,
-  emiratesID, doj, jobType, carType, passportNo, laborCardNo, bankAcNo,
-  salaryType, alrishaCharges, receivableFromCareem, payableToVendor
+  id,
+  name,
+  vendor,
+  project,
+  designation,
+  email,
+  mobile,
+  status,
+  careemID,
+  emiratesID,
+  doj,
+  jobType,
+  carType,
+  passportNo,
+  laborCardNo,
+  bankAcNo,
+  salaryType,
+  alrishaCharges,
+  receivableFromCareem,
+  payableToVendor,
 }) => {
   const navigate = useNavigate();
 
@@ -47,13 +64,13 @@ const EmployeeRow = ({
         <div className="w-2/12">{payableToVendor}</div>
         <div className="w-1/12 flex">
           <img
-            src="../../Assets/pencil.png" // Update with the correct path if necessary
+            src={require("../../Assets/pencil.png")} // Update with the correct path if necessary
             alt="Edit"
             className="w-6 h-6 cursor-pointer mr-2"
             onClick={handleEdit}
           />
           <img
-            src="../../Assets/trash.png" // Update with the correct path if necessary
+            src={require("../../Assets/trash.png")} // Update with the correct path if necessary
             alt="Delete"
             className="w-6 h-6 cursor-pointer"
             onClick={handleDelete}

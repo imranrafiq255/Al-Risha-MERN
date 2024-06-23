@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { FaSearch } from "react-icons/fa";
+// import { FaSearch } from "react-icons/fa";
 import SideBar from "../SideBar/SideBar";
 import Header from "../Header/Header";
-import "./DisplayEmployee.css"; 
+import "./DisplayEmployee.css";
 import PencilIcon from "../../Assets/pencil.png";
 import TrashIcon from "../../Assets/trash.png";
 
@@ -16,8 +16,10 @@ const DisplayEmployee = () => {
   useEffect(() => {
     const fetchEmployeeDetailsData = async () => {
       try {
-        const response = await axios.get("/api/v1/employee/loadallemployeesdetails");
-        setEmployeeDetails(response?.data?.employeesDetailsData || []);
+        const response = await axios.get(
+          "/api/v1/employee/loadallemployeesdetails"
+        );
+        setEmployeeDetails(response?.data?.emplyeesDetailsData);
       } catch (error) {
         setError("Failed to fetch employee details");
         console.error(error);
@@ -27,10 +29,13 @@ const DisplayEmployee = () => {
     };
     fetchEmployeeDetailsData();
   }, []);
-
-  const filteredEmployees = employeeDetails.filter((employee) =>
-    employee._id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (employee.emFirstName + " " + employee.emLastName).toLowerCase().includes(searchTerm.toLowerCase())
+  console.log(employeeDetails);
+  const filteredEmployees = employeeDetails.filter(
+    (employee) =>
+      employee._id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (employee.firstName + " " + employee.lastName)
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -45,7 +50,6 @@ const DisplayEmployee = () => {
           <div className="employees-list flex flex-col pt-20 px-10">
             <div className="search-box-container flex justify-start items-center mb-4">
               <div className="relative w-4/12">
-                <FaSearch className="absolute left-3 top-3 text-gray-500" />
                 <input
                   type="text"
                   placeholder="Search Employees..."
@@ -76,11 +80,10 @@ const DisplayEmployee = () => {
                 <EmployeeRow
                   key={detail._id}
                   id={detail._id}
-                  name={detail.emFirstName + " " + detail.emLastName}
-                  designation={detail.emDesignation || "N/A"}
-                  email={detail.emEmail}
-                  mobile={detail.emMobile || "N/A"}
-                  status={detail.status || "Offline"}
+                  name={detail.firstName + " " + detail.lastName}
+                  email={detail.email}
+                  mobile={detail.phoneNumber || "N/A"}
+                  status={detail.employeeStatus || "Offline"}
                 />
               ))
             ) : (
@@ -123,20 +126,22 @@ const EmployeeRow = ({ id, name, designation, email, mobile, status }) => {
         <div className="w-2/12">{mobile}</div>
         <div className="w-1/12">
           <div
-            className={`${status === "Active" ? "bg-green-400" : "bg-gray-400"} text-white w-16 h-7 flex justify-center items-center rounded-lg shadow-lg`}
+            className={`${
+              status === "active" ? "bg-green-400" : "bg-gray-400"
+            } text-white w-16 h-7 flex justify-center items-center rounded-lg shadow-lg`}
           >
             {status}
           </div>
         </div>
         <div className="w-1/12 flex">
           <img
-            src="../../Assets/pencil.png" // Update with the correct path if necessary
+            src={require("../../Assets/pencil.png")} // Update with the correct path if necessary
             alt="Edit"
             className="w-6 h-6 cursor-pointer mr-2"
             onClick={() => handleEdit(id)}
           />
           <img
-            src="../../Assets/trash.png" // Update with the correct path if necessary
+            src={require("../../Assets/trash.png")} // Update with the correct path if necessary
             alt="Delete"
             className="w-6 h-6 cursor-pointer"
             onClick={() => handleDelete(id)}
