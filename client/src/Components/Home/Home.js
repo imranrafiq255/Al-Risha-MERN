@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Home.css";
 import Star from "../../Assets/star.png";
 import User from "../../Assets/user.png";
@@ -11,15 +11,30 @@ import Header from "../Header/Header";
 // import Me from "../../Assets/me.jpeg";
 
 const Home = () => {
+  const [headerShowing, setHeaderShowing] = useState(false);
   return (
     <>
-      <div className="home-container custom-home-background w-screen h-full p-4 flex">
-        <SideBar />
-        <div className="right-sidebar-container w-10/12">
+      <div className="home-container custom-home-background p-4 flex justify-center">
+        {headerShowing ? (
+          <div className=" z-10">
+            <SideBar />
+          </div>
+        ) : (
+          ""
+        )}
+        <div className="right-sidebar-container w-11/12">
+          <img
+            src={require("../../Assets/menu.png")}
+            alt=""
+            className={`w-10 h-10 cursor-pointer ${
+              headerShowing ? "ml-56" : ""
+            }`}
+            onClick={() => setHeaderShowing(!headerShowing)}
+          />
           <Header />
           {/* sales-card-container */}
-          <div className="sales-card-container flex h-40 mt-14">
-            <div className="card-1-container w-3/12 px-2">
+          <div className="sales-card-container flex flex-wrap mt-14">
+            <div className="card-1-container w-full lg:w-6/12 xl:w-4/12 2xl:w-3/12 px-2 mb-6">
               <div className="card w-full h-full bg-white rounded-lg shadow-lg relative">
                 <h1 className=" text-right px-4 pt-3 font-thin">Total Users</h1>
                 <h1 className=" text-right px-4 text-2xl font-extrabold">
@@ -39,7 +54,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
-            <div className="card-2-container w-3/12 px-2">
+            <div className="card-2-container w-full lg:w-6/12 xl:w-4/12  2xl:w-3/12 px-2 mb-6">
               <div className="card w-full h-full bg-white rounded-lg shadow-lg relative">
                 <h1 className=" text-right px-4 pt-3 font-thin">
                   Today's Active Users
@@ -61,7 +76,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
-            <div className="card-3-container w-3/12 px-2">
+            <div className="card-3-container w-full lg:w-6/12 xl:w-4/12 2xl:w-3/12 px-2 mb-6">
               <div className="card w-full h-full bg-white rounded-lg shadow-lg relative">
                 <h1 className=" text-right px-4 pt-3 font-thin">
                   Today Offline Users
@@ -83,7 +98,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
-            <div className="card-4-container w-3/12 px-2">
+            <div className="card-4-container w-full lg:w-6/12 xl:w-4/12 2xl:w-3/12 px-2 mb-6">
               <div className="card w-full h-full bg-white rounded-lg shadow-lg relative">
                 <h1 className=" text-right px-4 pt-3 font-thin">
                   Total Vendors
@@ -107,8 +122,8 @@ const Home = () => {
             </div>
           </div>
           {/* sales graph container  */}
-          <div className="graph-container flex mt-14">
-            <div className="graph-1-container w-4/12 h-80 px-2">
+          <div className="graph-container flex flex-wrap mt-14">
+            <div className="graph-1-container w-full lg:w-6/12 xl:w-4/12 h-80 px-2 mb-14 xl:mb-1">
               <div className="graph-card bg-white w-full h-full shadow-lg rounded-lg relative">
                 <div className="graph-table w-11/12 h-2/3 bg-emerald-400 absolute -top-10 left-4 rounded-xl"></div>
                 <div className="flex w-full h-full flex-col">
@@ -129,7 +144,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
-            <div className="graph-2-container w-4/12 h-80 px-2">
+            <div className="graph-2-container w-full lg:w-6/12 xl:w-4/12 h-80 px-2 mb-14 xl:mb-1">
               <div className="graph-card bg-white w-full h-full shadow-lg rounded-lg relative">
                 <div className="graph-table w-11/12 h-2/3 bg-green-600 absolute -top-10 left-4 rounded-xl"></div>
                 <div className="flex w-full h-full flex-col">
@@ -150,7 +165,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
-            <div className="graph-3-container w-4/12 h-80 px-2">
+            <div className="graph-3-container w-full lg:w-6/12 xl:w-4/12 h-80 px-2 mb-14 xl:mb-1">
               <div className="graph-card bg-white w-full h-full shadow-lg rounded-lg relative">
                 <div className="graph-table w-11/12 h-2/3 bg-red-600 absolute -top-10 left-4 rounded-xl"></div>
                 <div className="flex w-full h-full flex-col">
@@ -173,8 +188,8 @@ const Home = () => {
             </div>
           </div>
           {/* overview container */}
-          <div className="overview-container flex mt-10">
-            <div className="left-side w-8/12 px-3 h-96">
+          <div className="overview-container flex flex-wrap mt-10">
+            <div className="left-side w-full lg:w-10/12 2xl:w-8/12 px-3 h-96 ">
               <div className="bg-white w-full h-full shadow-lg rounded-lg px-8">
                 <div className="projects w-full flex justify-between pt-6">
                   <h1 className="text-base font-semibold">Projects</h1>
@@ -201,7 +216,7 @@ const Home = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="right-side w-7/12">
+                  <div className="right-side w-full lg:w-10/12 2xl:w-7/12">
                     <div className="name flex justify-between w-full">
                       <div>
                         <h1 className="font-thin">Members</h1>
@@ -261,8 +276,12 @@ const Home = () => {
                 </div>
               </div>
             </div>
-            <div className="right-side w-4/12 px-3 h-96">
-              <div className="bg-white w-full h-full shadow-lg rounded-lg"></div>
+            <div className="right-side lg:w-2/12 2xl:w-4/12 px-3 h-96 mt-4 lg:mt-[0px] ">
+              <div className="bg-white w-full h-full shadow-lg rounded-lg">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Nesciunt ipsa quidem provident est, numquam ratione a delectus?
+                Possimus, eos.
+              </div>
             </div>
           </div>
         </div>

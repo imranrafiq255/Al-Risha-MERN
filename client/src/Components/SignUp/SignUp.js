@@ -11,19 +11,19 @@ const SignUp = () => {
   };
   return (
     <>
-      <div className="signup-container w-screen h-screen flex">
-        <div className="left basis-1/2 p-10">
+      <div className="signup-container w-screen h-screen flex justify-center">
+        <div className="left hidden lg:block lg:w-6/12 h-[88%] p-10 ">
           <img
             src={SignUpImage}
             alt=""
             className="w-full h-full object-fit rounded-3xl"
           />
         </div>
-        <div className="right basis-1/2 w-full h-full flex flex-col justify-center items-center">
+        <div className="right w-full lg:w-6/12 flex flex-col justify-center items-center">
           <div className="logo">
-            <img src={VerticalLogo} alt="" className="w-64 h-64 -mt-32" />
+            <img src={VerticalLogo} alt="" className="w-64 h-64" />
           </div>
-          <div className="form w-1/2">
+          <div className="form w-full lg:w-8/12 p-10">
             <h1 className="text-2xl font-bold">SignUp</h1>
             <h1 className="text-sm mt-3">
               Enter your name and email to register
