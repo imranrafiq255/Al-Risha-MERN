@@ -4,8 +4,6 @@ import axios from "axios";
 import SideBar from "../SideBar/SideBar";
 import Header from "../Header/Header";
 import "./DisplayEmployee.css";
-import PencilIcon from "../../Assets/pencil.png";
-import TrashIcon from "../../Assets/trash.png";
 
 const DisplayEmployee = () => {
   const [employeeDetails, setEmployeeDetails] = useState([]);

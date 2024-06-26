@@ -6,6 +6,9 @@ import Header from "../Header/Header";
 // import Userr from "../../Assets/userr.png";
 import "./AddEmployee.css";
 import axios from "axios";
+import successMessage from "../ToastMessages/successMessage";
+import errorMessage from "../ToastMessages/errorMessage";
+import {Toaster} from "react-hot-toast"
 const AddEmployee = () => {
   const [image, setImage] = useState(false);
   const [form, setForm] = useState(null);
@@ -22,8 +25,9 @@ const AddEmployee = () => {
   };
   const submitEmployeeData = async () => {
     if (!form) {
-      console.log("Input fields are missing!");
-      return;
+        console.log("Input fields are missing!");
+        errorMessage("Input fields are missing! Please fill in all required fields.");
+        return;
     }
     try {
       const response = await axios.post(
@@ -36,8 +40,10 @@ const AddEmployee = () => {
         }
       );
       console.log(response.data);
+      successMessage(response.data.message)
     } catch (error) {
       console.log(error.response.data.message);
+      errorMessage(error.response.data.message);
     }
   };
   return (
@@ -46,7 +52,7 @@ const AddEmployee = () => {
         <SideBar />
         <div className="right-sidebar-container w-10/12 absolute top-4 right-4">
           <Header />
-
+          <Toaster/>
           {/* Employee form fields */}
           <div className="home-container custom-home-background relative w-screen h-full p-4 flex"></div>
           <div className="form-container w-full h-full flex justify-center">
