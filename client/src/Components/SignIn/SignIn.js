@@ -23,8 +23,7 @@ const SignIn = () => {
         className="signin-container h-screen w-screen background-custom flex justify-center items-center"
         style={{ backgroundImage: `url(${BgSignUpCover})` }}
       >
-
-        <div className="form w-3/12 height-custom bg-white shadow-xl relative">
+        <div className="form w-10/12 sm:w-6/12 lg:w-4/12 xl:w-3/12 height-custom bg-white shadow-xl relative">
           <div className="top-of-form absolute width-custom h-36 custom-yellow-background -top-5 left-5 rounded-md flex justify-center items-center flex-col">
             <h1 className="text-white text-2xl font-bold">Sign in</h1>
             <div className="social-icons flex gap-5 mt-6">
@@ -60,8 +59,9 @@ const SignIn = () => {
           <div className="remember-toggle px-7 flex items-center gap-3 ">
             <div className="toggle w-10 h-4 bg-slate-700 relative rounded-3xl">
               <div
-                className={`${isRemember ? "translate-x-full" : "translate-x-0"
-                  } toggle-circle w-5 h-5 bg-slate-100 absolute -top-0.5 rounded-full border-slate-600 border-2 cursor-pointer transform transition-transform ease-in-out duration-300`}
+                className={`${
+                  isRemember ? "translate-x-full" : "translate-x-0"
+                } toggle-circle w-5 h-5 bg-slate-100 absolute -top-0.5 rounded-full border-slate-600 border-2 cursor-pointer transform transition-transform ease-in-out duration-300`}
                 onClick={rememberToggleHandler}
               ></div>
             </div>
@@ -71,7 +71,7 @@ const SignIn = () => {
             <button className="w-full h-12 custom-yellow-background border-none mt-8 hover:bg-sky-400 text-white btn-radius-custom">
               SIGN IN
             </button>
-            <h1 className="text-center mt-4">
+            <h1 className="text-center mt-4 mb-5">
               Already have an account?{" "}
               <span
                 className="ml-1 font-bold custom-yellow-color hover:underline cursor-pointer"
@@ -82,7 +82,7 @@ const SignIn = () => {
             </h1>
           </div>
         </div>
-        <div className="logo absolute top-20 left-28">
+        <div className="logo hidden lg:block absolute top-20 left-28">
           <img src={HorizontalLogo} alt="" className="w-40 h-40" />
         </div>
       </div>

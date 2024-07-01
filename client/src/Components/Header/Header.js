@@ -6,7 +6,7 @@ import Mee from "../../Assets/mee.jpeg";
 const Header = () => {
   return (
     <>
-      <div className="header flex h-10">
+      <div className="flex h-10">
         <div className="left-header basis-1/2">
           <h1 className=" text-sm">
             Pages / <span className="text-slate-600">Dashboard</span>
@@ -36,7 +36,7 @@ const Header = () => {
             <img src={Bell} alt="" className="w-4 h-4" />
             <div className="relative w-9 h-9 border-2 border-solid border-slate-600 rounded-full overflow-hidden">
               {/* This div creates a circular shape */}
-              { <img src={Mee} alt="" className="w-full h-full object-cover" /> }
+              {<img src={Mee} alt="" className="w-full h-full object-cover" />}
               {/* The image inside is stretched to cover the circular area */}
             </div>
             <h1>Log out</h1>
