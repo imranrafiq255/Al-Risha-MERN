@@ -8,7 +8,7 @@ import "./AddEmployee.css";
 import axios from "axios";
 import successMessage from "../ToastMessages/successMessage";
 import errorMessage from "../ToastMessages/errorMessage";
-import {Toaster} from "react-hot-toast"
+import { Toaster } from "react-hot-toast"
 const AddEmployee = () => {
   const [image, setImage] = useState(false);
   const [form, setForm] = useState(null);
@@ -25,9 +25,9 @@ const AddEmployee = () => {
   };
   const submitEmployeeData = async () => {
     if (!form) {
-        console.log("Input fields are missing!");
-        errorMessage("Input fields are missing! Please fill in all required fields.");
-        return;
+      console.log("Input fields are missing!");
+      errorMessage("Input fields are missing! Please fill in all required fields.");
+      return;
     }
     try {
       const response = await axios.post(
@@ -52,7 +52,7 @@ const AddEmployee = () => {
         <SideBar />
         <div className="right-sidebar-container w-10/12 absolute top-4 right-4">
           <Header />
-          <Toaster/>
+          <Toaster />
           {/* Employee form fields */}
           <div className="home-container custom-home-background relative w-screen h-full p-4 flex"></div>
           <div className="form-container w-full h-full flex justify-center">
@@ -81,7 +81,7 @@ const AddEmployee = () => {
               </h1>
             </div>
             {/* Company Information 1st form fields */}
-            <div className="form-container w-full h-full flex 6/12">
+            {/* <div className="form-container w-full h-full flex 6/12">
               <div className="projects-list mb-10 mt-3 flex flex-col pt-20 px-10 w-full">
                 <div className="form-field mb-4 flex w-full items-center gap-10">
                   <label
@@ -95,14 +95,12 @@ const AddEmployee = () => {
                     onChange={formHanlder}
                     name={"companyName"}
                     className="input-field px-3 py-2 outline-none border-custom-class w-3/12"
-                    style={{ color: "black" }}
+                    style={{ color: "black" }} // Added inline style to set text color to black
                   >
                     <option readOnly>Select Company Name</option>
-                    <option value="Al-Najaf">Al-Najaf</option>
-                    <option value="Al-Risha">Al-Risha</option>
+                    <option value="Al Risha Delivery Services">Al Risha Delivery Services</option>
                   </select>
                 </div>
-
                 <div className="form-field mb-4 flex w-full items-center gap-10">
                   <label
                     htmlFor="Vendors"
@@ -118,10 +116,13 @@ const AddEmployee = () => {
                     style={{ color: "black" }} // Added inline style to set text color to black
                   >
                     <option readOnly>Select Vendor</option>
-                    <option value="Al-Najaf">Al-Najaf</option>
-                    <option value="Speedo">Speedo</option>
-                    <option value="Fix-Time">Fix-Time</option>
-                    {/* Add more options as needed */}
+                    <option value="Al Najah">Al Najah</option>
+                    <option value="Speedoo">Speedoo</option>
+                    <option value="Total Team">Total Team</option>
+                    <option value="Direct">Direct</option>
+                    <option value="ABC">ABC</option>
+                    <option value="Dhirwat">Dhirwat</option>
+                    <option value="Fixed Time">Fixed Time</option>
                   </select>
                 </div>
 
@@ -140,17 +141,87 @@ const AddEmployee = () => {
                     style={{ color: "black" }} // Added inline style to set text color to black
                   >
                     <option readOnly>Select Project</option>
-                    <option value="McDonald's">McDonald's</option>
-                    <option value="American Bar & Grill">
-                      American Bar & Grill
-                    </option>
-                    <option value="KFC">KFC</option>
-                    <option value="Careem Foods">Careem Foods</option>
-                    {/* Add more vendor options as needed */}
+                    <option value="Amazon">Amazon</option>
+                    <option value="UFG/LULU">UFG/LULU</option>
+                    <option value="MacDonald">MacDonald</option>
+                    <option value="KFC/ Americana">KFC/ Americana</option>
+                    <option value="Al Nahdi Pharmacy">Al Nahdi Pharmacy</option>
+                    <option value="Smiles">Smiles</option>
+                  </select>
+                </div>
+              </div>
+            </div> */}
+            <div className="form-container w-full h-full flex flex-col md:flex-row">
+              <div className="projects-list mb-10 mt-3 flex flex-col pt-20 px-10 w-full md:w-6/12">
+                <div className="form-field mb-4 flex flex-col md:flex-row md:items-center gap-4 md:gap-10">
+                  <label
+                    htmlFor="companyName"
+                    className="font-semibold block mb-2 md:w-1/6 md:text-right" // Adjusted width and text alignment for label
+                  >
+                    Company Name:
+                  </label>
+                  <select
+                    id="companyName"
+                    onChange={formHanlder}
+                    name={"companyName"}
+                    className="input-field px-3 py-2 outline-none border-custom-class w-full md:w-2/3"
+                    style={{ color: "black" }} // Added inline style to set text color to black
+                  >
+                    <option readOnly>Select Company Name</option>
+                    <option value="Al Risha Delivery Services">Al Risha Delivery Services</option>
+                  </select>
+                </div>
+                <div className="form-field mb-4 flex flex-col md:flex-row md:items-center gap-4 md:gap-10">
+                  <label
+                    htmlFor="Vendors"
+                    className="font-semibold block mb-2 md:w-1/6 md:text-right" // Adjusted width and text alignment for label
+                  >
+                    Vendors Name:
+                  </label>
+                  <select
+                    id="Vendors"
+                    onChange={formHanlder}
+                    name={"vendorName"}
+                    className="input-field px-3 py-2 outline-none border-custom-class w-full md:w-2/3"
+                    style={{ color: "black" }} // Added inline style to set text color to black
+                  >
+                    <option readOnly>Select Vendor</option>
+                    <option value="Al Najah">Al Najah</option>
+                    <option value="Speedoo">Speedoo</option>
+                    <option value="Total Team">Total Team</option>
+                    <option value="Direct">Direct</option>
+                    <option value="ABC">ABC</option>
+                    <option value="Dhirwat">Dhirwat</option>
+                    <option value="Fixed Time">Fixed Time</option>
+                  </select>
+                </div>
+                <div className="form-field mb-4 flex flex-col md:flex-row md:items-center gap-4 md:gap-10">
+                  <label
+                    htmlFor="Projects"
+                    className="font-semibold block mb-2 md:w-1/6 md:text-right" // Adjusted width and text alignment for label
+                  >
+                    Projects:
+                  </label>
+                  <select
+                    id="Projects"
+                    onChange={formHanlder}
+                    name={"project"}
+                    className="input-field px-3 py-2 outline-none border-custom-class w-full md:w-2/3"
+                    style={{ color: "black" }} // Added inline style to set text color to black
+                  >
+                    <option readOnly>Select Project</option>
+                    <option value="Amazon">Amazon</option>
+                    <option value="UFG/LULU">UFG/LULU</option>
+                    <option value="MacDonald">MacDonald</option>
+                    <option value="KFC/ Americana">KFC/ Americana</option>
+                    <option value="Al Nahdi Pharmacy">Al Nahdi Pharmacy</option>
+                    <option value="Smiles">Smiles</option>
                   </select>
                 </div>
               </div>
             </div>
+
+
           </div>
           {/* Add Employee 2nd form fields */}
           <div className="venders-container h-2/3 bg-white mt-14 rounded-lg relative shadow-lg">
@@ -198,16 +269,18 @@ const AddEmployee = () => {
                     htmlFor="employeeID"
                     className="font-semibold block mb-2"
                   >
-                    Emp_ID
+                    Employee ID
                   </label>
                   <input
                     type="text"
                     id="employeeID"
-                    placeholder="System Generated"
+                    onChange={formHanlder}
+                    name={"employeeId"}
+                    defaultValue="AR-"
                     className="input-field px-3 py-2 w-full outline-none border-custom-class"
-                    readOnly
                   />
                 </div>
+
                 <div className="form-field mb-4">
                   <label
                     htmlFor="firstName"
@@ -226,23 +299,19 @@ const AddEmployee = () => {
                 </div>
                 <div className="form-field mb-4">
                   <label
-                    htmlFor="nationality"
+                    htmlFor="workStartDate"
                     className="font-semibold block mb-2"
                   >
-                    Nationality
+                    Since
                   </label>
-                  <select
-                    id="nationality"
+                  <input
+                    type="date"
+                    id="workStartDate"
                     onChange={formHanlder}
-                    name={"nationality"}
+                    name={"sinceDate"}
+                    placeholder="Enter work start date"
                     className="input-field px-3 py-2 w-full outline-none border-custom-class"
-                  >
-                    <option readOnly>Select Nationality</option>
-                    <option value="pakistan">Pakistan</option>
-                    <option value="india">India</option>
-                    <option value="abudhabi">Abu Dhabi</option>
-                    {/* <!-- Add more options as needed --> */}
-                  </select>
+                  />
                 </div>
                 <div className="form-field mb-4">
                   <label htmlFor="dob" className="font-semibold block mb-2">
@@ -339,8 +408,8 @@ const AddEmployee = () => {
                   >
                     <option readOnly>Select Employee Status</option>
                     <option value="active">Active</option>
-                    <option value="onLeave">On Leave</option>
-                    <option value="leftCompany">Left Company</option>
+                    <option value="onLeave">Leave</option>
+                    <option value="leftCompany">Left</option>
                   </select>
                 </div>
 
@@ -362,17 +431,17 @@ const AddEmployee = () => {
                 </div>
                 <div className="form-field mb-4">
                   <label
-                    htmlFor="emiratesIdFormat"
+                    htmlFor="emiratesID"
                     className="font-semibold block mb-2"
                   >
-                    Emirates ID Format
+                    Emirates ID
                   </label>
                   <input
                     type="text"
-                    id="emiratesIdFormat"
+                    id="emiratesID"
                     onChange={formHanlder}
-                    name={"emiratesIdFormat"}
-                    placeholder="Enter Emirates ID format"
+                    name={"emiratesId"}
+                    placeholder="Enter Emirates ID"
                     className="input-field px-3 py-2 w-full outline-none border-custom-class"
                   />
                 </div>
@@ -396,17 +465,17 @@ const AddEmployee = () => {
               <div className="projects-list flex flex-col pt-20 px-10 w-4/12 mt-52">
                 <div className="form-field mb-4">
                   <label
-                    htmlFor="emiratesID"
+                    htmlFor="Careem ID"
                     className="font-semibold block mb-2"
                   >
-                    Emirates ID
+                    Careem ID
                   </label>
                   <input
                     type="text"
-                    id="emiratesID"
+                    id="careemid"
                     onChange={formHanlder}
-                    name={"emiratesId"}
-                    placeholder="Enter Emirates ID"
+                    name={"careemid"}
+                    placeholder="Enter Careem ID"
                     className="input-field px-3 py-2 w-full outline-none border-custom-class"
                   />
                 </div>
@@ -490,24 +559,6 @@ const AddEmployee = () => {
                     className="input-field px-3 py-2 w-full outline-none border-custom-class"
                   />
                 </div>
-
-                <div className="form-field mb-4">
-                  <label
-                    htmlFor="workStartDate"
-                    className="font-semibold block mb-2"
-                  >
-                    Since:
-                  </label>
-                  <input
-                    type="date"
-                    id="workStartDate"
-                    onChange={formHanlder}
-                    name={"sinceDate"}
-                    placeholder="Enter work start date"
-                    className="input-field px-3 py-2 w-full outline-none border-custom-class"
-                  />
-                </div>
-
                 <div className="form-field mb-4">
                   <label
                     htmlFor="receivableFromCareem"
@@ -541,6 +592,26 @@ const AddEmployee = () => {
                     <option readOnly>Receive Passport?</option>
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
+                  </select>
+                </div>
+                <div className="form-field mb-4">
+                  <label
+                    htmlFor="nationality"
+                    className="font-semibold block mb-2"
+                  >
+                    Nationality
+                  </label>
+                  <select
+                    id="nationality"
+                    onChange={formHanlder}
+                    name={"nationality"}
+                    className="input-field px-3 py-2 w-full outline-none border-custom-class"
+                  >
+                    <option readOnly>Select Nationality</option>
+                    <option value="pakistan">Pakistan</option>
+                    <option value="india">India</option>
+                    <option value="abudhabi">Abu Dhabi</option>
+                    {/* <!-- Add more options as needed --> */}
                   </select>
                 </div>
                 <div className="form-field mb-4">
@@ -596,14 +667,14 @@ const AddEmployee = () => {
               <div className="projects-list flex flex-col pt-20 px-10 w-4/12 mt-52">
                 <div className="form-field mb-4">
                   <label htmlFor="doJoin" className="font-semibold block mb-2">
-                    Do Join
+                    Do Joining
                   </label>
                   <input
                     type="date"
                     id="doJoin"
                     onChange={formHanlder}
                     name={"joiningDate"}
-                    placeholder="Enter do join"
+                    placeholder="Enter do joining"
                     className="input-field px-3 py-2 w-full outline-none border-custom-class"
                   />
                 </div>

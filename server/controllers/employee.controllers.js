@@ -4,6 +4,7 @@ const employeeModel = require("../models/employee.models");
 exports.addEmployeeDetails = async (req, res) => {
   try {
     const {
+      employeeId,
       companyName,
       vendorName,
       project, // This was missing
@@ -36,7 +37,7 @@ exports.addEmployeeDetails = async (req, res) => {
       laborCardNo,
       cardIssue,
       cardExpiry,
-      emiratesIdFormat,
+      careemId,
       shiftTime,
       phoneNumber,
       jobType,
@@ -68,77 +69,77 @@ exports.addEmployeeDetails = async (req, res) => {
       familyHeadOccupation,
       applicantSignatureAndDate,
     } = req.body;
-
-    if (
-      !companyName ||
-      !vendorName ||
-      !project || // This was missing
-      !emiratesId ||
-      !joiningDate ||
-      !firstName ||
-      !lastName ||
-      !currentAddress ||
-      !nationality ||
-      !gender ||
-      !email ||
-      !dob ||
-      !foreignBankAcc ||
-      !nativeBankAcc ||
-      !passportNo ||
-      !passportIssueDate ||
-      !passportExpiryDate ||
-      !driverLicense ||
-      !licenseIssueDate ||
-      !licenseExpiryDate ||
-      !sinceDate ||
-      !stateOfIssuance ||
-      !alRishaCharges ||
-      !salaryType ||
-      !receivableFromCareem ||
-      !payableToVendor ||
-      !employeeStatus ||
-      !passportReceived ||
-      !passportReturned ||
-      !laborCardNo ||
-      !cardIssue ||
-      !cardExpiry ||
-      !emiratesIdFormat ||
-      !shiftTime ||
-      !phoneNumber ||
-      !jobType ||
-      !carType ||
-      !emergenceNo ||
-      !employerName ||
-      !employerPosition ||
-      !employerContact ||
-      !employerCity ||
-      !employerNOCStatus ||
-      !dateOfEmployment ||
-      !granterName ||
-      !granterJobAddress ||
-      !granterHomeAddress ||
-      !granterResidentialAddress ||
-      !granterRelationWithDA ||
-      !granterPhoneNumber ||
-      !granterPhone ||
-      !granterCountry ||
-      !granterHomeTown ||
-      !granterOccupation ||
-      !granterHomeHeadName ||
-      !granterFamilyHeadOccupation ||
-      !country ||
-      !homeAddress ||
-      !homeTownCity ||
-      !familyHeadName ||
-      !familyHeadPhoneNumber ||
-      !familyHeadOccupation ||
-      !applicantSignatureAndDate
-    ) {
-      return res.status(404).json({
-        statusCode: STATUS_CODES[404],
-        message: "Required fields are missing, please add all required fields",
-      });
-    }
+    
+    // if (
+    //   !companyName ||
+    //   !vendorName ||
+    //   !project || // This was missing
+    //   !emiratesId ||
+    //   !joiningDate ||
+    //   !firstName ||
+    //   !lastName ||
+    //   !currentAddress ||
+    //   !nationality ||
+    //   !gender ||
+    //   !email ||
+    //   !dob ||
+    //   !foreignBankAcc ||
+    //   !nativeBankAcc ||
+    //   !passportNo ||
+    //   !passportIssueDate ||
+    //   !passportExpiryDate ||
+    //   !driverLicense ||
+    //   !licenseIssueDate ||
+    //   !licenseExpiryDate ||
+    //   !sinceDate ||
+    //   !stateOfIssuance ||
+    //   !alRishaCharges ||
+    //   !salaryType ||
+    //   !receivableFromCareem ||
+    //   !payableToVendor ||
+    //   !employeeStatus ||
+    //   !passportReceived ||
+    //   !passportReturned ||
+    //   !laborCardNo ||
+    //   !cardIssue ||
+    //   !cardExpiry ||
+    //   !emiratesIdFormat ||
+    //   !shiftTime ||
+    //   !phoneNumber ||
+    //   !jobType ||
+    //   !carType ||
+    //   !emergenceNo ||
+    //   !employerName ||
+    //   !employerPosition ||
+    //   !employerContact ||
+    //   !employerCity ||
+    //   !employerNOCStatus ||
+    //   !dateOfEmployment ||
+    //   !granterName ||
+    //   !granterJobAddress ||
+    //   !granterHomeAddress ||
+    //   !granterResidentialAddress ||
+    //   !granterRelationWithDA ||
+    //   !granterPhoneNumber ||
+    //   !granterPhone ||
+    //   !granterCountry ||
+    //   !granterHomeTown ||
+    //   !granterOccupation ||
+    //   !granterHomeHeadName ||
+    //   !granterFamilyHeadOccupation ||
+    //   !country ||
+    //   !homeAddress ||
+    //   !homeTownCity ||
+    //   !familyHeadName ||
+    //   !familyHeadPhoneNumber ||
+    //   !familyHeadOccupation ||
+    //   !applicantSignatureAndDate
+    // ) {
+    //   return res.status(404).json({
+    //     statusCode: STATUS_CODES[404],
+    //     message: "Required fields are missing, please add all required fields",
+    //   });
+    // }
     const avatar = req.file ? req.file.path : null;
     if (!avatar) {
       return res.status(400).json({
@@ -147,6 +148,7 @@ exports.addEmployeeDetails = async (req, res) => {
       });
     }
     const newEmployeeDetails = await new employeeModel({
+      employeeId,
       companyName,
       vendorName,
       project, // This was missing
@@ -180,7 +182,7 @@ exports.addEmployeeDetails = async (req, res) => {
       laborCardNo,
       cardIssue,
       cardExpiry,
-      emiratesIdFormat,
+      careemId,
       shiftTime,
       phoneNumber,
       jobType,

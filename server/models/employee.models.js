@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const employeeSchema = mongoose.Schema(
   {
+    employeeId : {
+      type: String,
+      required: [true, "Employee Id is required"],
+      unique: [true, "Employee Id should be unique, it is already existed into database"],
+    },
     companyName: String,
     vendorName: String,
     project: String,
@@ -68,7 +73,7 @@ const employeeSchema = mongoose.Schema(
       type: String,
       match: /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/,
     },
-    emiratesIdFormat: String,
+    careemId: String,
     shiftTime: String,
     phoneNumber: String,
     jobType: String,
