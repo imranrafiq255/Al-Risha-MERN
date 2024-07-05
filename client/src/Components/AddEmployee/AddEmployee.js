@@ -164,6 +164,7 @@ const AddEmployee = () => {
                     id="companyName"
                     onChange={formHanlder}
                     name={"companyName"}
+                    
                     className="input-field px-3 py-2 outline-none border-custom-class w-full md:w-2/3"
                     style={{ color: "black" }} // Added inline style to set text color to black
                   >
@@ -229,7 +230,7 @@ const AddEmployee = () => {
               <h1 className="text-white text-2xl font-bold">Add Employee</h1>
             </div>
             {/* Employee 2nd form fields */}
-            <div className="form-container w-full h-full flex justify-center">
+            <div className="form-container w-full h-full flex justify-center flex-wrap">
               <div className="mt-1 absolute top-24 left-30  ">
                 <div className="w-40 h-40 relative">
                   <img
@@ -263,7 +264,7 @@ const AddEmployee = () => {
                 </div>
               </div>
               {/* Employee 1st column below of 2nd form fields  */}
-              <div className="projects-list mb-14 flex flex-col pt-20 px-10 w-4/12 mt-52">
+              <div className="projects-list mb-14 flex flex-col pt-20 px-10 w-full xl:w-6/12 2xl:w-4/12 2xl:mt-52">
                 <div className="form-field mb-4">
                   <label
                     htmlFor="employeeID"
@@ -462,7 +463,7 @@ const AddEmployee = () => {
                 </div>
               </div>
               {/* Employee 2nd column below of 2nd form fields  */}
-              <div className="projects-list flex flex-col pt-20 px-10 w-4/12 mt-52">
+              <div className="projects-list flex flex-col pt-20 px-10 w-full xl:w-6/12 2xl:w-4/12 2xl:mt-52">
                 <div className="form-field mb-4">
                   <label
                     htmlFor="Careem ID"
@@ -664,7 +665,7 @@ const AddEmployee = () => {
                 </div>
               </div>
               {/* Employee 3rd column below of 2nd form fields  */}
-              <div className="projects-list flex flex-col pt-20 px-10 w-4/12 mt-52">
+              <div className="projects-list flex flex-col pt-20 px-10 w-full xl:w-6/12 2xl:w-4/12 2xl:mt-52">
                 <div className="form-field mb-4">
                   <label htmlFor="doJoin" className="font-semibold block mb-2">
                     Do Joining
@@ -886,9 +887,9 @@ const AddEmployee = () => {
               </h1>
             </div>
             {/* Employment History */}
-            <div className="form-container w-full h-full flex justify-center">
+            <div className="form-container w-full h-full flex justify-center flex-wrap">
               {/* Employment History 1nd column below of 3rd form fields  */}
-              <div className="projects-list mb-10 flex flex-col pt-20 px-10 w-4/12">
+              <div className="projects-list mb-10 flex flex-col pt-20 px-10 w-full sm:w-10/12 md:w-6/12 xl:w-4/12 xl:mt-6">
                 <div className="form-field mb-4">
                   <label
                     htmlFor="employerName"
@@ -922,7 +923,7 @@ const AddEmployee = () => {
                   />
                 </div>
               </div>
-              <div className="projects-list flex flex-col pt-20 px-10 w-4/12">
+              <div className="projects-list flex flex-col pt-20 px-10 w-full sm:w-10/12 md:w-6/12 xl:w-4/12 xl:mt-6">
                 <div className="form-field mb-4">
                   <label
                     htmlFor="positionTitle"
@@ -956,7 +957,7 @@ const AddEmployee = () => {
                   />
                 </div>
               </div>
-              <div className="projects-list flex flex-col pt-20 px-10 w-4/12">
+              <div className="projects-list flex flex-col pt-20 px-10 w-full sm:w-10/12 md:w-6/12 xl:w-4/12 xl:mt-6">
                 <div className="form-field mb-4">
                   <label
                     htmlFor="employerContactNumber"
@@ -996,6 +997,9 @@ const AddEmployee = () => {
               </div>
             </div>
           </div>
+          {/* .... */}
+
+
           <div className="venders-container h-2/3 bg-white mt-14 rounded-lg relative shadow-lg">
             <div className="h-20 w-11/12 custom-venders-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
               <h1 className="text-white text-2xl font-bold">

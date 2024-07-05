@@ -12,8 +12,14 @@ import Vehicle from "./Components/Vehicle/Vehicle";
 import Profile from "./Components/Profile/Profile";
 import AddEmployee from "./Components/AddEmployee/AddEmployee";
 import DisplayEmployee from "./Components/DisplayEmployee/DisplayEmployee";
-import EditEmployee from "./Components/EditEmployee/EditEmployee"; // Ensure this path is correct
-
+import EditEmployee from "./Components/EditEmployee/EditEmployee";
+import Company from "./Components/Company/Company"; 
+import State from "./Components/State/State";
+import Gender from "./Components/Gender/Gender";
+import Shift from "./Components/Shift/Shift";
+import Nationality from "./Components/Nationality/Nationality";
+import Guarantor from "./Components/Guarantor/Guarantor";
+import NocStatus from "./Components/NocStatus/NocStatus"; 
 const App = () => {
   return (
     <>
@@ -31,7 +37,14 @@ const App = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/addemployee" element={<AddEmployee />} />
           <Route path="/displayemployee" element={<DisplayEmployee />} />
-          <Route path="/edit-employee/:id" element={<EditEmployee />} /> {/* Correct path */}
+          <Route path="/edit-employee/:id" element={<EditEmployee />} />
+          <Route path="/company" element={<Company />} />
+          <Route path="/state" element={<State />} />
+          <Route path="/gender" element={<Gender />} />
+          <Route path="/shifts" element={<Shift />} />
+          <Route path="/nationality" element={<Nationality />} />
+          <Route path="/guarantor" element={<Guarantor />} />
+          <Route path="/noc-status" element={<NocStatus />} />
         </Routes>
       </Router>
     </>

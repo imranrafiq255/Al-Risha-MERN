@@ -1,12 +1,12 @@
-// Card.js
-import React from 'react';
+// // Card.js
+// import React from 'react';
 
-const Card = ({ children }) => {
-  return (
-    <div className="card">
-      {children}
-    </div>
-  );
-};
+// const Card = ({ children }) => {
+//   return (
+//     <div className="card">
+//       {children}
+//     </div>
+//   );
+// };
 
-export default Card;
+// export default Card;
