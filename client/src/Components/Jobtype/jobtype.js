@@ -8,35 +8,26 @@ import trashImage from '../../Assets/trash.png';
 import viewImage from '../../Assets/view.png';
 import pencilImage from '../../Assets/pencil.png';
 
-const Vehicle = () => {
+const JobType = () => {
   const [formData, setFormData] = useState({
-    carTypeId: '',
-    carTypeName: '',
+    jobTypeId: '',
+    jobTypeName: '',
     status: '', // Defaulting to "active" status
   });
 
-  const [vehicleTypes, setVehicleTypes] = useState([
+  const [jobTypes, setJobTypes] = useState([
     {
-      carTypeId: '1',
-      carTypeName: 'Sedan',
+      jobTypeId: '1',
+      jobTypeName: 'Car',
       status: 'Active',
     },
     {
-      carTypeId: '2',
-      carTypeName: '7 Seater Mini Van',
+      jobTypeId: '2',
+      jobTypeName: 'Bike',
       status: 'Inactive',
     },
-    {
-      carTypeId: '3',
-      carTypeName: 'Bike',
-      status: 'Active',
-    },
-    {
-      carTypeId: '4',
-      carTypeName: 'Lamborghini',
-      status: 'Inactive',
-    },
-    // Add more vehicle types as needed
+    
+    // Add more job types as needed
   ]);
 
   const handleInputChange = (e) => {
@@ -50,55 +41,55 @@ const Vehicle = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.carTypeId) {
-      // Edit existing vehicle type
-      const updatedVehicleTypes = vehicleTypes.map((vehicleType) =>
-        vehicleType.carTypeId === formData.carTypeId ? { ...formData } : vehicleType
+    if (formData.jobTypeId) {
+      // Edit existing job type
+      const updatedJobTypes = jobTypes.map((jobType) =>
+        jobType.jobTypeId === formData.jobTypeId ? { ...formData } : jobType
       );
-      setVehicleTypes(updatedVehicleTypes);
+      setJobTypes(updatedJobTypes);
     } else {
-      // Add new vehicle type
-      const newVehicleType = { ...formData, carTypeId: String(vehicleTypes.length + 1) };
-      setVehicleTypes([...vehicleTypes, newVehicleType]);
+      // Add new job type
+      const newJobType = { ...formData, jobTypeId: String(jobTypes.length + 1) };
+      setJobTypes([...jobTypes, newJobType]);
     }
     setFormData({
-      carTypeId: '',
-      carTypeName: '',
+      jobTypeId: '',
+      jobTypeName: '',
       status: 'active', // Resetting status to active
     });
   };
 
-  const handleEdit = (carTypeId) => {
-    const selectedVehicleType = vehicleTypes.find((vehicleType) => vehicleType.carTypeId === carTypeId);
-    setFormData({ ...selectedVehicleType });
+  const handleEdit = (jobTypeId) => {
+    const selectedJobType = jobTypes.find((jobType) => jobType.jobTypeId === jobTypeId);
+    setFormData({ ...selectedJobType });
   };
 
-  const handleDelete = (carTypeId) => {
-    const updatedVehicleTypes = vehicleTypes.filter((vehicleType) => vehicleType.carTypeId !== carTypeId);
-    setVehicleTypes(updatedVehicleTypes);
+  const handleDelete = (jobTypeId) => {
+    const updatedJobTypes = jobTypes.filter((jobType) => jobType.jobTypeId !== jobTypeId);
+    setJobTypes(updatedJobTypes);
   };
 
   const handleCancel = () => {
     setFormData({
-      carTypeId: '',
-      carTypeName: '',
+      jobTypeId: '',
+      jobTypeName: '',
       status: 'active', // Resetting status to active
     });
   };
 
-  const VehicleTypeRow = ({ vehicleType }) => {
-    const { carTypeId, carTypeName, status } = vehicleType;
+  const JobTypeRow = ({ jobType }) => {
+    const { jobTypeId, jobTypeName, status } = jobType;
 
-    const handleView = (carTypeId) => {
-      console.log(`Viewing vehicle type details: ${carTypeId}`);
+    const handleView = (jobTypeId) => {
+      console.log(`Viewing job type details: ${jobTypeId}`);
       // Implement view functionality here
     };
 
     return (
       <>
         <div className="flex mt-4 items-center">
-          <div className="w-1/4">{carTypeId}</div>
-          <div className="w-3/4">{carTypeName}</div>
+          <div className="w-1/4">{jobTypeId}</div>
+          <div className="w-3/4">{jobTypeName}</div>
           <div className="w-1/4">
             <div
               className={`${
@@ -113,19 +104,19 @@ const Vehicle = () => {
               src={viewImage}
               alt="View"
               className="w-7 h-8 cursor-pointer mr-2"
-              onClick={() => handleView(carTypeId)}
+              onClick={() => handleView(jobTypeId)}
             />
             <img
               src={pencilImage}
               alt="Edit"
               className="w-6 h-6 cursor-pointer mr-2"
-              onClick={() => handleEdit(carTypeId)}
+              onClick={() => handleEdit(jobTypeId)}
             />
             <img
               src={trashImage}
               alt="Delete"
               className="w-6 h-6 cursor-pointer"
-              onClick={() => handleDelete(carTypeId)}
+              onClick={() => handleDelete(jobTypeId)}
             />
           </div>
         </div>
@@ -143,40 +134,40 @@ const Vehicle = () => {
         <Header />
         <div className="projects-container h-2/4 bg-white mt-14 rounded-lg relative shadow-lg">
           <div className="h-20 w-11/12 custom-company-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
-            <h1 className="text-white text-2xl font-bold">Add Vehicle Types:</h1>
+            <h1 className="text-white text-2xl font-bold">Add Job Types:</h1>
           </div>
           <div className="projects-list flex flex-col pt-6 px-10">
-            {/* Vehicle Type Form Fields */}
+            {/* Job Type Form Fields */}
             <form onSubmit={handleSubmit}>
               <div className="form-field-grid mb-1 grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 mt-16">
-                {/* Car Type ID */}
+                {/* Job Type ID */}
                 <div className="mb-4">
-                  <label htmlFor="carTypeId" className="font-semibold block mb-2">
-                    Car Type ID
+                  <label htmlFor="jobTypeId" className="font-semibold block mb-2">
+                    Job Type ID
                   </label>
                   <input
                     type="text"
-                    id="carTypeId"
+                    id="jobTypeId"
                     onChange={handleInputChange}
-                    name="carTypeId"
-                    placeholder="Enter Car Type ID"
-                    value={formData.carTypeId}
+                    name="jobTypeId"
+                    placeholder="Enter Job Type ID"
+                    value={formData.jobTypeId}
                     className="input-field px-3 py-2 w-full outline-none border-custom-class"
                   />
                 </div>
 
-                {/* Car Type Name */}
+                {/* Job Type Name */}
                 <div className="mb-4">
-                  <label htmlFor="carTypeName" className="font-semibold block mb-2">
-                    Car Type Name
+                  <label htmlFor="jobTypeName" className="font-semibold block mb-2">
+                    Job Type Name
                   </label>
                   <input
                     type="text"
-                    id="carTypeName"
+                    id="jobTypeName"
                     onChange={handleInputChange}
-                    name="carTypeName"
-                    placeholder="Enter Car Type Name"
-                    value={formData.carTypeName}
+                    name="jobTypeName"
+                    placeholder="Enter Job Type Name"
+                    value={formData.jobTypeName}
                     className="input-field px-3 py-2 w-full outline-none border-custom-class"
                   />
                 </div>
@@ -233,24 +224,24 @@ const Vehicle = () => {
           </div>
         </div>
 
-        {/* Vehicle Type Display Data Form */}
+        {/* Job Type Display Data Form */}
         <div className="company-container h-2/3 bg-white mt-14 rounded-lg relative shadow-lg">
           <div className="h-20 w-11/12 custom-company-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
-            <h1 className="text-white text-2xl font-bold">Vehicle Type Details:</h1>
+            <h1 className="text-white text-2xl font-bold">Job Type Details:</h1>
           </div>
           <div className="projects-list flex flex-col pt-20 px-10">
-            {/* Vehicle Type Headings */}
+            {/* Job Type Headings */}
             <div className="flex mt-4 font-bold">
-              <div className="w-1/4">Car Type ID</div>
-              <div className="w-3/4">Car Type Name</div>
+              <div className="w-1/4">Job Type ID</div>
+              <div className="w-3/4">Job Type Name</div>
               <div className="w-1/4">Status</div>
               <div className="w-1/4">Action</div>
             </div>
             <div className="line w-full mt-4">
               <div className="company-bottom-line w-full"></div>
             </div>
-            {vehicleTypes.map((vehicleType) => (
-              <VehicleTypeRow key={vehicleType.carTypeId} vehicleType={vehicleType} />
+            {jobTypes.map((jobType) => (
+              <JobTypeRow key={jobType.jobTypeId} jobType={jobType} />
             ))}
           </div>
         </div>
@@ -259,4 +250,4 @@ const Vehicle = () => {
   );
 };
 
-export default Vehicle;
+export default JobType;

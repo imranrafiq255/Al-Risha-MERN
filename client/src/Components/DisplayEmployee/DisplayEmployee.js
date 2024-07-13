@@ -125,7 +125,7 @@ const EmployeeRow = ({ id, name, designation, email, mobile, status }) => {
         <div className="w-1/12">
           <div
             className={`${
-              status === "active" ? "bg-green-400" : "bg-gray-400"
+              status === "active" ? "bg-green-600" : "bg-red-600"
             } text-white w-16 h-7 flex justify-center items-center rounded-lg shadow-lg`}
           >
             {status}

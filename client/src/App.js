@@ -14,12 +14,14 @@ import AddEmployee from "./Components/AddEmployee/AddEmployee";
 import DisplayEmployee from "./Components/DisplayEmployee/DisplayEmployee";
 import EditEmployee from "./Components/EditEmployee/EditEmployee";
 import Company from "./Components/Company/Company"; 
-import State from "./Components/State/State";
+import State from './Components/State/StateOfIssuance'; 
 import Gender from "./Components/Gender/Gender";
 import Shift from "./Components/Shift/Shift";
 import Nationality from "./Components/Nationality/Nationality";
 import Guarantor from "./Components/Guarantor/Guarantor";
 import NocStatus from "./Components/NocStatus/NocStatus"; 
+import JobType from "./Components/Jobtype/jobtype"; 
+
 const App = () => {
   return (
     <>
@@ -31,6 +33,7 @@ const App = () => {
           <Route path="/venders" element={<Venders />} />
           <Route path="/project" element={<Project />} />
           <Route path="/vehicle" element={<Vehicle />} />
+          <Route path="/jobtype" element={<JobType />} />
           <Route path="/salary" element={<Salary />} />
           <Route path="/notification" element={<Notification />} />
           <Route path="/maintain" element={<Maintain />} />
@@ -39,7 +42,7 @@ const App = () => {
           <Route path="/displayemployee" element={<DisplayEmployee />} />
           <Route path="/edit-employee/:id" element={<EditEmployee />} />
           <Route path="/company" element={<Company />} />
-          <Route path="/state" element={<State />} />
+          <Route path="/state" element={<State/>} />
           <Route path="/gender" element={<Gender />} />
           <Route path="/shifts" element={<Shift />} />
           <Route path="/nationality" element={<Nationality />} />

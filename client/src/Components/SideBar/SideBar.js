@@ -18,6 +18,7 @@ import Shift from "../../Assets/shift.png";
 import Nationality from "../../Assets/nationality.png";
 import Guarantor from "../../Assets/guarantor.png";
 import Noc from "../../Assets/noc.png"; // Import NOC icon here
+import JobType from "../../Assets/jobtype.png"; // Import Job Type icon here
 
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -42,6 +43,11 @@ const SideBar = () => {
   const vehicleNavigator = () => {
     navigate("/vehicle");
   };
+
+  const jobtypeNavigator = () => {
+    navigate("/jobtype");
+  };
+
 
   const salaryNavigator = () => {
     navigate("/salary");
@@ -83,31 +89,31 @@ const SideBar = () => {
   const companyNavigator = () => {
     navigate("/company");
   };
-  
+
   const stateNavigator = () => {
-    navigate("/state-of-issuance");
+    navigate("/state");
   };
-  
+
   const genderNavigator = () => {
     navigate("/gender");
   };
-  
+
   const shiftNavigator = () => {
     navigate("/shifts");
   };
-  
+
   const nationalityNavigator = () => {
     navigate("/nationality");
   };
-  
+
   const guarantorNavigator = () => {
     navigate("/guarantor");
   };
-  
+
   const nocNavigator = () => {
     navigate("/noc");
   };
-  
+
   return (
     <>
       <div className="relative h-screen w-2/12">
@@ -182,6 +188,16 @@ const SideBar = () => {
                   <h1 className="text-white">Our Vendors</h1>
                 </div>
                 <div
+                  className={`${location.pathname === "/jobtype"
+                    ? "home-sidebar-selected-item-bg-color"
+                    : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
+                    } vehicle flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer hover:bg-slate-600 transition-colors duration-500 ease-in-out`}
+                  onClick={jobtypeNavigator}
+                >
+                  <img src={JobType} alt="" className="w-7 h-7 invert" />
+                  <h1 className="text-white">Job Type</h1>
+                </div>
+                <div
                   className={`${location.pathname === "/vehicle"
                     ? "home-sidebar-selected-item-bg-color"
                     : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
@@ -189,8 +205,10 @@ const SideBar = () => {
                   onClick={vehicleNavigator}
                 >
                   <img src={Vehicle} alt="" className="w-7 h-7 invert" />
-                  <h1 className="text-white">Job/Vehicle Type</h1>
+                  <h1 className="text-white">Vehicle Type</h1>
                 </div>
+                
+
                 <div
                   className={`${location.pathname === "/salary"
                     ? "home-sidebar-selected-item-bg-color"
@@ -232,11 +250,11 @@ const SideBar = () => {
                   <h1 className="text-white">Nationality</h1>
                 </div>
                 <div
-                  className={`${location.pathname === "/state-of-issuance"
+                  className={`${location.pathname === "/state"
                     ? "home-sidebar-selected-item-bg-color"
                     : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
                     } profile flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer `}
-                  onClick={() => navigate("/state-of-issuance")}
+                  onClick={() => navigate("/state")}
                 >
                   <img src={State} alt="" className="w-5 h-5 invert" />
                   <h1 className="text-white">State of issuance</h1>

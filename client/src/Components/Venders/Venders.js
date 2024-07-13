@@ -1,162 +1,286 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import SideBar from "../SideBar/SideBar";
 import Header from "../Header/Header";
-import "./Venders.css";
-import Plus from "../../Assets/plus.png";
-import Najaf from "../../Assets/najaf.png";
-import Speedo from "../../Assets/Speedo.png";
-import Fixtime from "../../Assets/fixtime.png";
-import PencilIcon from "../../Assets/pencil.png";
-import TrashIcon from "../../Assets/trash.png";
+import "../Company/Company.css";
+
+// Import your images
+import trashImage from "../../Assets/trash.png";
+import viewImage from "../../Assets/view.png";
+import pencilImage from "../../Assets/pencil.png";
 
 const Vendors = () => {
-  const [isShowing, setShowing] = useState(false);
+  const [formData, setFormData] = useState({
+    vendorId: "",
+    vendorName: "",
+    vendorAddress: "",
+    vendorPhoneNumber: "",
+    vendorPOCName: "",
+    status: "", // Defaulting to "inactive" status
+  });
 
-  const addVenderHandler = () => {
-    setShowing(!isShowing);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
-  return (
-    <>
-      <div className="home-container custom-home-background w-screen h-full p-4 flex">
-        <SideBar />
-        <div className="right-sidebar-container w-10/12">
-          <Header />
-          <div className="venders-container h-2/3 bg-white mt-14 rounded-lg relative shadow-lg">
-            <div className="h-20 w-11/12 custom-venders-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
-              <h1 className="text-white text-2xl font-bold">Venders</h1>
-              <img
-                src={Plus}
-                alt=""
-                className={`${
-                  isShowing
-                    ? " rotate-45 transition-transform duration-300 ease-in-out"
-                    : "rotate-0 transition-transform duration-300 ease-in-out"
-                } w-6 h-6 invert cursor-pointer`}
-                onClick={addVenderHandler}
-              />
-            </div>
-            <div className="venders-list flex flex-col pt-20 px-10">
-              <div className="flex mt-4 font-bold">
-                <div className="w-5/12">Vendors</div>
-                
-                <div className="w-7/12 flex justify-between items-center">
-                  <h1>FUNCTION</h1>
-                  <h1>STATUS</h1>
-                  <h1>EMPLOYED</h1>
-                  <h1>MODIFICATION</h1>
-                </div>
-              </div>
-              <div className="line w-full mt-4">
-                <div className="vender-bottom-line w-full"></div>
-              </div>
-              {/* first user data */}
-              <VendorRow
-                image={Najaf}
-                name="Al-Najaf"
-                email="alnajaf11@gmail.com"
-                functionType="Manager"
-                status="Online"
-                employedDate="12 Dec 2014"
-              />
-              {/* Second user data */}
-              {/* <VendorRow
-                image={Speedo}
-                name="Speedo"
-                email="Speedo01@gmail.com"
-                functionType="Manager"
-                status="Offline"
-                employedDate="10 Jan 2014"
-              /> */}
-              {/* Third user data */}
-              {/* <VendorRow
-                image={Fixtime}
-                name="Fix-Time"
-                email="Fixtime@gmail.com"
-                functionType="Supervisor"
-                status="Online"
-                employedDate="19 Oct 2014"
-              /> */}
-            </div>
-            {isShowing ? (
-              <div className="venders-to-add-list absolute top-14 right-16 w-72 h-96 bg-slate-300 rounded-b-lg shadow-lg"></div>
-            ) : (
-              ""
-            )}
-          </div>
-        </div>
-      </div>
-    </>
-  );
-};
-
-const VendorRow = ({
-  image,
-  name,
-  email,
-  functionType,
-  status,
-  employedDate,
-}) => {
-  const handleEdit = (vendorId) => {
-    // Handle edit action for the specific vendor
-    console.log(`Editing vendor with ID: ${vendorId}`);
+  const handleStatusChange = (e) => {
+    setFormData({ ...formData, status: e.target.value });
   };
 
-  const handleDelete = (vendorId) => {
-    // Handle delete action for the specific vendor
-    console.log(`Deleting vendor with ID: ${vendorId}`);
-  };
+  // Dummy data for vendors
+  const [vendors] = useState([
+    {
+      vendorId: '1',
+      vendorName: 'Vendor A',
+      vendorAddress: '789 Elm St, Town, Country',
+      vendorPhoneNumber: '+1234567890',
+      vendorPOCName: 'John Doe',
+      status: 'Active',
+    },
+    {
+      vendorId: '2',
+      vendorName: 'Vendor B',
+      vendorAddress: '456 Pine St, City, Country',
+      vendorPhoneNumber: '+9876543210',
+      vendorPOCName: 'Jane Smith',
+      status: 'Inactive',
+    },
+    // Add more vendors as needed
+  ]);
 
-  return (
-    <>
-      <div className="flex mt-4">
-        <div className="w-5/12 flex">
-          <div className="image">
-            <img
-              src={image}
-              alt=""
-              className="w-15 h-14 rounded-full object-fill"
-            />
-          </div>
-          <div className="name flex flex-col justify-center pl-4">
-            <h1>{name}</h1>
-            <h1 className="email">{email}</h1>
-          </div>
-        </div>
-        <div className="w-7/12 flex justify-between items-center">
-          <div>
-            <h1 className="font-bold">{functionType}</h1>
-            <h1 className="font-thin">Organization</h1>
-          </div>
-          <div>
-            <div className="bg-green-400 text-white w-16 h-7 flex justify-center items-center rounded-lg shadow-lg">
+  const VendorRow = ({ vendor }) => {
+    const {
+      vendorId,
+      vendorName,
+      vendorAddress,
+      vendorPhoneNumber,
+      vendorPOCName,
+      status,
+    } = vendor;
+
+    const handleEdit = (vendorId) => {
+      console.log(`Editing vendor: ${vendorId}`);
+      // Implement edit functionality here
+    };
+
+    const handleDelete = (vendorId) => {
+      console.log(`Deleting vendor: ${vendorId}`);
+      // Implement delete functionality here
+    };
+
+    const handleView = (vendorId) => {
+      console.log(`Viewing vendor details: ${vendorId}`);
+      // Implement view functionality here
+    };
+
+    return (
+      <>
+        <div className="flex mt-4 items-center">
+          <div className="w-1/6">{vendorId}</div>
+          <div className="w-2/6">{vendorName}</div>
+          <div className="w-2/6">{vendorAddress}</div>
+          <div className="w-1/6">{vendorPhoneNumber}</div>
+          <div className="w-2/6">{vendorPOCName}</div>
+          <div className="w-1/6">
+            <div
+              className={`${
+                status === 'Active' ? 'bg-green-400' : 'bg-red-600'
+              } text-white w-16 h-7 flex justify-center items-center rounded-lg shadow-lg`}
+            >
               {status}
             </div>
           </div>
-          <div className="employed">
-            <h1>{employedDate}</h1>
-          </div>
-          <div className="modification-icons flex">
+          <div className="w-1/6 flex">
             <img
-              src={PencilIcon}
-              alt="Edit"
-              className="w-6 h-6 cursor-pointer mr-2"
-              onClick={() => handleEdit(name)}
+              src={viewImage}
+              alt="View"
+              className="w-7 h-8 cursor-pointer mr-2"
+              onClick={() => handleView(vendorId)}
             />
             <img
-              src={TrashIcon}
+              src={pencilImage}
+              alt="Edit"
+              className="w-6 h-6 cursor-pointer mr-2"
+              onClick={() => handleEdit(vendorId)}
+            />
+            <img
+              src={trashImage}
               alt="Delete"
               className="w-6 h-6 cursor-pointer"
-              onClick={() => handleDelete(name)}
+              onClick={() => handleDelete(vendorId)}
             />
           </div>
         </div>
+        <div className="line w-full mt-4">
+          <div className="company-bottom-line w-full"></div>
+        </div>
+      </>
+    );
+  };
+
+  return (
+    <div className="home-container custom-home-background w-screen h-full p-4 flex">
+      <SideBar />
+      <div className="right-sidebar-container w-10/12">
+        <Header />
+        <div className="projects-container h-2/3 bg-white mt-14 rounded-lg relative shadow-lg">
+          <div className="h-20 w-11/12 custom-company-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
+            <h1 className="text-white text-2xl font-bold">Our Vendors:</h1>
+          </div>
+          <div className="projects-list flex flex-col pt-6 px-10">
+            {/* Vendor Form Fields */}
+            <div className="form-field-grid mb-1  grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 mt-16">
+              {/* Vendor ID */}
+              <div className="mb-4">
+                <label htmlFor="vendorId" className="font-semibold block mb-2">
+                  Vendor ID
+                </label>
+                <input
+                  type="text"
+                  id="vendorId"
+                  onChange={handleInputChange}
+                  name="vendorId"
+                  placeholder="Enter Vendor ID"
+                  value={formData.vendorId}
+                  className="input-field px-3 py-2 w-full outline-none border-custom-class"
+                />
+              </div>
+
+              {/* Vendor Name */}
+              <div className="mb-4">
+                <label htmlFor="vendorName" className="font-semibold block mb-2">
+                  Vendor Name
+                </label>
+                <input
+                  type="text"
+                  id="vendorName"
+                  onChange={handleInputChange}
+                  name="vendorName"
+                  placeholder="Enter Vendor Name"
+                  value={formData.vendorName}
+                  className="input-field px-3 py-2 w-full outline-none border-custom-class"
+                />
+              </div>
+
+              {/* Vendor Address */}
+              <div className="mb-4">
+                <label htmlFor="vendorAddress" className="font-semibold block mb-2">
+                  Vendor Address
+                </label>
+                <input
+                  type="text"
+                  id="vendorAddress"
+                  onChange={handleInputChange}
+                  name="vendorAddress"
+                  placeholder="Enter Vendor Address"
+                  value={formData.vendorAddress}
+                  className="input-field px-3 py-2 w-full outline-none border-custom-class"
+                />
+              </div>
+
+              {/* Vendor Phone Number */}
+              <div className="mb-4">
+                <label htmlFor="vendorPhoneNumber" className="font-semibold block mb-2">
+                  Vendor Phone Number
+                </label>
+                <input
+                  type="tel"
+                  id="vendorPhoneNumber"
+                  onChange={handleInputChange}
+                  name="vendorPhoneNumber"
+                  placeholder="Enter Vendor Phone Number"
+                  value={formData.vendorPhoneNumber}
+                  className="input-field px-3 py-2 w-full outline-none border-custom-class"
+                />
+              </div>
+
+              {/* Vendor POC (Point of Contact) Name */}
+              <div className="mb-4">
+                <label htmlFor="vendorPOCName" className="font-semibold block mb-2">
+                  Vendor POC Name
+                </label>
+                <input
+                  type="text"
+                  id="vendorPOCName"
+                  onChange={handleInputChange}
+                  name="vendorPOCName"
+                  placeholder="Enter Vendor POC Name"
+                  value={formData.vendorPOCName}
+                  className="input-field px-3 py-2 w-full outline-none border-custom-class"
+                />
+              </div>
+
+              {/* Status */}
+              <div className="mb-4">
+                <label className="font-semibold block mb-2">Status</label>
+                <div>
+                  <label className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      value="active"
+                      checked={formData.status === "active"}
+                      onChange={handleStatusChange}
+                      className="form-radio h-4 w-4 text-custom-class"
+                    />
+                    <span className="ml-2">Active</span>
+                  </label>
+                </div>
+                <div>
+                  <label className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      value="inactive"
+                      checked={formData.status === "inactive"}
+                      onChange={handleStatusChange}
+                      className="form-radio h-4 w-4 text-custom-class"
+                    />
+                    <span className="ml-2">Inactive</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            {/* Button Container */}
+            <div className="flex justify-center space-x-4">
+              {/* Submit Button */}
+              <button className="submit-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-blue-500 hover:bg-blue-600">
+                Submit
+              </button>
+              {/* Cancel Button */}
+              <button className="cancel-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-red-500 hover:bg-red-600">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Vendors Display Data Form */}
+        <div className="company-container h-1/3 bg-white mt-14 rounded-lg relative shadow-lg">
+          <div className="h-20 w-11/12 custom-company-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
+            <h1 className="text-white text-2xl font-bold">Vendor Details:</h1>
+          </div>
+          {/* Placeholder for displaying vendor details */}
+          <div className="projects-list flex flex-col pt-20 px-10">
+            {/* Vendor Headings */}
+            <div className="flex mt-4 font-bold">
+              <div className="w-1/6">Vendor ID</div>
+              <div className="w-2/6">Vendor Name</div>
+              <div className="w-2/6">Address</div>
+              <div className="w-1/6">Phone No</div>
+              <div className="w-2/6">POC Name</div>
+              <div className="w-1/6">Status</div>
+              <div className="w-1/6">Action</div>
+            </div>
+            <div className="line w-full mt-4">
+              <div className="company-bottom-line w-full"></div>
+            </div>
+            {vendors.map((vendor) => (
+              <VendorRow key={vendor.vendorId} vendor={vendor} />
+            ))}
+          </div>
+        </div>
       </div>
-      <div className="line w-full mt-4">
-        <div className="vender-bottom-line w-full"></div>
-      </div>
-    </>
+    </div>
   );
 };
 
