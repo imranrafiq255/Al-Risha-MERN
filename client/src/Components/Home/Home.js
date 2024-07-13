@@ -16,19 +16,17 @@ const Home = () => {
     <>
       <div className="home-container custom-home-background p-4 flex justify-center">
         {headerShowing ? (
-          <div className=" z-10">
+          <div className=" z-10 w-2/12">
             <SideBar />
           </div>
         ) : (
           ""
         )}
-        <div className="right-sidebar-container w-11/12">
+        <div className="right-sidebar-container w-10/12">
           <img
             src={require("../../Assets/menu.png")}
             alt=""
-            className={`w-10 h-10 cursor-pointer ${
-              headerShowing ? "ml-56" : ""
-            }`}
+            className={`w-10 h-10 cursor-pointer ${headerShowing ? "" : ""}`}
             onClick={() => setHeaderShowing(!headerShowing)}
           />
           <Header />

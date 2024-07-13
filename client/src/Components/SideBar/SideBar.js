@@ -48,7 +48,6 @@ const SideBar = () => {
     navigate("/jobtype");
   };
 
-
   const salaryNavigator = () => {
     navigate("/salary");
   };
@@ -65,7 +64,7 @@ const SideBar = () => {
     navigate("/profile");
   };
 
-  const signOutHandler = () => { };
+  const signOutHandler = () => {};
 
   const signUpNavigator = () => {
     navigate("/signup");
@@ -117,7 +116,7 @@ const SideBar = () => {
   return (
     <>
       <div className="relative h-screen w-2/12">
-        <div className="left-sidebar fixed left-4 h-full w-full">
+        <div className="left-sidebar fixed left-4 h-full w-2/12">
           <div className="h-full w-64 bg-slate-700 rounded-lg p-2 flex flex-col overflow-scroll">
             <div className="first p-2">
               <div className="flex items-center justify-center pb-4">
@@ -129,10 +128,11 @@ const SideBar = () => {
             </div>
             <div className="second flex flex-col"></div>
             <div
-              className={`${location.pathname === "/"
-                ? "home-sidebar-selected-item-bg-color"
-                : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
-                } dashboard flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer`}
+              className={`${
+                location.pathname === "/"
+                  ? "home-sidebar-selected-item-bg-color"
+                  : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
+              } dashboard flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer`}
               onClick={dashboardNavigator}
             >
               <img src={Dashboard} alt="" className="w-4 h-4 invert" />
@@ -140,10 +140,11 @@ const SideBar = () => {
             </div>
             {/* Maintain */}
             <div
-              className={`${isOpen
-                ? "bg-sky-400"
-                : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
-                } notification flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer`}
+              className={`${
+                isOpen
+                  ? "bg-sky-400"
+                  : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
+              } notification flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer`}
               onClick={maintainOptionsShower}
             >
               <img src={Maintain} alt="" className="w-5 h-5 invert" />
@@ -158,122 +159,133 @@ const SideBar = () => {
               <div>
                 {/* Maintain Field Dropdown items */}
                 <div
-                  className={`${location.pathname === "/company"
-                    ? "home-sidebar-selected-item-bg-color"
-                    : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
-                    } profile flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer `}
+                  className={`${
+                    location.pathname === "/company"
+                      ? "home-sidebar-selected-item-bg-color"
+                      : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
+                  } profile flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer `}
                   onClick={() => navigate("/company")}
                 >
                   <img src={Company} alt="" className="w-5 h-5 invert" />
                   <h1 className="text-white">Company</h1>
                 </div>
                 <div
-                  className={`${location.pathname === "/project"
-                    ? "home-sidebar-selected-item-bg-color"
-                    : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
-                    } project flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer `}
+                  className={`${
+                    location.pathname === "/project"
+                      ? "home-sidebar-selected-item-bg-color"
+                      : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
+                  } project flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer `}
                   onClick={projectNavigator}
                 >
                   <img src={Project} alt="" className="w-6 h-6 invert" />
                   <h1 className="text-white">Projects</h1>
                 </div>
                 <div
-                  className={`${location.pathname === "/venders"
-                    ? "home-sidebar-selected-item-bg-color"
-                    : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
-                    } vendor flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer`}
+                  className={`${
+                    location.pathname === "/venders"
+                      ? "home-sidebar-selected-item-bg-color"
+                      : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
+                  } vendor flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer`}
                   onClick={vendersNavigator}
                 >
                   <img src={Vendor} alt="" className="w-6 h-5 invert" />
                   <h1 className="text-white">Our Vendors</h1>
                 </div>
                 <div
-                  className={`${location.pathname === "/jobtype"
-                    ? "home-sidebar-selected-item-bg-color"
-                    : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
-                    } vehicle flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer hover:bg-slate-600 transition-colors duration-500 ease-in-out`}
+                  className={`${
+                    location.pathname === "/jobtype"
+                      ? "home-sidebar-selected-item-bg-color"
+                      : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
+                  } vehicle flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer hover:bg-slate-600 transition-colors duration-500 ease-in-out`}
                   onClick={jobtypeNavigator}
                 >
                   <img src={JobType} alt="" className="w-7 h-7 invert" />
                   <h1 className="text-white">Job Type</h1>
                 </div>
                 <div
-                  className={`${location.pathname === "/vehicle"
-                    ? "home-sidebar-selected-item-bg-color"
-                    : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
-                    } vehicle flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer hover:bg-slate-600 transition-colors duration-500 ease-in-out`}
+                  className={`${
+                    location.pathname === "/vehicle"
+                      ? "home-sidebar-selected-item-bg-color"
+                      : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
+                  } vehicle flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer hover:bg-slate-600 transition-colors duration-500 ease-in-out`}
                   onClick={vehicleNavigator}
                 >
                   <img src={Vehicle} alt="" className="w-7 h-7 invert" />
                   <h1 className="text-white">Vehicle Type</h1>
                 </div>
-                
 
                 <div
-                  className={`${location.pathname === "/salary"
-                    ? "home-sidebar-selected-item-bg-color"
-                    : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
-                    } salary flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer`}
+                  className={`${
+                    location.pathname === "/salary"
+                      ? "home-sidebar-selected-item-bg-color"
+                      : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
+                  } salary flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer`}
                   onClick={salaryNavigator}
                 >
                   <img src={Salary} alt="" className="w-6 h-5 invert" />
                   <h1 className="text-white">Salaries Type</h1>
                 </div>
                 <div
-                  className={`${location.pathname === "/shifts"
-                    ? "home-sidebar-selected-item-bg-color"
-                    : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
-                    } profile flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer `}
+                  className={`${
+                    location.pathname === "/shifts"
+                      ? "home-sidebar-selected-item-bg-color"
+                      : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
+                  } profile flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer `}
                   onClick={() => navigate("/shifts")}
                 >
                   <img src={Shift} alt="" className="w-5 h-5 invert" />
                   <h1 className="text-white">Shifts</h1>
                 </div>
                 <div
-                  className={`${location.pathname === "/gender"
-                    ? "home-sidebar-selected-item-bg-color"
-                    : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
-                    } profile flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer `}
+                  className={`${
+                    location.pathname === "/gender"
+                      ? "home-sidebar-selected-item-bg-color"
+                      : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
+                  } profile flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer `}
                   onClick={() => navigate("/gender")}
                 >
                   <img src={Gender} alt="" className="w-5 h-5 invert" />
                   <h1 className="text-white">Gender</h1>
                 </div>
                 <div
-                  className={`${location.pathname === "/nationality"
-                    ? "home-sidebar-selected-item-bg-color"
-                    : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
-                    } profile flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer `}
+                  className={`${
+                    location.pathname === "/nationality"
+                      ? "home-sidebar-selected-item-bg-color"
+                      : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
+                  } profile flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer `}
                   onClick={() => navigate("/nationality")}
                 >
                   <img src={Nationality} alt="" className="w-5 h-5 invert" />
                   <h1 className="text-white">Nationality</h1>
                 </div>
                 <div
-                  className={`${location.pathname === "/state"
-                    ? "home-sidebar-selected-item-bg-color"
-                    : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
-                    } profile flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer `}
+                  className={`${
+                    location.pathname === "/state"
+                      ? "home-sidebar-selected-item-bg-color"
+                      : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
+                  } profile flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer `}
                   onClick={() => navigate("/state")}
                 >
                   <img src={State} alt="" className="w-5 h-5 invert" />
                   <h1 className="text-white">State of issuance</h1>
                 </div>
                 <div
-                  className={`${location.pathname === "/guarantor"
-                    ? "home-sidebar-selected-item-bg-color"
-                    : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
-                    } profile flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer `}
+                  className={`${
+                    location.pathname === "/guarantor"
+                      ? "home-sidebar-selected-item-bg-color"
+                      : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
+                  } profile flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer `}
                   onClick={() => navigate("/guarantor")}
                 >
                   <img src={Guarantor} alt="" className="w-5 h-5 invert" />
                   <h1 className="text-white">Guarantor</h1>
                 </div>
                 <div
-                  className={`${location.pathname === "/noc-status"
-                    ? "home-sidebar-selected-item-bg-color"
-                    : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
-                    } profile flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer `}
+                  className={`${
+                    location.pathname === "/noc-status"
+                      ? "home-sidebar-selected-item-bg-color"
+                      : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
+                  } profile flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer `}
                   onClick={() => navigate("/noc-status")}
                 >
                   <img src={Noc} alt="" className="w-5 h-5 invert" />
@@ -287,47 +299,53 @@ const SideBar = () => {
             )}
             {/* Employee */}
             <div
-              className={`${isEmployeeOpen
-                ? "bg-sky-400"
-                : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
-                } notification flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer`}
+              className={`${
+                isEmployeeOpen
+                  ? "bg-sky-400"
+                  : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
+              } notification flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer`}
               onClick={employeeOptionsShower}
             >
               <img src={Vendor} alt="" className="w-5 h-5 invert" />
               <h1 className="text-white">Employee</h1>
               <img
                 src={Arrow}
-                className={`${isEmployeeOpen ? "rotate-180" : ""} ml-3 w-3 h-3 invert`}
+                className={`${
+                  isEmployeeOpen ? "rotate-180" : ""
+                } ml-3 w-3 h-3 invert`}
                 onClick={employeeOptionsShower}
               />
             </div>
             {isEmployeeOpen ? (
               <div>
                 <div
-                  className={`${location.pathname === "/addemployee"
-                    ? "home-sidebar-selected-item-bg-color"
-                    : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
-                    } vendor flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer`}
+                  className={`${
+                    location.pathname === "/addemployee"
+                      ? "home-sidebar-selected-item-bg-color"
+                      : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
+                  } vendor flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer`}
                   onClick={addEmployeeNavigator}
                 >
                   <img src={Vendor} alt="" className="w-6 h-5 invert" />
                   <h1 className="text-white">Add Employee</h1>
                 </div>
                 <div
-                  className={`${location.pathname === "/displayemployee"
-                    ? "home-sidebar-selected-item-bg-color"
-                    : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
-                    } project flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer `}
+                  className={`${
+                    location.pathname === "/displayemployee"
+                      ? "home-sidebar-selected-item-bg-color"
+                      : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
+                  } project flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer `}
                   onClick={displayEmployeeNavigator}
                 >
                   <img src={Project} alt="" className="w-6 h-6 invert" />
                   <h1 className="text-white">Search Employee</h1>
                 </div>
                 <div
-                  className={`${location.pathname === "/Reports"
-                    ? "home-sidebar-selected-item-bg-color"
-                    : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
-                    } project flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer `}
+                  className={`${
+                    location.pathname === "/Reports"
+                      ? "home-sidebar-selected-item-bg-color"
+                      : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
+                  } project flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer `}
                   onClick={displayEmployeeNavigator}
                 >
                   <img src={Signup} alt="" className="w-6 h-6 invert" />
@@ -339,10 +357,11 @@ const SideBar = () => {
             )}
             {/* Notifications */}
             <div
-              className={`${location.pathname === "/notification"
-                ? "home-sidebar-selected-item-bg-color"
-                : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
-                } notification flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer`}
+              className={`${
+                location.pathname === "/notification"
+                  ? "home-sidebar-selected-item-bg-color"
+                  : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
+              } notification flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer`}
               onClick={notificationNavigator}
             >
               <img src={Bell} alt="" className="w-5 h-5 invert" />
@@ -354,10 +373,11 @@ const SideBar = () => {
             </div>
             {/* My Profile */}
             <div
-              className={`${location.pathname === "/profile"
-                ? "home-sidebar-selected-item-bg-color"
-                : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
-                } profile flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer `}
+              className={`${
+                location.pathname === "/profile"
+                  ? "home-sidebar-selected-item-bg-color"
+                  : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
+              } profile flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer `}
               onClick={profileNavigator}
             >
               <img src={User} alt="" className="w-5 h-5 invert" />
@@ -373,10 +393,11 @@ const SideBar = () => {
             </div>
             {/* Sign Up */}
             <div
-              className={`${location.pathname === "/signin"
-                ? "home-sidebar-selected-item-bg-color"
-                : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
-                } signin flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer`}
+              className={`${
+                location.pathname === "/signin"
+                  ? "home-sidebar-selected-item-bg-color"
+                  : "hover:bg-slate-600 transition-colors duration-500 ease-in-out"
+              } signin flex gap-3 items-center p-2 w-full h-12 rounded-lg mt-5 cursor-pointer`}
               onClick={signUpNavigator}
             >
               <img src={Signup} alt="" className="w-4 h-4 invert" />

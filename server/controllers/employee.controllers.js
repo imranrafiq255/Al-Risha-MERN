@@ -1,5 +1,7 @@
 const { STATUS_CODES } = require("http");
 const employeeModel = require("../models/employee.models");
+const companyModel = require("../models/company.models");
+const projectModel = require("../models/project.models");
 
 exports.addEmployeeDetails = async (req, res) => {
   try {
@@ -7,7 +9,7 @@ exports.addEmployeeDetails = async (req, res) => {
       employeeId,
       companyName,
       vendorName,
-      project, // This was missing
+      project,
       emiratesId,
       joiningDate,
       firstName,
@@ -69,7 +71,7 @@ exports.addEmployeeDetails = async (req, res) => {
       familyHeadOccupation,
       applicantSignatureAndDate,
     } = req.body;
-    
+
     // if (
     //   !companyName ||
     //   !vendorName ||
@@ -151,7 +153,7 @@ exports.addEmployeeDetails = async (req, res) => {
       employeeId,
       companyName,
       vendorName,
-      project, // This was missing
+      project,
       avatar,
       emiratesId,
       joiningDate,
@@ -241,6 +243,205 @@ exports.loadAllEmployeesDetails = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+
+// Company
+exports.addCompany = async (req, res) => {
+  try {
+    const {
+      companyId,
+      companyName,
+      companyAddress,
+      companyPOCName,
+      companyPOCEmail,
+      companyPOCPhoneNumber,
+      companyStatus,
+    } = req.body;
+    if (
+      !companyId ||
+      !companyName ||
+      !companyAddress ||
+      !companyPOCName ||
+      !companyPOCEmail ||
+      !companyPOCPhoneNumber
+    ) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message:
+          "One or more fields are missing!, please make sure to add all fields",
+      });
+    }
+    const newCompany = await companyModel({
+      companyId,
+      companyName,
+      companyAddress,
+      companyPOCName,
+      companyPOCEmail,
+      companyPOCPhoneNumber,
+      companyStatus,
+    }).save();
+    return res.status(201).json({
+      statusCode: STATUS_CODES[201],
+      message: `${newCompany.companyName} is added successfully!`,
+    });
+  } catch (error) {
+    res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.loadAllCompanies = async (req, res) => {
+  try {
+    const companies = await companyModel.find();
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      companies,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.deleteCompanyById = async (req, res) => {
+  try {
+    const companyId = req?.params?.id;
+    if (!companyId) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Company id parameter is missing!",
+      });
+    }
+    const company = await companyModel.findOne({ _id: companyId });
+    if (!company) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "No, company found with given id!",
+      });
+    }
+    await companyModel.findByIdAndDelete({ _id: companyId });
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      message: `${company.companyName} is deleted successfully`,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.updateCompanyById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Id parameter is missing!",
+      });
+    }
+    const data = req.body;
+
+    await companyModel.findByIdAndUpdate(id, data, {
+      new: true,
+    });
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      message: "Company record is updated successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+
+// Project
+
+exports.addProject = async (req, res) => {
+  try {
+    const data = req.body;
+    const newProject = await projectModel({ ...data }).save();
+    return res.status(201).json({
+      statusCode: STATUS_CODES[201],
+      message: `${newProject.projectName} is added succesfully!`,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.deleteProjectById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "id parameter is missing!",
+      });
+    }
+    const project = await projectModel.findOne({ _id: id });
+    if (!project) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "No, project found with given id!",
+      });
+    }
+    await projectModel.findByIdAndDelete({ _id: id });
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      message: `${project.projectName} is deleted successfully!`,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.updateProjectById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Id parameter is missing!",
+      });
+    }
+    const data = req.body;
+
+    await projectModel.findByIdAndUpdate(id, data, {
+      new: true,
+    });
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      message: "Project record is updated successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.loadAllProjects = async (req, res) => {
+  try {
+    const projects = await projectModel.find().populate("companyName");
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      projects,
+    });
+  } catch (error) {
+    return res.status(500).json({
       statusCode: STATUS_CODES[500],
       message: error.message,
     });
