@@ -12,6 +12,14 @@ import errorMessage from "../ToastMessages/errorMessage";
 import successMessage from "../ToastMessages/successMessage";
 import { Toaster } from "react-hot-toast";
 const Company = () => {
+  const [company, setCompany] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [showCompany, setShowCompany] = useState(null);
+  const [deleteOption, setDeleteOption] = useState(false);
+  const [deleteLoader, setDeleteLoader] = useState(false);
+  const [deleteCompany, setDeleteCompany] = useState(null);
+  const [updateCompany, setUpdateCompany] = useState(null);
+  const [updateCompanyLoader, setUpdateCompanyLoader] = useState(false);
   const [formData, setFormData] = useState({
     companyId: "",
     companyName: "",
@@ -21,14 +29,19 @@ const Company = () => {
     companyPOCPhoneNumber: "",
     companyStatus: false,
   });
-  const [company, setCompany] = useState(null);
-  const [loading, setLoading] = useState(false);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    if (updateCompany) {
+      updateCompany[name] = value;
+    }
     setFormData({ ...formData, [name]: value });
   };
 
   const handleStatusChange = (e) => {
+    if (updateCompany) {
+      const name = "companyStatus";
+      updateCompany[name] = e.target.value;
+    }
     setFormData({ ...formData, companyStatus: e.target.value });
   };
   const loadAllCompanies = async () => {
@@ -57,10 +70,59 @@ const Company = () => {
       successMessage(response?.data?.message);
       setLoading(false);
       loadAllCompanies();
+      setDeleteOption(false);
+      setFormData({
+        companyId: "",
+        companyName: "",
+        companyAddress: "",
+        companyPOCName: "",
+        companyPOCEmail: "",
+        companyPOCPhoneNumber: "",
+        companyStatus: false,
+      });
     } catch (error) {
       console.log(error?.response?.data?.message);
       errorMessage(error?.response?.data?.message);
       setLoading(false);
+      setDeleteOption(false);
+    }
+  };
+
+  const deleteCompanyHandler = async (id) => {
+    try {
+      setDeleteLoader(true);
+      const response = await axios.delete(
+        `/api/v1/company/delete-company/${id}`
+      );
+      console.log(response?.data?.message);
+      loadAllCompanies();
+      setShowCompany(null);
+      setDeleteLoader(false);
+      setDeleteCompany(null);
+      successMessage(response?.data?.message);
+    } catch (error) {
+      console.log(error?.response?.data?.message);
+      errorMessage(error?.response?.data?.message);
+      setShowCompany(null);
+      setDeleteLoader(false);
+      setDeleteCompany(null);
+    }
+  };
+
+  const updateCompanyHandler = async () => {
+    try {
+      setUpdateCompanyLoader(true);
+      const response = await axios.put(
+        `/api/v1/company/update-company/${updateCompany?._id}`,
+        formData
+      );
+      console.log(response?.data?.message);
+      successMessage(response?.data?.message);
+      setUpdateCompanyLoader(false);
+      updateCompany(null);
+    } catch (error) {
+      console.log(error?.response?.data?.message);
+      setUpdateCompanyLoader(false);
     }
   };
   return (
@@ -87,7 +149,7 @@ const Company = () => {
                   onChange={handleInputChange}
                   name="companyId"
                   placeholder="Enter Company ID"
-                  value={formData.companyId}
+                  value={updateCompany && updateCompany?.companyId}
                   className="input-field px-3 py-2 w-full outline-none border-custom-class"
                 />
               </div>
@@ -105,8 +167,8 @@ const Company = () => {
                   id="companyName"
                   onChange={handleInputChange}
                   name="companyName"
+                  value={updateCompany && updateCompany?.companyName}
                   placeholder="Enter Company Name"
-                  value={formData.companyName}
                   className="input-field px-3 py-2 w-full outline-none border-custom-class"
                 />
               </div>
@@ -125,7 +187,7 @@ const Company = () => {
                   onChange={handleInputChange}
                   name="companyAddress"
                   placeholder="Enter Company Address"
-                  value={formData.companyAddress}
+                  value={updateCompany && updateCompany?.companyAddress}
                   className="input-field px-3 py-2 w-full outline-none border-custom-class"
                 />
               </div>
@@ -141,7 +203,7 @@ const Company = () => {
                   onChange={handleInputChange}
                   name="companyPOCName"
                   placeholder="Enter POC Name"
-                  value={formData.poc}
+                  value={updateCompany && updateCompany?.companyPOCName}
                   className="input-field px-3 py-2 w-full outline-none border-custom-class"
                 />
               </div>
@@ -157,7 +219,7 @@ const Company = () => {
                   onChange={handleInputChange}
                   name="companyPOCEmail"
                   placeholder="Enter POC Email Address"
-                  value={formData.pocEmail}
+                  value={updateCompany && updateCompany?.companyPOCEmail}
                   className="input-field px-3 py-2 w-full outline-none border-custom-class"
                 />
               </div>
@@ -176,7 +238,7 @@ const Company = () => {
                   onChange={handleInputChange}
                   name="companyPOCPhoneNumber"
                   placeholder="Enter POC Phone Number"
-                  value={formData.pocPhoneNumber}
+                  value={updateCompany && updateCompany?.companyPOCPhoneNumber}
                   className="input-field px-3 py-2 w-full outline-none border-custom-class"
                 />
               </div>
@@ -191,7 +253,7 @@ const Company = () => {
                     <input
                       type="radio"
                       id="active"
-                      name="companyStatus" // Add this
+                      name="companyStatus"
                       value={true}
                       onChange={handleStatusChange}
                       className="form-radio h-4 w-4 text-custom-class"
@@ -204,7 +266,7 @@ const Company = () => {
                     <input
                       type="radio"
                       id="inactive"
-                      name="companyStatus" // Add this
+                      name="companyStatus"
                       value={false}
                       onChange={handleStatusChange}
                       className="form-radio h-4 w-4 text-custom-class"
@@ -216,30 +278,51 @@ const Company = () => {
             </div>
 
             {/* Button Container */}
-            <div className="flex justify-center space-x-4">
-              {/* Submit Button */}
-              {loading ? (
-                <button
-                  className="submit-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-blue-500 hover:bg-blue-600"
-                  disabled
-                >
-                  Please wait ...
-                </button>
-              ) : (
-                <div className="w-2/3">
+            {updateCompany ? (
+              <div className="flex justify-center space-x-4">
+                {updateCompanyLoader ? (
                   <button
-                    className="submit-btn w-5/12 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-blue-500 hover:bg-blue-600"
-                    onClick={submitCompanyData}
+                    className="submit-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-blue-500 hover:bg-blue-600"
+                    onClick={updateCompanyHandler}
+                    disabled
                   >
-                    Submit
+                    Updating Record ...
                   </button>
-                  {/* Cancel Button */}
-                  <button className="cancel-btn w-5/12 ml-2 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-red-500 hover:bg-red-600">
-                    Cancel
+                ) : (
+                  <button
+                    className="submit-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-blue-500 hover:bg-blue-600"
+                    onClick={updateCompanyHandler}
+                  >
+                    Update Record
                   </button>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
+            ) : (
+              <div className="flex justify-center space-x-4">
+                {/* Submit Button */}
+                {loading ? (
+                  <button
+                    className="submit-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-blue-500 hover:bg-blue-600"
+                    disabled
+                  >
+                    Please wait ...
+                  </button>
+                ) : (
+                  <div className="w-2/3">
+                    <button
+                      className="submit-btn w-5/12 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-blue-500 hover:bg-blue-600"
+                      onClick={submitCompanyData}
+                    >
+                      Submit
+                    </button>
+                    {/* Cancel Button */}
+                    <button className="cancel-btn w-5/12 ml-2 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-red-500 hover:bg-red-600">
+                      Cancel
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
 
@@ -298,16 +381,24 @@ const Company = () => {
                         src={viewImage}
                         alt="View"
                         className="w-7 h-8 cursor-pointer mr-2"
+                        onClick={() => {
+                          setShowCompany(com);
+                        }}
                       />
                       <img
                         src={pencilImage}
                         alt="Edit"
                         className="w-6 h-6 cursor-pointer mr-2"
+                        onClick={() => setUpdateCompany(com)}
                       />
                       <img
                         src={trashImage}
                         alt="Delete"
                         className="w-6 h-6 cursor-pointer"
+                        onClick={() => {
+                          setDeleteOption(true);
+                          setDeleteCompany(com);
+                        }}
                       />
                     </div>
                   </div>
@@ -322,6 +413,106 @@ const Company = () => {
           </div>
         </div>
       </div>
+      {showCompany && (
+        <div className="single-company-data-viewer fixed top-[20%] left-[34%] w-6/12 h-[70%] bg-pink-300 rounded-lg overflow-scroll">
+          <img
+            src={require("../../Assets/bell.png")}
+            alt=""
+            className="w-12 h-12 float-end my-5 mx-10 cursor-pointer bg-slate-400 p-3 rounded-full"
+            onClick={() => setShowCompany(null)}
+          />
+          <div className="line flex justify-center mt-[10%]">
+            <div className="w-10/12 h-[0.2px] bg-[#fdefef]"></div>
+          </div>
+          <div className="ml-14 flex flex-col w-full h-[70%] justify-around">
+            <h1 className="text-xl w-full">
+              Company Id:{" "}
+              <span className=" font-medium font-serif text-4xl ml-3 text-[#f56e00]">
+                {showCompany?.companyId}
+              </span>
+            </h1>
+            <h1 className="text-xl w-full">
+              Company Name:{" "}
+              <span className=" font-medium font-serif text-4xl text-[#f56e00]">
+                {showCompany?.companyName}
+              </span>
+            </h1>
+            <h1 className="text-xl w-full">
+              Company Address:{" "}
+              <span className=" font-medium font-serif text-4xl text-[#f56e00]">
+                {showCompany?.companyAddress}
+              </span>
+            </h1>
+            <h1 className="text-xl w-full">
+              Company Poc Name:{" "}
+              <span className=" font-medium font-serif text-4xl text-[#f56e00]">
+                {showCompany?.companyPOCName}
+              </span>
+            </h1>
+            <h1 className="text-xl w-full">
+              Company Poc Email:{" "}
+              <span className=" font-medium font-serif text-4xl text-[#f56e00]">
+                {showCompany?.companyPOCEmail}
+              </span>
+            </h1>
+            <h1 className="text-xl w-full">
+              Company Poc Phone No:{" "}
+              <span className=" font-medium font-serif text-4xl text-[#f56e00]">
+                {showCompany?.companyPOCPhoneNumber}
+              </span>
+            </h1>
+            <h1 className="text-xl w-full">
+              System Generated Id:{" "}
+              <span className=" font-medium font-serif text-4xl text-[#f56e00]">
+                {showCompany?._id}
+              </span>
+            </h1>
+            <h1 className="text-xl w-full">
+              Company Status:{" "}
+              <span className=" font-medium font-serif text-4xl text-[#f56e00]">
+                {showCompany?.companyStatus ? "Active" : "Offline"}
+              </span>
+            </h1>
+          </div>
+        </div>
+      )}
+      {deleteOption ? (
+        <div className="delete-options w-full h-full fixed top-[40%] left-[42%]">
+          {deleteLoader ? (
+            <div className="w-full h-full flex justify-center items-center">
+              <h1 className="text-white text-2xl">Deleting, please wait</h1>
+            </div>
+          ) : (
+            <div className="h-[20%] w-[25%] bg-slate-800 rounded-md py-2 px-4">
+              <h1 className="text-white font-semibold text-2xl">
+                Are you sure to delete?
+              </h1>
+              <div className="flex w-full justify-around items-center h-full">
+                <button
+                  className="w-4/12 bg-white h-10 rounded-sm"
+                  onClick={() => {
+                    setDeleteOption(false);
+                    setDeleteCompany(null);
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="w-4/12 bg-red-600 h-10 rounded-sm"
+                  onClick={() => {
+                    deleteCompanyHandler(deleteCompany?._id);
+                    setDeleteOption(false);
+                  }}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

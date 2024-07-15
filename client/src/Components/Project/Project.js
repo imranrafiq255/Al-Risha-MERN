@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SideBar from "../SideBar/SideBar";
 import Header from "../Header/Header";
 import "../Project/Project.css";
@@ -6,19 +6,35 @@ import "../Project/Project.css";
 import trashImage from "../../Assets/trash.png";
 import viewImage from "../../Assets/view.png";
 import pencilImage from "../../Assets/pencil.png";
+import axios from "axios";
 
 const Project = () => {
+  const [companies, setCompanies] = useState(null);
+  const loadAllCompanies = async () => {
+    try {
+      const response = await axios.get("/api/v1/company/load-all-companies");
+      setCompanies(response?.data?.companies);
+    } catch (error) {
+      console.log(error?.response?.data?.message);
+    }
+  };
+  useEffect(() => {
+    loadAllCompanies();
+  }, []);
+  console.log(companies);
   // State to manage form data
   const [formData, setFormData] = useState({
     projectId: "",
     projectName: "",
     startDate: "",
     companyName: "",
-    status: "" // No default status selected initially
+    status: "", // No default status selected initially
   });
 
   // State to manage selected company name in dropdown
-  const [selectedCompanyName, setSelectedCompanyName] = useState("Select Company Name");
+  const [selectedCompanyName, setSelectedCompanyName] = useState(
+    "Select Company Name"
+  );
 
   // Function to handle input changes
   const handleInputChange = (e) => {
@@ -41,28 +57,28 @@ const Project = () => {
   // Dummy data for projects
   const [projects] = useState([
     {
-      projectId: '1',
+      projectId: "1",
       projectName: "McDonald's",
       startDate: "2020-06-15",
       companyName: "Speedo",
       status: "Inactive",
     },
     {
-      projectId: '2',
+      projectId: "2",
       projectName: "KFC/ Americana",
       startDate: "2024-06-20",
       companyName: "Careem",
       status: "Active",
     },
     {
-      projectId: '3',
+      projectId: "3",
       projectName: "Al Nahdi Pharmacy",
       startDate: "2023-09-05",
       companyName: "Direct",
       status: "Active",
     },
     {
-      projectId: '4',
+      projectId: "4",
       projectName: "Smiles",
       startDate: "2022-05-10",
       companyName: "Dhirwat",
@@ -98,7 +114,7 @@ const Project = () => {
           <div className="w-1/6">
             <div
               className={`${
-                status === 'Active' ? 'bg-green-500' : 'bg-red-600'
+                status === "Active" ? "bg-green-500" : "bg-red-600"
               } text-white w-16 h-7 flex justify-center items-center rounded-lg shadow-lg`}
             >
               {status}
@@ -164,7 +180,10 @@ const Project = () => {
 
               {/* Project Name */}
               <div className="mb-4">
-                <label htmlFor="projectName" className="font-semibold block mb-2">
+                <label
+                  htmlFor="projectName"
+                  className="font-semibold block mb-2"
+                >
                   Project Name
                 </label>
                 <input
@@ -196,7 +215,10 @@ const Project = () => {
 
               {/* Company Name Dropdown */}
               <div className="mb-4">
-                <label htmlFor="companyName" className="font-semibold block mb-2">
+                <label
+                  htmlFor="companyName"
+                  className="font-semibold block mb-2"
+                >
                   Company Name
                 </label>
                 <select
@@ -206,11 +228,16 @@ const Project = () => {
                   value={selectedCompanyName}
                   className="input-field px-3 py-2 w-full outline-none border-custom-class"
                 >
-                  <option value="Select Company Name">Select Company Name</option>
-                  <option value="Speedo">Speedo</option>
-                  <option value="Careem">Careem</option>
-                  <option value="Direct">Direct</option>
-                  <option value="Dhirwat">Dhirwat</option>
+                  <option value="Select Company Name">
+                    Select Company Name
+                  </option>
+                  {companies && Array.isArray(companies)
+                    ? companies.map((company) => (
+                        <option value={company?.companyId}>
+                          {company?.companyName}
+                        </option>
+                      ))
+                    : ""}
                 </select>
               </div>
 

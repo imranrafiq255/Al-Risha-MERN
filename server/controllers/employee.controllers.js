@@ -347,13 +347,31 @@ exports.updateCompanyById = async (req, res) => {
       });
     }
     const data = req.body;
+    const updateData = {};
+    for (let key in data) {
+      if (data.hasOwnProperty(key) && data[key] !== null && data[key] !== "") {
+        updateData[key] = data[key];
+      }
+    }
+    const updatedCompany = await companyModel.findByIdAndUpdate(
+      id,
+      updateData,
+      {
+        new: true,
+      }
+    );
 
-    await companyModel.findByIdAndUpdate(id, data, {
-      new: true,
-    });
+    if (!updatedCompany) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Company not found!",
+      });
+    }
+
     return res.status(200).json({
       statusCode: STATUS_CODES[200],
       message: "Company record is updated successfully",
+      data: updatedCompany,
     });
   } catch (error) {
     return res.status(500).json({
@@ -418,7 +436,6 @@ exports.updateProjectById = async (req, res) => {
       });
     }
     const data = req.body;
-
     await projectModel.findByIdAndUpdate(id, data, {
       new: true,
     });
