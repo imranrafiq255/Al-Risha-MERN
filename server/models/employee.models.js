@@ -2,10 +2,13 @@ const mongoose = require("mongoose");
 
 const employeeSchema = mongoose.Schema(
   {
-    employeeId : {
+    employeeId: {
       type: String,
       required: [true, "Employee Id is required"],
-      unique: [true, "Employee Id should be unique, it is already existed into database"],
+      unique: [
+        true,
+        "Employee Id should be unique, it is already existed into database",
+      ],
     },
     companyName: String,
     vendorName: String,

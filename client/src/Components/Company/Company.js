@@ -47,7 +47,7 @@ const Company = () => {
   const loadAllCompanies = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("/api/v1/company/load-all-companies");
+      const response = await axios.get("/api/v1/admin/load-all-companies");
       setCompany(response?.data?.companies);
       setLoading(false);
     } catch (error) {
@@ -62,10 +62,7 @@ const Company = () => {
   const submitCompanyData = async () => {
     try {
       setLoading(true);
-      const response = await axios.post(
-        "/api/v1/company/add-company",
-        formData
-      );
+      const response = await axios.post("/api/v1/admin/add-company", formData);
       console.log(response?.data?.message);
       successMessage(response?.data?.message);
       setLoading(false);
@@ -91,9 +88,7 @@ const Company = () => {
   const deleteCompanyHandler = async (id) => {
     try {
       setDeleteLoader(true);
-      const response = await axios.delete(
-        `/api/v1/company/delete-company/${id}`
-      );
+      const response = await axios.delete(`/api/v1/admin/delete-company/${id}`);
       console.log(response?.data?.message);
       loadAllCompanies();
       setShowCompany(null);
@@ -113,13 +108,13 @@ const Company = () => {
     try {
       setUpdateCompanyLoader(true);
       const response = await axios.put(
-        `/api/v1/company/update-company/${updateCompany?._id}`,
+        `/api/v1/admin/update-company/${updateCompany?._id}`,
         formData
       );
       console.log(response?.data?.message);
       successMessage(response?.data?.message);
       setUpdateCompanyLoader(false);
-      updateCompany(null);
+      setUpdateCompany(null);
     } catch (error) {
       console.log(error?.response?.data?.message);
       setUpdateCompanyLoader(false);
@@ -588,82 +583,69 @@ const Company = () => {
         </div>
       </div>
       {showCompany && (
-        <div className="single-company-data-viewer fixed top-[20%] left-[34%] w-6/12 h-[70%] bg-pink-300 rounded-lg overflow-scroll">
+        <div className="single-company-data-viewer fixed top-1/4 left-1/4 w-1/2 h-3/4 bg-gray-800 rounded-lg overflow-scroll text-white shadow-lg">
           <img
             src={require("../../Assets/cancel.png")}
             alt=""
-            className="w-12 h-12 float-end my-5 mx-10 cursor-pointer bg-slate-400 p-3 rounded-full invert"
+            className="w-10 h-10 absolute top-2 right-2 cursor-pointer bg-gray-700 p-2 rounded-full invert"
             onClick={() => setShowCompany(null)}
           />
-          <div className="line flex justify-center mt-[10%]">
-            <div className="w-10/12 h-[0.2px] bg-[#fdefef]"></div>
-          </div>
-          <div className="ml-14 flex flex-col w-full h-[70%] justify-around">
-            <h1 className="text-xl w-full">
-              Company Id:{" "}
-              <span className=" font-medium font-serif text-4xl ml-3 text-[#f56e00]">
-                {showCompany?.companyId}
-              </span>
+          <div className="px-6 py-8">
+            <h1 className="text-3xl font-bold mb-4">
+              Company Name: {showCompany?.companyName}
             </h1>
-            <h1 className="text-xl w-full">
-              Company Name:{" "}
-              <span className=" font-medium font-serif text-4xl text-[#f56e00]">
-                {showCompany?.companyName}
-              </span>
-            </h1>
-            <h1 className="text-xl w-full">
-              Company Address:{" "}
-              <span className=" font-medium font-serif text-4xl text-[#f56e00]">
-                {showCompany?.companyAddress}
-              </span>
-            </h1>
-            <h1 className="text-xl w-full">
-              Company Poc Name:{" "}
-              <span className=" font-medium font-serif text-4xl text-[#f56e00]">
-                {showCompany?.companyPOCName}
-              </span>
-            </h1>
-            <h1 className="text-xl w-full">
-              Company Poc Email:{" "}
-              <span className=" font-medium font-serif text-4xl text-[#f56e00]">
-                {showCompany?.companyPOCEmail}
-              </span>
-            </h1>
-            <h1 className="text-xl w-full">
-              Company Poc Phone No:{" "}
-              <span className=" font-medium font-serif text-4xl text-[#f56e00]">
-                {showCompany?.companyPOCPhoneNumber}
-              </span>
-            </h1>
-            <h1 className="text-xl w-full">
-              System Generated Id:{" "}
-              <span className=" font-medium font-serif text-4xl text-[#f56e00]">
-                {showCompany?._id}
-              </span>
-            </h1>
-            <h1 className="text-xl w-full">
-              Company Status:{" "}
-              <span className=" font-medium font-serif text-4xl text-[#f56e00]">
-                {showCompany?.companyStatus ? "Active" : "Offline"}
-              </span>
-            </h1>
+            <div className="w-full h-0.5 bg-gray-600 mb-6"></div>
+            <div className="flex flex-col space-y-4">
+              <div className="flex justify-between">
+                <div className="w-1/2">
+                  <h2 className="text-xl font-semibold">Company ID:</h2>
+                  <p className="text-lg">{showCompany?.companyId}</p>
+                </div>
+                <div className="w-1/2">
+                  <h2 className="text-xl font-semibold">Status:</h2>
+                  <span
+                    className={`px-3 py-1 rounded ${
+                      showCompany?.companyStatus ? "bg-green-500" : "bg-red-500"
+                    }`}
+                  >
+                    {showCompany?.companyStatus ? "Active" : "Offline"}
+                  </span>
+                </div>
+              </div>
+              <div>
+                <h2 className="text-xl font-semibold">Address:</h2>
+                <p className="text-lg">{showCompany?.companyAddress}</p>
+              </div>
+              <div>
+                <h2 className="text-xl font-semibold">POC Name:</h2>
+                <p className="text-lg">{showCompany?.companyPOCName}</p>
+              </div>
+              <div>
+                <h2 className="text-xl font-semibold">POC Email:</h2>
+                <p className="text-lg">{showCompany?.companyPOCEmail}</p>
+              </div>
+              <div>
+                <h2 className="text-xl font-semibold">POC Phone Number:</h2>
+                <p className="text-lg">{showCompany?.companyPOCPhoneNumber}</p>
+              </div>
+            </div>
           </div>
         </div>
       )}
       {deleteOption ? (
-        <div className="delete-options w-full h-full fixed top-[40%] left-[42%]">
+        <div className="delete-options fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-900 rounded-lg shadow-lg p-6 text-white w-96">
           {deleteLoader ? (
             <div className="w-full h-full flex justify-center items-center">
-              <h1 className="text-white text-2xl">Deleting, please wait</h1>
+              <h1 className="text-2xl">Deleting, please wait...</h1>
             </div>
           ) : (
-            <div className="h-[20%] w-[25%] bg-slate-800 rounded-md py-2 px-4">
-              <h1 className="text-white font-semibold text-2xl">
-                Are you sure to delete?
+            <div className="w-full">
+              <h1 className="text-3xl font-semibold mb-4 text-center">
+                Are you sure you want to delete {deleteCompany?.companyName}?
               </h1>
-              <div className="flex w-full justify-around items-center h-full">
+              <div className="flex justify-center space-x-4">
                 <button
-                  className="w-4/12 bg-white h-10 rounded-sm"
+                  className="bg-gray-800 hover:bg-gray-700 text-white py-2 px-6 rounded-md focus:outline-none"
                   onClick={() => {
                     setDeleteOption(false);
                     setDeleteCompany(null);
@@ -672,7 +654,7 @@ const Company = () => {
                   Cancel
                 </button>
                 <button
-                  className="w-4/12 bg-red-600 h-10 rounded-sm"
+                  className="bg-red-600 hover:bg-red-500 text-white py-2 px-6 rounded-md focus:outline-none"
                   onClick={() => {
                     deleteCompanyHandler(deleteCompany?._id);
                     setDeleteOption(false);

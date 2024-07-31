@@ -2,6 +2,11 @@ const { STATUS_CODES } = require("http");
 const employeeModel = require("../models/employee.models");
 const companyModel = require("../models/company.models");
 const projectModel = require("../models/project.models");
+const guarantorModel = require("../models/guarantor.models");
+const jobTypeModel = require("../models/jobType.models");
+const nationalityModel = require("../models/nationality.models");
+const nocStatusModel = require("../models/nocStatus.models");
+const salaryTypeModel = require("../models/salaryType.models");
 
 exports.addEmployeeDetails = async (req, res) => {
   try {
@@ -456,6 +461,538 @@ exports.loadAllProjects = async (req, res) => {
     return res.status(200).json({
       statusCode: STATUS_CODES[200],
       projects,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+
+// Guarantor
+exports.addGuarantor = async (req, res) => {
+  try {
+    const {
+      guarantorId,
+      guarantorName,
+      guarantorPhoneNumber,
+      guarantorResidentialAddress,
+      guarantorOccupation,
+      guarantorJobAddress,
+      guarantorRelationWithDA,
+      guarantorStatus,
+    } = req.body;
+    const newGuarantor = await new guarantorModel({
+      guarantorId,
+      guarantorName,
+      guarantorPhoneNumber,
+      guarantorResidentialAddress,
+      guarantorOccupation,
+      guarantorJobAddress,
+      guarantorRelationWithDA,
+      guarantorStatus,
+    }).save();
+    return res.status(201).json({
+      statusCode: STATUS_CODES[201],
+      message: `${newGuarantor.guarantorName} is added successfully!`,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.deleteGuarantorById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Id parameter is missing!",
+      });
+    }
+    const guarantor = await guarantorModel.findOne({ _id: id });
+    if (!guarantor) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "No, guarantor found with given id!",
+      });
+    }
+    await guarantorModel.findByIdAndDelete({ _id: id });
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      message: `${guarantor.guarantorName} is deleted successfully!`,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.updateGuarantorById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Id parameter is missing!",
+      });
+    }
+    const data = req.body;
+    const updateData = {};
+    for (let key in data) {
+      if (data.hasOwnProperty(key) && data[key] !== null && data[key] !== "") {
+        updateData[key] = data[key];
+      }
+    }
+    const updatedGuarantor = await guarantorModel.findByIdAndUpdate(
+      id,
+      updateData,
+      {
+        new: true,
+      }
+    );
+
+    if (!updatedGuarantor) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Guarantor not found!",
+      });
+    }
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      message: "Guarantor record is updated successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.loadAllGuarantors = async (req, res) => {
+  try {
+    const guarantors = await guarantorModel.find();
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      guarantors,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+
+// Job type
+
+exports.addJobType = async (req, res) => {
+  try {
+    const { jobTypeId, jobTypeName, jobTypeStatus } = req.body;
+    const newJobType = await new jobTypeModel({
+      jobTypeId,
+      jobTypeName,
+      jobTypeStatus,
+    }).save();
+    return res.status(201).json({
+      statusCode: STATUS_CODES[201],
+      message: `${newJobType.jobTypeName} is added successfully!`,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.deleteJobTypeById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Id parameter is missing!",
+      });
+    }
+    const jobType = await jobTypeModel.findOne({ _id: id });
+    if (!jobType) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "No, job type found with given id!",
+      });
+    }
+    await jobTypeModel.findByIdAndDelete({ _id: id });
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      message: `${jobType.jobTypeName} is deleted successfully!`,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.updateJobTypeById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Id parameter is missing!",
+      });
+    }
+    const data = req.body;
+    const updateData = {};
+    for (let key in data) {
+      if (data.hasOwnProperty(key) && data[key] !== null && data[key] !== "") {
+        updateData[key] = data[key];
+      }
+    }
+    const updatedJobType = await jobTypeModel.findByIdAndUpdate(
+      id,
+      updateData,
+      {
+        new: true,
+      }
+    );
+
+    if (!updatedJobType) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Job type not found!",
+      });
+    }
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      message: "Job type record is updated successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.loadAllJobTypes = async (req, res) => {
+  try {
+    const jobTypes = await jobTypeModel.find();
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      jobTypes,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+
+// Nationality
+exports.addNationality = async (req, res) => {
+  try {
+    const { nationalityId, nationality, nationalityStatus } = req.body;
+    const newNationality = await new nationalityModel({
+      nationalityId,
+      nationality,
+      nationalityStatus,
+    }).save();
+    return res.status(201).json({
+      statusCode: STATUS_CODES[201],
+      message: `${newNationality.nationality} is added successfully!`,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.deleteNationalityById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Id parameter is missing!",
+      });
+    }
+    const nationality = await nationalityModel.findOne({ _id: id });
+    if (!nationality) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "No, nationality found with given id!",
+      });
+    }
+    await nationalityModel.findByIdAndDelete({ _id: id });
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      message: `${nationality.nationality} is deleted successfully!`,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.updateNationalityById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Id parameter is missing!",
+      });
+    }
+    const data = req.body;
+    const updateData = {};
+    for (let key in data) {
+      if (data.hasOwnProperty(key) && data[key] !== null && data[key] !== "") {
+        updateData[key] = data[key];
+      }
+    }
+    const updatedNationality = await nationalityModel.findByIdAndUpdate(
+      id,
+      updateData,
+      {
+        new: true,
+      }
+    );
+    if (!updatedNationality) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Nationality not found!",
+      });
+    }
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      message: "Nationality record is updated successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.loadAllNationalities = async (req, res) => {
+  try {
+    const natiionities = await nationalityModel.find();
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      natiionities,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+
+// NOC Status
+exports.addNOCStatus = async (req, res) => {
+  try {
+    const { nocId, nocStatus, nocDetails } = req.body;
+    const newNocStatus = await new nocStatusModel({
+      nocId,
+      nocStatus,
+      nocDetails,
+    }).save();
+    return res.status(201).json({
+      statusCode: STATUS_CODES[201],
+      message: `NOC Status is added successfully!`,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.deleteNOCStatusById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Id parameter is missing!",
+      });
+    }
+    const nocStatus = await nocStatusModel.findOne({ _id: id });
+    if (!nocStatus) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "No, NOC Status found with given id!",
+      });
+    }
+    await nocStatusModel.findByIdAndDelete({ _id: id });
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      message: `NOC Status is deleted successfully!`,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.updateNOCStatusById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Id parameter is missing!",
+      });
+    }
+    const data = req.body;
+    const updateData = {};
+    for (let key in data) {
+      if (data.hasOwnProperty(key) && data[key] !== null && data[key] !== "") {
+        updateData[key] = data[key];
+      }
+    }
+    const updatedNocStatus = await nocStatusModel.findByIdAndUpdate(
+      id,
+      updateData,
+      {
+        new: true,
+      }
+    );
+    if (!updatedNocStatus) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "NOC Status not found!",
+      });
+    }
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      message: "NOC Status record is updated successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.loadAllNOCStatuses = async (req, res) => {
+  try {
+    const nocStatuses = await nocStatusModel.find();
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      nocStatuses,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+
+// Salary Type
+exports.addSalaryType = async (req, res) => {
+  try {
+    const { salaryTypeId, salaryTypeName, salaryTypeStatus } = req.body;
+    await new salaryTypeModel({
+      salaryTypeId,
+      salaryTypeName,
+      salaryTypeStatus,
+    }).save();
+    return res.status(201).json({
+      statusCode: STATUS_CODES[201],
+      message: `Salary Type is added successfully!`,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.deleteSalaryType = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Id parameter is missing!",
+      });
+    }
+    const salaryType = await salaryTypeModel.findOne({ _id: id });
+    if (!salaryType) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "No, Salary Type found with given id!",
+      });
+    }
+    await salaryTypeModel.findByIdAndDelete({ _id: id });
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      message: `Salary Type is deleted successfully!`,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.updateSalaryTypeById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Id parameter is missing!",
+      });
+    }
+    const data = req.body;
+    const updateData = {};
+    for (let key in data) {
+      if (data.hasOwnProperty(key) && data[key] !== null && data[key] !== "") {
+        updateData[key] = data[key];
+      }
+    }
+    const updatedSalaryType = await salaryTypeModel.findByIdAndUpdate(
+      id,
+      updateData,
+      {
+        new: true,
+      }
+    );
+    if (!updatedSalaryType) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Salary Type not found!",
+      });
+    }
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      message: "Salary Type record is updated successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.loadAllSalaryTypes = async (req, res) => {
+  try {
+    const salaryTypes = await salaryTypeModel.find();
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      salaryTypes,
     });
   } catch (error) {
     return res.status(500).json({

@@ -15,7 +15,7 @@ const DisplayEmployee = () => {
     const fetchEmployeeDetailsData = async () => {
       try {
         const response = await axios.get(
-          "/api/v1/employee/loadallemployeesdetails"
+          "/api/v1/admin/loadallemployeesdetails"
         );
         setEmployeeDetails(response?.data?.emplyeesDetailsData);
       } catch (error) {

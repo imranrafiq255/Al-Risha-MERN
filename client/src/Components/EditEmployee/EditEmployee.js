@@ -31,7 +31,7 @@ const EditEmployee = () => {
   useEffect(() => {
     const fetchEmployeeData = async () => {
       try {
-        const response = await axios.get(`/api/v1/employee/${id}`);
+        const response = await axios.get(`/api/v1/admin/${id}`);
         setEmployeeData(response.data);
       } catch (error) {
         console.error("Error fetching employee data", error);
@@ -49,7 +49,7 @@ const EditEmployee = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/api/v1/employee/${id}`, employeeData);
+      await axios.put(`/api/v1/admin/${id}`, employeeData);
       navigate("/displayemployee");
     } catch (error) {
       console.error("Error updating employee data", error);

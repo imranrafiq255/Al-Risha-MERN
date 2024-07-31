@@ -8,7 +8,7 @@ import "./AddEmployee.css";
 import axios from "axios";
 import successMessage from "../ToastMessages/successMessage";
 import errorMessage from "../ToastMessages/errorMessage";
-import { Toaster } from "react-hot-toast"
+import { Toaster } from "react-hot-toast";
 const AddEmployee = () => {
   const [image, setImage] = useState(false);
   const [form, setForm] = useState(null);
@@ -26,12 +26,14 @@ const AddEmployee = () => {
   const submitEmployeeData = async () => {
     if (!form) {
       console.log("Input fields are missing!");
-      errorMessage("Input fields are missing! Please fill in all required fields.");
+      errorMessage(
+        "Input fields are missing! Please fill in all required fields."
+      );
       return;
     }
     try {
       const response = await axios.post(
-        "/api/v1/employee/addemployeedetails",
+        "/api/v1/admin/addemployeedetails",
         form,
         {
           headers: {
@@ -40,7 +42,7 @@ const AddEmployee = () => {
         }
       );
       console.log(response.data);
-      successMessage(response.data.message)
+      successMessage(response.data.message);
     } catch (error) {
       console.log(error.response.data.message);
       errorMessage(error.response.data.message);
@@ -164,12 +166,13 @@ const AddEmployee = () => {
                     id="companyName"
                     onChange={formHanlder}
                     name={"companyName"}
-                    
                     className="input-field px-3 py-2 outline-none border-custom-class w-full md:w-2/3"
                     style={{ color: "black" }} // Added inline style to set text color to black
                   >
                     <option readOnly>Select Company Name</option>
-                    <option value="Al Risha Delivery Services">Al Risha Delivery Services</option>
+                    <option value="Al Risha Delivery Services">
+                      Al Risha Delivery Services
+                    </option>
                   </select>
                 </div>
                 <div className="form-field mb-4 flex flex-col md:flex-row md:items-center gap-4 md:gap-10">
@@ -221,8 +224,6 @@ const AddEmployee = () => {
                 </div>
               </div>
             </div>
-
-
           </div>
           {/* Add Employee 2nd form fields */}
           <div className="venders-container h-2/3 bg-white mt-14 rounded-lg relative shadow-lg">
@@ -998,7 +999,6 @@ const AddEmployee = () => {
             </div>
           </div>
           {/* .... */}
-
 
           <div className="venders-container h-2/3 bg-white mt-14 rounded-lg relative shadow-lg">
             <div className="h-20 w-11/12 custom-venders-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
