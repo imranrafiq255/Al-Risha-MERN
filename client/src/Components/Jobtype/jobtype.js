@@ -1,19 +1,55 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SideBar from "../SideBar/SideBar";
 import Header from "../Header/Header";
 import "../Company/Company.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import trashImage from "../../Assets/trash.png";
-import viewImage from "../../Assets/view.png";
 import pencilImage from "../../Assets/pencil.png";
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addJobTypeAction,
+  deleteJobTypeAction,
+  loadJobTypesAction,
+  updateJobTypeAction,
+} from "../Redux/Actions/Actions";
+import successMessage from "../ToastMessages/successMessage";
+import errorMessage from "../ToastMessages/errorMessage";
+import LoaderCircles from "../Loader/LoaderCircles";
+import RingLoader from "../Loader/RingLoader";
+import { Toaster } from "react-hot-toast";
 const JobType = () => {
+  // add job type
+  let { addJobTypeLoading, addJobTypeError, addJobTypeMessage } = useSelector(
+    (state) => state.addJobTypeReducer
+  );
+  // load job types
+  let { loadJobTypesLoading, jobTypes, loadJobTypesError } = useSelector(
+    (state) => state.loadJobTypes
+  );
+  // delete job types
+  let { deleteJobTypeLoading, deleteJobTypeError, deleteJobTypeMessage } =
+    useSelector((state) => state.deleteJobTypeReducer);
+  // update job types
+  let { updateJobTypeLoading, updateJobTypeError, updateJobTypeMessage } =
+    useSelector((state) => state.updateJobTypeReducer);
+  const addJobTypeToastShown = useRef(false);
+  const loadJobTypesToastShown = useRef(false);
+  const deleteJobTypeToastShown = useRef(false);
+  const updateJobTypeToastShown = useRef(false);
+  const [updatedData, setUpdatedData] = useState(null);
+  const dispatch = useDispatch();
+  const loadJobTypes = () => {
+    dispatch(loadJobTypesAction());
+  };
+  useEffect(() => {
+    loadJobTypes();
+  }, [updateJobTypeLoading, addJobTypeLoading, deleteJobTypeLoading]);
   const formik = useFormik({
     initialValues: {
       jobTypeId: "",
       jobTypeName: "",
-      jobTypeStatus: false,
+      jobTypeStatus: "",
     },
     validationSchema: Yup.object().shape({
       jobTypeId: Yup.string()
@@ -23,12 +59,68 @@ const JobType = () => {
       jobTypeStatus: Yup.boolean().required("Job type status is required"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      const data = {
+        ...values,
+        jobTypeStatus: values.jobTypeStatus === "true",
+      };
+      if (updatedData) {
+        dispatch(updateJobTypeAction(updatedData._id, data));
+      } else {
+        dispatch(addJobTypeAction(data));
+      }
+      formik.resetForm();
+      setUpdatedData(null);
     },
   });
+  useEffect(() => {
+    if (!addJobTypeLoading) {
+      if (addJobTypeMessage && !addJobTypeToastShown.current) {
+        successMessage(addJobTypeMessage);
+        addJobTypeToastShown.current = true;
+      } else if (addJobTypeError && !addJobTypeToastShown.current) {
+        errorMessage(addJobTypeError);
+        console.log(addJobTypeError);
+        addJobTypeToastShown.current = true;
+      }
+    }
+  }, [addJobTypeLoading, addJobTypeMessage, addJobTypeError]);
+  useEffect(() => {
+    if (!loadJobTypesLoading) {
+      if (loadJobTypesError && !loadJobTypesToastShown.current) {
+        errorMessage(loadJobTypesError);
+        loadJobTypesToastShown.current = true;
+      }
+    }
+  }, [loadJobTypesLoading, loadJobTypesError]);
+  const deleteJobType = (id) => {
+    dispatch(deleteJobTypeAction(id));
+  };
+  useEffect(() => {
+    if (!deleteJobTypeLoading) {
+      if (deleteJobTypeError && !deleteJobTypeToastShown.current) {
+        errorMessage(deleteJobTypeError);
+        deleteJobTypeToastShown.current = true;
+      } else if (!deleteJobTypeToastShown.current && deleteJobTypeMessage) {
+        successMessage(deleteJobTypeMessage);
+        deleteJobTypeToastShown.current = true;
+      }
+    }
+  }, [deleteJobTypeLoading, deleteJobTypeMessage, deleteJobTypeError]);
+  useEffect(() => {
+    if (!updateJobTypeLoading) {
+      if (updateJobTypeError && !updateJobTypeToastShown.current) {
+        errorMessage(updateJobTypeError);
+        updateJobTypeToastShown.current = true;
+      } else if (!updateJobTypeToastShown.current && updateJobTypeMessage) {
+        successMessage(updateJobTypeMessage);
+        updateJobTypeToastShown.current = true;
+      }
+    }
+  }, [updateJobTypeMessage, updateJobTypeLoading, updateJobTypeError]);
 
   return (
     <div className="home-container custom-home-background w-screen h-full p-4 flex">
+      <Toaster />
       <SideBar />
       <div className="right-sidebar-container w-10/12">
         <Header />
@@ -133,12 +225,18 @@ const JobType = () => {
               {/* Button Container */}
               <div className="flex justify-center space-x-4">
                 {/* Submit Button */}
-                <button
-                  type="submit"
-                  className="submit-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-blue-500 hover:bg-blue-600"
-                >
-                  Submit
-                </button>
+                {addJobTypeLoading ? (
+                  <div className="submit-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-blue-500 hover:bg-blue-600 flex justify-center items-center">
+                    <LoaderCircles />
+                  </div>
+                ) : (
+                  <button
+                    type="submit"
+                    className="submit-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-blue-500 hover:bg-blue-600"
+                  >
+                    {updatedData ? "Update now" : "Submit"}
+                  </button>
+                )}
                 {/* Cancel Button */}
                 <button
                   type="button"
@@ -167,32 +265,56 @@ const JobType = () => {
             <div className="line w-full mt-4">
               <div className="company-bottom-line w-full"></div>
             </div>
-            <div className="flex mt-4 items-center">
-              <div className="w-1/4">jobTypeId</div>
-              <div className="w-3/4">jobTypeName</div>
-              <div className="w-1/4">
-                <div className="text-white w-16 h-7 flex justify-center items-center rounded-lg shadow-lg">
-                  status
+            {loadJobTypesLoading || deleteJobTypeLoading ? (
+              <div className="flex justify-center items-center mt-10">
+                <RingLoader />
+              </div>
+            ) : jobTypes && Array.isArray(jobTypes) && jobTypes.length > 0 ? (
+              jobTypes.map((jobType) => (
+                <div className="flex mt-4 items-center">
+                  <div className="w-1/4">{jobType?.jobTypeId}</div>
+                  <div className="w-3/4">{jobType?.jobTypeName}</div>
+                  <div className="w-1/4">
+                    <div
+                      className={`${
+                        jobType?.jobTypeStatus
+                          ? "bg-green-500 text-white p-4"
+                          : "bg-red-500 text-white p-4"
+                      } w-16 h-7 flex justify-center items-center rounded-lg shadow-lg`}
+                    >
+                      {jobType?.jobTypeStatus ? "Active" : "Inactive"}
+                    </div>
+                  </div>
+                  <div className="w-1/4 flex">
+                    <img
+                      src={pencilImage}
+                      alt="Edit"
+                      className="w-6 h-6 cursor-pointer mr-2"
+                      onClick={() => {
+                        setUpdatedData(jobType);
+                        formik.setValues({
+                          jobTypeId: jobType.jobTypeId || "",
+                          jobTypeName: jobType.jobTypeName || "",
+                          jobTypeStatus: jobType.jobTypeStatus
+                            ? "true"
+                            : "false",
+                        });
+                      }}
+                    />
+                    <img
+                      src={trashImage}
+                      alt="Delete"
+                      className="w-6 h-6 cursor-pointer"
+                      onClick={() => deleteJobType(jobType?._id)}
+                    />
+                  </div>
                 </div>
+              ))
+            ) : (
+              <div className="flex justify-center items-center">
+                <h1>No data received from database</h1>
               </div>
-              <div className="w-1/4 flex">
-                <img
-                  src={viewImage}
-                  alt="View"
-                  className="w-7 h-8 cursor-pointer mr-2"
-                />
-                <img
-                  src={pencilImage}
-                  alt="Edit"
-                  className="w-6 h-6 cursor-pointer mr-2"
-                />
-                <img
-                  src={trashImage}
-                  alt="Delete"
-                  className="w-6 h-6 cursor-pointer"
-                />
-              </div>
-            </div>
+            )}
             <div className="line w-full mt-4">
               <div className="company-bottom-line w-full"></div>
             </div>

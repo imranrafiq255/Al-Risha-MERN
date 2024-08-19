@@ -615,6 +615,7 @@ exports.addJobType = async (req, res) => {
 exports.deleteJobTypeById = async (req, res) => {
   try {
     const id = req.params.id;
+
     if (!id) {
       return res.status(404).json({
         statusCode: STATUS_CODES[404],

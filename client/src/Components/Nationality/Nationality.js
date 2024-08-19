@@ -21,7 +21,7 @@ const Nationality = () => {
         .matches(/[0-9]/, "Nationality ID should be a number")
         .required("Nationality ID is required"),
       nationality: Yup.string().required("Nationality is required"),
-      nationalityStatus: Yup.string().required(
+      nationalityStatus: Yup.boolean().required(
         "Nationality status is required"
       ),
     }),
