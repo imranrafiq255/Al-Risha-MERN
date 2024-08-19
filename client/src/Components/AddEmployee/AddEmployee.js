@@ -72,12 +72,12 @@ const AddEmployee = () => {
             Please be advised that your employment is contingent upon successful
             completion of this background check.
           </h5>
-          <h1 className="text-3xl font-bold ml-14 mt-7">
+          <h1 className="text-4xl font-bold ml-14 mt-7">
             BACKGROUND VERIFICATION FORM
           </h1>
           {/* Company Information form fields */}
           <div className="venders-container h-2/3 bg-white mt-14 rounded-lg relative shadow-lg">
-            <div className="h-20 w-11/12 custom-venders-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
+            <div className="h-20 w-11/12 custom-company-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
               <h1 className="text-white text-2xl font-bold">
                 Company Information
               </h1>
@@ -199,6 +199,7 @@ const AddEmployee = () => {
                     <option value="Fixed Time">Fixed Time</option>
                   </select>
                 </div>
+
                 <div className="form-field mb-4 flex flex-col md:flex-row md:items-center gap-4 md:gap-10">
                   <label
                     htmlFor="Projects"
@@ -222,12 +223,58 @@ const AddEmployee = () => {
                     <option value="Smiles">Smiles</option>
                   </select>
                 </div>
+                {/* Zones Dropdown */}
+                <div className="form-field mb-4 flex flex-col md:flex-row md:items-center gap-4 md:gap-10">
+                  <label
+                    htmlFor="Zones"
+                    className="font-semibold block mb-2 md:w-1/6 md:text-right"
+                  >
+                    Zones:
+                  </label>
+                  <select
+                    id="Zones"
+                    onChange={formHanlder}
+                    name={"zone"}
+                    className="input-field px-3 py-2 outline-none border-custom-class w-full md:w-2/3"
+                    style={{ color: "black" }}
+                  >
+                    <option readonly>Select Zone</option>
+                    <option value="Zone 1">Zone 1</option>
+                    <option value="Zone 2">Zone 2</option>
+                    <option value="Zone 3">Zone 3</option>
+                    {/* Add more options as needed */}
+                  </select>
+                </div>
+                {/* Store Locations Dropdown */}
+                <div className="form-field mb-4 flex flex-col md:flex-row md:items-center gap-4 md:gap-10">
+                  <label
+                    htmlFor="StoreLocations"
+                    className="font-semibold block mb-2 md:w-1/6 md:text-right"
+                  >
+                    Store Locations:
+                  </label>
+                  <select
+                    id="StoreLocations"
+                    onChange={formHanlder}
+                    name={"storeLocation"}
+                    className="input-field px-3 py-2 outline-none border-custom-class w-full md:w-2/3"
+                    style={{ color: "black" }}
+                  >
+                    <option readonly >Select Store Location</option>
+                    <option value="Store 1">Store 1</option>
+                    <option value="Store 2">Store 2</option>
+                    <option value="Store 3">Store 3</option>
+                    {/* Add more options as needed */}
+                  </select>
+                </div>
               </div>
             </div>
           </div>
+
+
           {/* Add Employee 2nd form fields */}
           <div className="venders-container h-2/3 bg-white mt-14 rounded-lg relative shadow-lg">
-            <div className="h-20 w-11/12 custom-venders-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
+            <div className="h-20 w-11/12 custom-company-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
               <h1 className="text-white text-2xl font-bold">Add Employee</h1>
             </div>
             {/* Employee 2nd form fields */}
@@ -409,9 +456,13 @@ const AddEmployee = () => {
                     className="input-field px-3 py-2 w-full outline-none border-custom-class"
                   >
                     <option readOnly>Select Employee Status</option>
-                    <option value="active">Active</option>
-                    <option value="onLeave">Leave</option>
-                    <option value="leftCompany">Left</option>
+                    <option value="Active">Active</option>
+                    <option value="InActive">InActive</option>
+                    <option value="On Temporary Leave">On Temporary Leave</option>
+                    <option value="Left">Left</option>
+                    <option value="Resigned">Resigned</option>
+                    <option value="Terminated">Terminated</option>
+                    <option value="Struck Off">Struck Off</option>
                   </select>
                 </div>
 
@@ -462,6 +513,25 @@ const AddEmployee = () => {
                     <option value="car">Car</option>
                   </select>
                 </div>
+                {/* Labor Card No */}
+                {/* <div className="form-field mb-4">
+                  <label
+                    htmlFor="laborCardNo"
+                    className="font-semibold block mb-2"
+                  >
+                    Labor Card No:
+                  </label>
+                  <input
+                    type="text"
+                    id="laborCardNo"
+                    onChange={formHanlder}
+                    name="laborCardNo"
+                    placeholder="Enter Labor Card No"
+                    className="input-field px-3 py-2 w-full outline-none border-custom-class"
+                  />
+                </div> */}
+
+
               </div>
               {/* Employee 2nd column below of 2nd form fields  */}
               <div className="projects-list flex flex-col pt-20 px-10 w-full xl:w-6/12 2xl:w-4/12 2xl:mt-52">
@@ -621,7 +691,7 @@ const AddEmployee = () => {
                     htmlFor="cardIssue"
                     className="font-semibold block mb-2"
                   >
-                    Card Issue
+               Select Labor Card Issuance Date:
                   </label>
                   <input
                     type="date"
@@ -639,18 +709,22 @@ const AddEmployee = () => {
                   >
                     Shift Time
                   </label>
-                  <input
-                    type="time"
+                  <select
                     id="shiftTime"
                     onChange={formHanlder}
                     name={"shiftTime"}
-                    placeholder="Select shift time"
                     className="input-field px-3 py-2 w-full outline-none border-custom-class"
-                  />
+                  >
+                    <option value="">Select Shift Time</option>
+                    <option value="09:00 to 01:00 PM">09:00 AM to 01:00 PM</option>
+                    <option value="13:00 to 05:00 PM">01:00 PM to 05:00 PM</option>
+                    <option value="17:00 to 09:00 AM">05:00 PM to 09:00 AM</option>
+                  </select>
                 </div>
+
                 <div className="form-field mb-4">
                   <label htmlFor="carType" className="font-semibold block mb-2">
-                    Car Type
+                   Vehicle Type
                   </label>
                   <select
                     id="carType"
@@ -658,18 +732,35 @@ const AddEmployee = () => {
                     name={"carType"}
                     className="input-field px-3 py-2 w-full outline-none border-custom-class"
                   >
-                    <option readOnly>Select Car Type</option>
+                    <option readOnly>Select Vehicle Type</option>
                     <option value="sedan">Sedan</option>
                     <option value="mini-van">Mini Van 7 Seater</option>
                     <option value="civic">Civic</option>
                   </select>
                 </div>
+                {/* Labor Card Issuance Date */}
+                {/* <div className="form-field mb-4">
+                  <label
+                    htmlFor="laborCardIssuanceDate"
+                    className="font-semibold block mb-2"
+                  >
+                    Select Labor Card Issuance Date:
+                  </label>
+                  <input
+                    type="date"
+                    id="laborCardIssuanceDate"
+                    onChange={formHanlder}
+                    name="laborCardIssuanceDate"
+                    placeholder="Select Issuance Date"
+                    className="input-field px-3 py-2 w-full outline-none border-custom-class"
+                  />
+                </div> */}
               </div>
               {/* Employee 3rd column below of 2nd form fields  */}
               <div className="projects-list flex flex-col pt-20 px-10 w-full xl:w-6/12 2xl:w-4/12 2xl:mt-52">
                 <div className="form-field mb-4">
                   <label htmlFor="doJoin" className="font-semibold block mb-2">
-                    Do Joining
+                    Date Of Joining
                   </label>
                   <input
                     type="date"
@@ -832,7 +923,7 @@ const AddEmployee = () => {
                     htmlFor="cardExpiry"
                     className="font-semibold block mb-2"
                   >
-                    Card Expiry
+                    Select Labor Card Expiry Date:
                   </label>
                   <input
                     type="date"
@@ -848,7 +939,7 @@ const AddEmployee = () => {
                     htmlFor="phoneNumber"
                     className="font-semibold block mb-2"
                   >
-                    Phone#
+                    Phone number
                   </label>
                   <input
                     type="text"
@@ -864,7 +955,7 @@ const AddEmployee = () => {
                     htmlFor="emergencyNumber"
                     className="font-semibold block mb-2"
                   >
-                    Emergence #
+                  Contact number in Case of Emergency 
                   </label>
                   <input
                     type="text"
@@ -875,14 +966,35 @@ const AddEmployee = () => {
                     className="input-field px-3 py-2 w-full outline-none border-custom-class"
                   />
                 </div>
+
+                {/* Labor Card Expiry Date */}
+                {/* <div className="form-field mb-4">
+                  <label
+                    htmlFor="laborCardExpiryDate"
+                    className="font-semibold block mb-2"
+                  >
+                    Select Labor Card Expiry Date:
+                  </label>
+                  <input
+                    type="date"
+                    id="laborCardExpiryDate"
+                    onChange={formHanlder}
+                    name="laborCardExpiryDate"
+                    placeholder="Select Expiry Date"
+                    className="input-field px-3 py-2 w-full outline-none border-custom-class"
+                  />
+                </div> */}
                 {/* <div className="flex w-full justify-end">
                                     <button className="submit-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl">Submit</button>
                                 </div> */}
               </div>
             </div>
           </div>
+      
+
+          {/* ... Employment History.... */}
           <div className="venders-container h-2/3 bg-white mt-14 rounded-lg relative shadow-lg">
-            <div className="h-20 w-11/12 custom-venders-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
+            <div className="h-20 w-11/12 custom-company-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
               <h1 className="text-white text-2xl font-bold">
                 Employment History
               </h1>
@@ -896,7 +1008,8 @@ const AddEmployee = () => {
                     htmlFor="employerName"
                     className="font-semibold block mb-2"
                   >
-                    Company/Employer Name
+                    Company (Previous work History):
+
                   </label>
                   <input
                     type="text"
@@ -982,15 +1095,20 @@ const AddEmployee = () => {
                   >
                     NOC Status
                   </label>
-                  <input
-                    type="text"
+                  <select
                     id="nocStatus"
                     onChange={formHanlder}
-                    name={"employerNOCStatus"}
-                    placeholder="Enter NOC status"
+                    name="employerNOCStatus"
                     className="input-field px-3 py-2 w-full outline-none border-custom-class"
-                  />
+                  >
+                    <option readonly >Select NOC Status</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Rejected">Rejected</option>
+                    <option value="Not Applicable">Not Applicable</option>
+                  </select>
                 </div>
+
                 {/* <button className="submit-btn text-white px-4 py-2 rounded-lg mb-10">Submit</button> */}
                 {/* <div className="flex w-full justify-end">
                                     <button className="submit-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl">Submit</button>
@@ -998,12 +1116,13 @@ const AddEmployee = () => {
               </div>
             </div>
           </div>
-          {/* .... */}
+
+          {/*  Granter Detail/ References */}
 
           <div className="venders-container h-2/3 bg-white mt-14 rounded-lg relative shadow-lg">
-            <div className="h-20 w-11/12 custom-venders-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
+            <div className="h-20 w-11/12 custom-company-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
               <h1 className="text-white text-2xl font-bold">
-                Granter Detail/ References
+                Guarantor Detail/ References
               </h1>
             </div>
             {/* Granter Detail/ References */}
@@ -1014,7 +1133,7 @@ const AddEmployee = () => {
                     htmlFor="granterName"
                     className="font-semibold block mb-2"
                   >
-                    Name Of Granter
+                    Name Of Guarantor
                   </label>
                   <input
                     type="text"
@@ -1218,7 +1337,7 @@ const AddEmployee = () => {
           </div>
           {/* Home Town Information/Verification */}
           <div className="venders-container h-2/3 bg-white mt-14 rounded-lg relative shadow-lg">
-            <div className="h-20 w-11/12 custom-venders-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
+            <div className="h-20 w-11/12 custom-company-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
               <h1 className="text-white text-2xl font-bold">
                 Home Town Information/Verification
               </h1>

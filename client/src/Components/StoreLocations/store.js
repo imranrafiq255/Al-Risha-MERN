@@ -1,33 +1,40 @@
 import React, { useState } from 'react';
-import SideBar from '../SideBar/SideBar';
-import Header from '../Header/Header';
-import '../Company/Company.css';
+import '../Company/Company.css'; // Assuming you want to use the same CSS styles
 
 // Import your images
 import trashImage from '../../Assets/trash.png';
 import viewImage from '../../Assets/view.png';
 import pencilImage from '../../Assets/pencil.png';
+import SideBar from '../SideBar/SideBar'; // Import the sidebar component
+import Header from '../Header/Header'; // Import the Header component
 
-const JobType = () => {
+const Store = () => {
   const [formData, setFormData] = useState({
-    jobTypeId: '',
-    jobTypeName: '',
-    status: '', // Defaulting to "active" status
+    storeId: '',
+    storeName: '',
+    storeState: '',
+    status: '', // Defaulting to "Active" status
   });
 
-  const [jobTypes, setJobTypes] = useState([
+  const [stores, setStores] = useState([
     {
-      jobTypeId: '1',
-      jobTypeName: 'Car',
+      storeId: '1',
+      storeName: 'North Store',
+      storeState: 'State A',
       status: 'Active',
     },
     {
-      jobTypeId: '2',
-      jobTypeName: 'Bike',
+      storeId: '2',
+      storeName: 'South Store',
+      storeState: 'State B',
       status: 'Inactive',
     },
-    
-    // Add more job types as needed
+    {
+      storeId: '3',
+      storeName: 'East Store',
+      storeState: 'State C',
+      status: 'Active',
+    },
   ]);
 
   const handleInputChange = (e) => {
@@ -41,56 +48,59 @@ const JobType = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.jobTypeId) {
-      // Edit existing job type
-      const updatedJobTypes = jobTypes.map((jobType) =>
-        jobType.jobTypeId === formData.jobTypeId ? { ...formData } : jobType
+    if (formData.storeId) {
+      // Edit existing store
+      const updatedStores = stores.map((store) =>
+        store.storeId === formData.storeId ? { ...formData } : store
       );
-      setJobTypes(updatedJobTypes);
+      setStores(updatedStores);
     } else {
-      // Add new job type
-      const newJobType = { ...formData, jobTypeId: String(jobTypes.length + 1) };
-      setJobTypes([...jobTypes, newJobType]);
+      // Add new store
+      const newStore = { ...formData, storeId: String(stores.length + 1) };
+      setStores([...stores, newStore]);
     }
     setFormData({
-      jobTypeId: '',
-      jobTypeName: '',
-      status: 'active', // Resetting status to active
+      storeId: '',
+      storeName: '',
+      storeState: '',
+      status: 'Active', // Resetting status to active
     });
   };
 
-  const handleEdit = (jobTypeId) => {
-    const selectedJobType = jobTypes.find((jobType) => jobType.jobTypeId === jobTypeId);
-    setFormData({ ...selectedJobType });
+  const handleEdit = (storeId) => {
+    const selectedStore = stores.find((store) => store.storeId === storeId);
+    setFormData({ ...selectedStore });
   };
 
-  const handleDelete = (jobTypeId) => {
-    const updatedJobTypes = jobTypes.filter((jobType) => jobType.jobTypeId !== jobTypeId);
-    setJobTypes(updatedJobTypes);
+  const handleDelete = (storeId) => {
+    const updatedStores = stores.filter((store) => store.storeId !== storeId);
+    setStores(updatedStores);
   };
 
   const handleCancel = () => {
     setFormData({
-      jobTypeId: '',
-      jobTypeName: '',
-      status: 'active', // Resetting status to active
+      storeId: '',
+      storeName: '',
+      storeState: '',
+      status: 'Active', // Resetting status to active
     });
   };
 
-  const JobTypeRow = ({ jobType }) => {
-    const { jobTypeId, jobTypeName, status } = jobType;
+  const StoreRow = ({ store }) => {
+    const { storeId, storeName, storeState, status } = store;
 
-    const handleView = (jobTypeId) => {
-      console.log(`Viewing job type details: ${jobTypeId}`);
+    const handleView = (storeId) => {
+      console.log(`Viewing store details: ${storeId}`);
       // Implement view functionality here
     };
 
     return (
       <>
         <div className="flex mt-4 items-center">
-          <div className="w-1/4">{jobTypeId}</div>
-          <div className="w-3/4">{jobTypeName}</div>
-          <div className="w-1/4">
+          <div className="w-1/5">{storeId}</div>
+          <div className="w-1/5">{storeName}</div>
+          <div className="w-1/5">{storeState}</div>
+          <div className="w-1/5">
             <div
               className={`${
                 status === 'Active' ? 'bg-green-400' : 'bg-red-600'
@@ -99,24 +109,24 @@ const JobType = () => {
               {status}
             </div>
           </div>
-          <div className="w-1/4 flex">
+          <div className="w-1/5 flex">
             <img
               src={viewImage}
               alt="View"
               className="w-7 h-8 cursor-pointer mr-2"
-              onClick={() => handleView(jobTypeId)}
+              onClick={() => handleView(storeId)}
             />
             <img
               src={pencilImage}
               alt="Edit"
               className="w-6 h-6 cursor-pointer mr-2"
-              onClick={() => handleEdit(jobTypeId)}
+              onClick={() => handleEdit(storeId)}
             />
             <img
               src={trashImage}
               alt="Delete"
               className="w-6 h-6 cursor-pointer"
-              onClick={() => handleDelete(jobTypeId)}
+              onClick={() => handleDelete(storeId)}
             />
           </div>
         </div>
@@ -129,47 +139,67 @@ const JobType = () => {
 
   return (
     <div className="home-container custom-home-background w-screen h-full p-4 flex">
-      <SideBar />
+      <SideBar /> {/* Include the sidebar */}
       <div className="right-sidebar-container w-10/12">
-        <Header />
+        <Header /> {/* Include the header */}
         <div className="projects-container h-2/4 bg-white mt-14 rounded-lg relative shadow-lg">
           <div className="h-20 w-11/12 custom-company-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
-            <h1 className="text-white text-2xl font-bold">Add Job Types:</h1>
+            <h1 className="text-white text-2xl font-bold">Add Store Locations:</h1>
           </div>
           <div className="projects-list flex flex-col pt-6 px-10">
-            {/* Job Type Form Fields */}
+            {/* Store Form Fields */}
             <form onSubmit={handleSubmit}>
               <div className="form-field-grid mb-1 grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 mt-16">
-                {/* Job Type ID */}
+                {/* Store ID */}
                 <div className="mb-4">
-                  <label htmlFor="jobTypeId" className="font-semibold block mb-2">
-                    Job Type ID
+                  <label htmlFor="storeId" className="font-semibold block mb-2">
+                    Store Location ID
                   </label>
                   <input
                     type="text"
-                    id="jobTypeId"
+                    id="storeId"
                     onChange={handleInputChange}
-                    name="jobTypeId"
-                    placeholder="Enter Job Type ID"
-                    value={formData.jobTypeId}
+                    name="storeId"
+                    placeholder="Enter Store Location ID"
+                    value={formData.storeId}
                     className="input-field px-3 py-2 w-full outline-none border-custom-class"
                   />
                 </div>
 
-                {/* Job Type Name */}
+                {/* Store Name */}
                 <div className="mb-4">
-                  <label htmlFor="jobTypeName" className="font-semibold block mb-2">
-                    Job Type Name
+                  <label htmlFor="storeLocation" className="font-semibold block mb-2">
+                    Store Location 
                   </label>
                   <input
                     type="text"
-                    id="jobTypeName"
+                    id="storeLocation"
                     onChange={handleInputChange}
-                    name="jobTypeName"
-                    placeholder="Enter Job Type Name"
-                    value={formData.jobTypeName}
+                    name="storeLocation"
+                    placeholder="Enter Store Location"
+                    value={formData.storeName}
                     className="input-field px-3 py-2 w-full outline-none border-custom-class"
                   />
+                </div>
+
+                {/* Store State */}
+                <div className="mb-4">
+                  <label htmlFor="storeState" className="font-semibold block mb-2">
+                    Store State
+                  </label>
+                  <select
+                    id="storeState"
+                    name="storeState"
+                    value={formData.storeState}
+                    onChange={handleInputChange}
+                    className="input-field px-3 py-2 w-full outline-none border-custom-class"
+                  >
+                    <option value="">Select State</option>
+                    <option value="State A">State A</option>
+                    <option value="State B">State B</option>
+                    <option value="State C">State C</option>
+                    {/* Add more states as needed */}
+                  </select>
                 </div>
 
                 {/* Status */}
@@ -224,24 +254,25 @@ const JobType = () => {
           </div>
         </div>
 
-        {/* Job Type Display Data Form */}
-        <div className="company-container h-2/3 bg-white mt-14 rounded-lg relative shadow-lg">
+        {/* Store Display Data Form */}
+        <div className="projects-container h-2/3 bg-white mt-14 rounded-lg relative shadow-lg">
           <div className="h-20 w-11/12 custom-company-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
-            <h1 className="text-white text-2xl font-bold">Job Type Details:</h1>
+            <h1 className="text-white text-2xl font-bold">Store Locations Details:</h1>
           </div>
           <div className="projects-list flex flex-col pt-20 px-10">
-            {/* Job Type Headings */}
+            {/* Store Headings */}
             <div className="flex mt-4 font-bold">
-              <div className="w-1/4">Job Type ID</div>
-              <div className="w-3/4">Job Type Name</div>
-              <div className="w-1/4">Status</div>
-              <div className="w-1/4">Action</div>
+              <div className="w-1/5">Store ID</div>
+              <div className="w-1/5">Store Name</div>
+              <div className="w-1/5">Store State</div>
+              <div className="w-1/5">Status</div>
+              <div className="w-1/5">Action</div>
             </div>
             <div className="line w-full mt-4">
               <div className="company-bottom-line w-full"></div>
             </div>
-            {jobTypes.map((jobType) => (
-              <JobTypeRow key={jobType.jobTypeId} jobType={jobType} />
+            {stores.map((store) => (
+              <StoreRow key={store.storeId} store={store} />
             ))}
           </div>
         </div>
@@ -250,4 +281,4 @@ const JobType = () => {
   );
 };
 
-export default JobType;
+export default Store;

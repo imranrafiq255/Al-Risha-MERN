@@ -21,36 +21,38 @@ import Nationality from "./Components/Nationality/Nationality";
 import Guarantor from "./Components/Guarantor/Guarantor";
 import NocStatus from "./Components/NocStatus/NocStatus"; 
 import JobType from "./Components/Jobtype/jobtype"; 
+import Zone from './Components/Zone/zone';
+import Store from './Components/StoreLocations/store';
 
 const App = () => {
   return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/venders" element={<Venders />} />
-          <Route path="/project" element={<Project />} />
-          <Route path="/vehicle" element={<Vehicle />} />
-          <Route path="/jobtype" element={<JobType />} />
-          <Route path="/salary" element={<Salary />} />
-          <Route path="/notification" element={<Notification />} />
-          <Route path="/maintain" element={<Maintain />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/addemployee" element={<AddEmployee />} />
-          <Route path="/displayemployee" element={<DisplayEmployee />} />
-          <Route path="/edit-employee/:id" element={<EditEmployee />} />
-          <Route path="/company" element={<Company />} />
-          <Route path="/state" element={<State/>} />
-          <Route path="/gender" element={<Gender />} />
-          <Route path="/shifts" element={<Shift />} />
-          <Route path="/nationality" element={<Nationality />} />
-          <Route path="/guarantor" element={<Guarantor />} />
-          <Route path="/noc-status" element={<NocStatus />} />
-        </Routes>
-      </Router>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/venders" element={<Venders />} />
+        <Route path="/project" element={<Project />} />
+        <Route path="/vehicle" element={<Vehicle />} />
+        <Route path="/jobtype" element={<JobType />} />
+        <Route path="/salary" element={<Salary />} />
+        <Route path="/notification" element={<Notification />} />
+        <Route path="/maintain" element={<Maintain />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/addemployee" element={<AddEmployee />} />
+        <Route path="/displayemployee" element={<DisplayEmployee />} />
+        <Route path="/edit-employee/:id" element={<EditEmployee />} />
+        <Route path="/company" element={<Company />} />
+        <Route path="/state" element={<State/>} />
+        <Route path="/gender" element={<Gender />} />
+        <Route path="/shifts" element={<Shift />} />
+        <Route path="/nationality" element={<Nationality />} />
+        <Route path="/guarantor" element={<Guarantor />} />
+        <Route path="/noc-status" element={<NocStatus />} />
+        <Route path="/zone" element={<Zone />} /> {/* Added Route for Zone */}
+        <Route path="/store" element={<Store />} /> {/* Added Route for Store */}
+      </Routes>
+    </Router>
   );
 };
 

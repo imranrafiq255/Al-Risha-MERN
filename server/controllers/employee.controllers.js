@@ -7,6 +7,9 @@ const jobTypeModel = require("../models/jobType.models");
 const nationalityModel = require("../models/nationality.models");
 const nocStatusModel = require("../models/nocStatus.models");
 const salaryTypeModel = require("../models/salaryType.models");
+const shiftTimeModel = require("../models/shiftTime.models");
+const vehicleTypeModel = require("../models/vehicleType.models");
+const stateOfIssuanceModel = require("../models/stateOfIssuance.models");
 
 exports.addEmployeeDetails = async (req, res) => {
   try {
@@ -993,6 +996,311 @@ exports.loadAllSalaryTypes = async (req, res) => {
     return res.status(200).json({
       statusCode: STATUS_CODES[200],
       salaryTypes,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+// Shift time
+exports.addShiftTime = async (req, res) => {
+  try {
+    const { shiftId, shiftTime, shiftTimeStatus } = req.body;
+    await new shiftTimeModel({
+      shiftId,
+      shiftTime,
+      shiftTimeStatus,
+    }).save();
+    return res.status(201).json({
+      statusCode: STATUS_CODES[201],
+      message: `Shift Time is added successfully!`,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.deleteShiftTime = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Id parameter is missing!",
+      });
+    }
+    const shiftTime = await shiftTimeModel.findOne({ _id: id });
+    if (!shiftTime) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "No, Shift Time found with given id!",
+      });
+    }
+    await shiftTimeModel.findByIdAndDelete({ _id: id });
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      message: `Shift Time is deleted successfully!`,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.updateShiftTime = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Id parameter is missing!",
+      });
+    }
+    const data = req.body;
+    const updateData = {};
+    for (let key in data) {
+      if (data.hasOwnProperty(key) && data[key] !== null && data[key] !== "") {
+        updateData[key] = data[key];
+      }
+    }
+    const updatedShiftTime = await shiftTimeModel.findByIdAndUpdate(
+      id,
+      updateData,
+      {
+        new: true,
+      }
+    );
+    if (!updatedShiftTime) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Shift Time not found!",
+      });
+    }
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      message: "Shift Time record is updated successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.loadAllShiftTimes = async (req, res) => {
+  try {
+    const shiftTimes = await shiftTimeModel.find();
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      shiftTimes,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+// Vehicle Type
+exports.addVehicleType = async (req, res) => {
+  try {
+    const { vehicleTypeId, vehicleTypeName, vehicleTypeStatus } = req.body;
+    await new vehicleTypeModel({
+      vehicleTypeId,
+      vehicleTypeName,
+      vehicleTypeStatus,
+    }).save();
+    return res.status(201).json({
+      statusCode: STATUS_CODES[201],
+      message: `Vehicle Type is added successfully!`,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.deleteVehicleType = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Id parameter is missing!",
+      });
+    }
+    const vehicleType = await vehicleTypeModel.findOne({ _id: id });
+    if (!vehicleType) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "No, Vehicle Type found with given id!",
+      });
+    }
+    await vehicleTypeModel.findByIdAndDelete({ _id: id });
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      message: `Vehicle Type is deleted successfully!`,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.updateVehicleType = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Id parameter is missing!",
+      });
+    }
+    const data = req.body;
+    const updateData = {};
+    for (let key in data) {
+      if (data.hasOwnProperty(key) && data[key] !== null && data[key] !== "") {
+        updateData[key] = data[key];
+      }
+    }
+    const updatedVehicleType = await vehicleTypeModel.findByIdAndUpdate(
+      id,
+      updateData,
+      {
+        new: true,
+      }
+    );
+    if (!updatedVehicleType) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Vehicle Type not found!",
+      });
+    }
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      message: "Vehicle Type record is updated successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.loadVehicleTypes = async (req, res) => {
+  try {
+    const vehicleTypes = await vehicleTypeModel.find();
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      vehicleTypes,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+// State Of Issuance
+exports.addStateOfIssuance = async (req, res) => {
+  try {
+    const { stateId, stateName, stateStatus } = req.body;
+    await new stateOfIssuanceModel({
+      stateId,
+      stateName,
+      stateStatus,
+    }).save();
+    return res.status(201).json({
+      statusCode: STATUS_CODES[201],
+      message: `State of Issuance is added successfully!`,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.deleteStateOfIssuance = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Id parameter is missing!",
+      });
+    }
+    const stateOfIssuance = await stateOfIssuanceModel.findOne({ _id: id });
+    if (!stateOfIssuance) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "No, State of Issuance found with given id!",
+      });
+    }
+    await stateOfIssuanceModel.findByIdAndDelete({ _id: id });
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      message: `State of Issuance is deleted successfully!`,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.updateStateOfIssuance = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "Id parameter is missing!",
+      });
+    }
+    const data = req.body;
+    const updateData = {};
+    for (let key in data) {
+      if (data.hasOwnProperty(key) && data[key] !== null && data[key] !== "") {
+        updateData[key] = data[key];
+      }
+    }
+    const updatedStateOfIssuance = await stateOfIssuanceModel.findByIdAndUpdate(
+      id,
+      updateData,
+      {
+        new: true,
+      }
+    );
+    if (!updatedStateOfIssuance) {
+      return res.status(404).json({
+        statusCode: STATUS_CODES[404],
+        message: "State of Issuance not found!",
+      });
+    }
+    return res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      message: "State of Issuance record is updated successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: STATUS_CODES[500],
+      message: error.message,
+    });
+  }
+};
+exports.loadAllStateOfIssuances = async (req, res) => {
+  try {
+    res.status(200).json({
+      statusCode: STATUS_CODES[200],
+      states: await stateOfIssuanceModel.find(),
     });
   } catch (error) {
     return res.status(500).json({

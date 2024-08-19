@@ -2,17 +2,17 @@ const mongoose = require("mongoose");
 
 const vehicleTypeSchema = mongoose.Schema(
   {
-    carTypeId: {
+    vehicleTypeId: {
       type: String,
-      unique: [true, "Car type id should be unique"],
-      required: [true, "Car type id required"],
+      unique: [true, "Vehicle type id should be unique"],
+      required: [true, "Vehicle type id required"],
     },
-    carTypeName: {
+    vehicleTypeName: {
       type: String,
-      unique: [true, "Car type name should be unique"],
-      required: [true, "Car type name required"],
+      unique: [true, "Vehicle type name should be unique"],
+      required: [true, "Vehicle type name required"],
     },
-    carTypeStatus: {
+    vehicleTypeStatus: {
       type: Boolean,
       default: 0,
     },

@@ -30,6 +30,18 @@ const {
   deleteSalaryType,
   updateSalaryTypeById,
   loadAllSalaryTypes,
+  addShiftTime,
+  deleteShiftTime,
+  updateShiftTime,
+  loadAllShiftTimes,
+  addVehicleType,
+  deleteVehicleType,
+  updateVehicleType,
+  loadVehicleTypes,
+  addStateOfIssuance,
+  deleteStateOfIssuance,
+  updateStateOfIssuance,
+  loadAllStateOfIssuances,
 } = require("../controllers/employee.controllers.js");
 const singleUpload = require("../middlewares/single-image.middlewares.js");
 const Router = express.Router();
@@ -76,4 +88,19 @@ Router.route("/add-salary-type").post(addSalaryType);
 Router.route("/delete-salary-type/:id").delete(deleteSalaryType);
 Router.route("/update-salary-type/:id").put(updateSalaryTypeById);
 Router.route("/load-all-salary-types").get(loadAllSalaryTypes);
+// Shift Time Routes
+Router.route("/add-shift-time").post(addShiftTime);
+Router.route("/delete-shift-time/:id").delete(deleteShiftTime);
+Router.route("/update-shift-time/:id").put(updateShiftTime);
+Router.route("/load-all-shift-times").get(loadAllShiftTimes);
+// Vehicle Type Routes
+Router.route("/add-vehicle-type").post(addVehicleType);
+Router.route("/delete-vehicle-type/:id").delete(deleteVehicleType);
+Router.route("/update-vehicle-type/:id").put(updateVehicleType);
+Router.route("/load-all-vehicle-types").get(loadVehicleTypes);
+// State of Issuance Routes
+Router.route("/add-state-of-issuance").post(addStateOfIssuance);
+Router.route("/delete-state-of-issuance/:id").delete(deleteStateOfIssuance);
+Router.route("/update-state-of-issuance/:id").put(updateStateOfIssuance);
+Router.route("/load-all-states").get(loadAllStateOfIssuances);
 module.exports = Router;
