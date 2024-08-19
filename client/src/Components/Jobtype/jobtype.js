@@ -1,131 +1,31 @@
-import React, { useState } from 'react';
-import SideBar from '../SideBar/SideBar';
-import Header from '../Header/Header';
-import '../Company/Company.css';
-
-// Import your images
-import trashImage from '../../Assets/trash.png';
-import viewImage from '../../Assets/view.png';
-import pencilImage from '../../Assets/pencil.png';
+import React from "react";
+import SideBar from "../SideBar/SideBar";
+import Header from "../Header/Header";
+import "../Company/Company.css";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import trashImage from "../../Assets/trash.png";
+import viewImage from "../../Assets/view.png";
+import pencilImage from "../../Assets/pencil.png";
 
 const JobType = () => {
-  const [formData, setFormData] = useState({
-    jobTypeId: '',
-    jobTypeName: '',
-    status: '', // Defaulting to "active" status
+  const formik = useFormik({
+    initialValues: {
+      jobTypeId: "",
+      jobTypeName: "",
+      jobTypeStatus: false,
+    },
+    validationSchema: Yup.object().shape({
+      jobTypeId: Yup.string()
+        .matches(/[0-9]/, "Job type ID should be a number")
+        .required("Job type ID is required"),
+      jobTypeName: Yup.string().required("Job type name is required"),
+      jobTypeStatus: Yup.boolean().required("Job type status is required"),
+    }),
+    onSubmit: (values) => {
+      console.log(values);
+    },
   });
-
-  const [jobTypes, setJobTypes] = useState([
-    {
-      jobTypeId: '1',
-      jobTypeName: 'Car',
-      status: 'Active',
-    },
-    {
-      jobTypeId: '2',
-      jobTypeName: 'Bike',
-      status: 'Inactive',
-    },
-    
-    // Add more job types as needed
-  ]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleStatusChange = (e) => {
-    setFormData({ ...formData, status: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (formData.jobTypeId) {
-      // Edit existing job type
-      const updatedJobTypes = jobTypes.map((jobType) =>
-        jobType.jobTypeId === formData.jobTypeId ? { ...formData } : jobType
-      );
-      setJobTypes(updatedJobTypes);
-    } else {
-      // Add new job type
-      const newJobType = { ...formData, jobTypeId: String(jobTypes.length + 1) };
-      setJobTypes([...jobTypes, newJobType]);
-    }
-    setFormData({
-      jobTypeId: '',
-      jobTypeName: '',
-      status: 'active', // Resetting status to active
-    });
-  };
-
-  const handleEdit = (jobTypeId) => {
-    const selectedJobType = jobTypes.find((jobType) => jobType.jobTypeId === jobTypeId);
-    setFormData({ ...selectedJobType });
-  };
-
-  const handleDelete = (jobTypeId) => {
-    const updatedJobTypes = jobTypes.filter((jobType) => jobType.jobTypeId !== jobTypeId);
-    setJobTypes(updatedJobTypes);
-  };
-
-  const handleCancel = () => {
-    setFormData({
-      jobTypeId: '',
-      jobTypeName: '',
-      status: 'active', // Resetting status to active
-    });
-  };
-
-  const JobTypeRow = ({ jobType }) => {
-    const { jobTypeId, jobTypeName, status } = jobType;
-
-    const handleView = (jobTypeId) => {
-      console.log(`Viewing job type details: ${jobTypeId}`);
-      // Implement view functionality here
-    };
-
-    return (
-      <>
-        <div className="flex mt-4 items-center">
-          <div className="w-1/4">{jobTypeId}</div>
-          <div className="w-3/4">{jobTypeName}</div>
-          <div className="w-1/4">
-            <div
-              className={`${
-                status === 'Active' ? 'bg-green-400' : 'bg-red-600'
-              } text-white w-16 h-7 flex justify-center items-center rounded-lg shadow-lg`}
-            >
-              {status}
-            </div>
-          </div>
-          <div className="w-1/4 flex">
-            <img
-              src={viewImage}
-              alt="View"
-              className="w-7 h-8 cursor-pointer mr-2"
-              onClick={() => handleView(jobTypeId)}
-            />
-            <img
-              src={pencilImage}
-              alt="Edit"
-              className="w-6 h-6 cursor-pointer mr-2"
-              onClick={() => handleEdit(jobTypeId)}
-            />
-            <img
-              src={trashImage}
-              alt="Delete"
-              className="w-6 h-6 cursor-pointer"
-              onClick={() => handleDelete(jobTypeId)}
-            />
-          </div>
-        </div>
-        <div className="line w-full mt-4">
-          <div className="company-bottom-line w-full"></div>
-        </div>
-      </>
-    );
-  };
 
   return (
     <div className="home-container custom-home-background w-screen h-full p-4 flex">
@@ -138,38 +38,56 @@ const JobType = () => {
           </div>
           <div className="projects-list flex flex-col pt-6 px-10">
             {/* Job Type Form Fields */}
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={formik.handleSubmit}>
               <div className="form-field-grid mb-1 grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 mt-16">
                 {/* Job Type ID */}
                 <div className="mb-4">
-                  <label htmlFor="jobTypeId" className="font-semibold block mb-2">
+                  <label
+                    htmlFor="jobTypeId"
+                    className="font-semibold block mb-2"
+                  >
                     Job Type ID
                   </label>
                   <input
                     type="text"
                     id="jobTypeId"
-                    onChange={handleInputChange}
                     name="jobTypeId"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.jobTypeId}
                     placeholder="Enter Job Type ID"
-                    value={formData.jobTypeId}
                     className="input-field px-3 py-2 w-full outline-none border-custom-class"
                   />
+                  {formik.errors.jobTypeId && formik.touched.jobTypeId && (
+                    <div className="text-red-500 text-xs">
+                      {formik.errors.jobTypeId}
+                    </div>
+                  )}
                 </div>
 
                 {/* Job Type Name */}
                 <div className="mb-4">
-                  <label htmlFor="jobTypeName" className="font-semibold block mb-2">
+                  <label
+                    htmlFor="jobTypeName"
+                    className="font-semibold block mb-2"
+                  >
                     Job Type Name
                   </label>
                   <input
                     type="text"
                     id="jobTypeName"
-                    onChange={handleInputChange}
                     name="jobTypeName"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.jobTypeName}
                     placeholder="Enter Job Type Name"
-                    value={formData.jobTypeName}
                     className="input-field px-3 py-2 w-full outline-none border-custom-class"
                   />
+                  {formik.errors.jobTypeName && formik.touched.jobTypeName && (
+                    <div className="text-red-500 text-xs">
+                      {formik.errors.jobTypeName}
+                    </div>
+                  )}
                 </div>
 
                 {/* Status */}
@@ -179,9 +97,11 @@ const JobType = () => {
                     <label className="inline-flex items-center">
                       <input
                         type="radio"
-                        value="Active"
-                        checked={formData.status === 'Active'}
-                        onChange={handleStatusChange}
+                        name="jobTypeStatus"
+                        value="true"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        checked={formik.values.jobTypeStatus === "true"}
                         className="form-radio h-4 w-4 text-custom-class"
                       />
                       <span className="ml-2">Active</span>
@@ -191,14 +111,22 @@ const JobType = () => {
                     <label className="inline-flex items-center">
                       <input
                         type="radio"
-                        value="Inactive"
-                        checked={formData.status === 'Inactive'}
-                        onChange={handleStatusChange}
+                        name="jobTypeStatus"
+                        value="false"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        checked={formik.values.jobTypeStatus === "false"}
                         className="form-radio h-4 w-4 text-custom-class"
                       />
                       <span className="ml-2">Inactive</span>
                     </label>
                   </div>
+                  {formik.errors.jobTypeStatus &&
+                    formik.touched.jobTypeStatus && (
+                      <div className="text-red-500 text-xs">
+                        {formik.errors.jobTypeStatus}
+                      </div>
+                    )}
                 </div>
               </div>
 
@@ -214,7 +142,6 @@ const JobType = () => {
                 {/* Cancel Button */}
                 <button
                   type="button"
-                  onClick={handleCancel}
                   className="cancel-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-red-500 hover:bg-red-600"
                 >
                   Cancel
@@ -240,9 +167,35 @@ const JobType = () => {
             <div className="line w-full mt-4">
               <div className="company-bottom-line w-full"></div>
             </div>
-            {jobTypes.map((jobType) => (
-              <JobTypeRow key={jobType.jobTypeId} jobType={jobType} />
-            ))}
+            <div className="flex mt-4 items-center">
+              <div className="w-1/4">jobTypeId</div>
+              <div className="w-3/4">jobTypeName</div>
+              <div className="w-1/4">
+                <div className="text-white w-16 h-7 flex justify-center items-center rounded-lg shadow-lg">
+                  status
+                </div>
+              </div>
+              <div className="w-1/4 flex">
+                <img
+                  src={viewImage}
+                  alt="View"
+                  className="w-7 h-8 cursor-pointer mr-2"
+                />
+                <img
+                  src={pencilImage}
+                  alt="Edit"
+                  className="w-6 h-6 cursor-pointer mr-2"
+                />
+                <img
+                  src={trashImage}
+                  alt="Delete"
+                  className="w-6 h-6 cursor-pointer"
+                />
+              </div>
+            </div>
+            <div className="line w-full mt-4">
+              <div className="company-bottom-line w-full"></div>
+            </div>
           </div>
         </div>
       </div>
