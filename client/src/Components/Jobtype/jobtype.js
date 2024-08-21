@@ -118,15 +118,21 @@ const JobType = () => {
     }
   }, [updateJobTypeMessage, updateJobTypeLoading, updateJobTypeError]);
 
+  const [isSideBarVisible, setIsSideBarVisible] = useState(true);
+
+  const toggleSideBarVisibility = () => {
+    setIsSideBarVisible((prevState) => !prevState);
+  };
   return (
-    <div className="home-container custom-home-background w-screen h-full p-4 flex">
+    <div className="home-container custom-home-background w-screen h-full p-4">
       <Toaster />
-      <SideBar />
-      <div className="right-sidebar-container w-10/12">
-        <Header />
+      <Header toggleSideBarVisibility={toggleSideBarVisibility} />
+      <div className="right-sidebar-container w-full mt-[70px] relative">
         <div className="projects-container h-2/4 bg-white mt-14 rounded-lg relative shadow-lg">
-          <div className="h-20 w-11/12 custom-company-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
-            <h1 className="text-white text-2xl font-bold">Add Job Types:</h1>
+          <div className="lg:h-20 h-14 w-11/12 custom-company-bg absolute lg:-top-6 -top-3 lg:left-14 left-4 rounded-lg flex justify-between items-center px-10">
+            <h1 className="text-white lg:text-2xl text-lg text-center font-bold">
+              Add Job Types:
+            </h1>
           </div>
           <div className="projects-list flex flex-col pt-6 px-10">
             {/* Job Type Form Fields */}
@@ -226,13 +232,13 @@ const JobType = () => {
               <div className="flex justify-center space-x-4">
                 {/* Submit Button */}
                 {addJobTypeLoading ? (
-                  <div className="submit-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-blue-500 hover:bg-blue-600 flex justify-center items-center">
+                  <div className="submit-btn lg:w-1/3 w-5/12 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-blue-500 hover:bg-blue-600 flex justify-center items-center">
                     <LoaderCircles />
                   </div>
                 ) : (
                   <button
                     type="submit"
-                    className="submit-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-blue-500 hover:bg-blue-600"
+                    className="submit-btn lg:w-1/3 w-5/12 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-blue-500 hover:bg-blue-600"
                   >
                     {updatedData ? "Update now" : "Submit"}
                   </button>
@@ -251,74 +257,103 @@ const JobType = () => {
 
         {/* Job Type Display Data Form */}
         <div className="company-container h-2/3 bg-white mt-14 rounded-lg relative shadow-lg">
-          <div className="h-20 w-11/12 custom-company-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
-            <h1 className="text-white text-2xl font-bold">Job Type Details:</h1>
+          <div className="lg:h-20 h-14 w-11/12 custom-company-bg absolute lg:-top-6 -top-4 lg:left-14 left-4 rounded-lg flex justify-between items-center px-10">
+            <h1 className="text-white lg:text-2xl text-lg font-bold">
+              Job Type Details:
+            </h1>
           </div>
-          <div className="projects-list flex flex-col pt-20 px-10">
+          <div className="projects-list pt-20 lg:px-10 px-3">
             {/* Job Type Headings */}
-            <div className="flex mt-4 font-bold">
-              <div className="w-1/4">Job Type ID</div>
-              <div className="w-3/4">Job Type Name</div>
-              <div className="w-1/4">Status</div>
-              <div className="w-1/4">Action</div>
-            </div>
-            <div className="line w-full mt-4">
-              <div className="company-bottom-line w-full"></div>
-            </div>
-            {loadJobTypesLoading || deleteJobTypeLoading ? (
-              <div className="flex justify-center items-center mt-10">
-                <RingLoader />
-              </div>
-            ) : jobTypes && Array.isArray(jobTypes) && jobTypes.length > 0 ? (
-              jobTypes.map((jobType) => (
-                <div className="flex mt-4 items-center">
-                  <div className="w-1/4">{jobType?.jobTypeId}</div>
-                  <div className="w-3/4">{jobType?.jobTypeName}</div>
-                  <div className="w-1/4">
-                    <div
-                      className={`${
-                        jobType?.jobTypeStatus
-                          ? "bg-green-500 text-white p-4"
-                          : "bg-red-500 text-white p-4"
-                      } w-16 h-7 flex justify-center items-center rounded-lg shadow-lg`}
+            <table className="w-full mt-4">
+              <thead className="font-bold text-xs">
+                <tr className="text-left">
+                  <th className="lg:w-1/4 px-2 py-1 lg:text-lg text-xs">
+                    Job Type ID
+                  </th>
+                  <th className="lg:w-3/4 px-2 py-1 lg:text-lg text-xs">
+                    Job Type Name
+                  </th>
+                  <th className="lg:w-1/4 px-2 py-1 lg:text-lg text-xs">
+                    Status
+                  </th>
+                  <th className="lg:w-1/4 px-2 py-1 lg:text-lg text-xs">
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {loadJobTypesLoading || deleteJobTypeLoading ? (
+                  <tr>
+                    <td
+                      colSpan="4"
+                      className="text-center py-10 w-full flex justify-center"
                     >
-                      {jobType?.jobTypeStatus ? "Active" : "Inactive"}
-                    </div>
-                  </div>
-                  <div className="w-1/4 flex">
-                    <img
-                      src={pencilImage}
-                      alt="Edit"
-                      className="w-6 h-6 cursor-pointer mr-2"
-                      onClick={() => {
-                        setUpdatedData(jobType);
-                        formik.setValues({
-                          jobTypeId: jobType.jobTypeId || "",
-                          jobTypeName: jobType.jobTypeName || "",
-                          jobTypeStatus: jobType.jobTypeStatus
-                            ? "true"
-                            : "false",
-                        });
-                      }}
-                    />
-                    <img
-                      src={trashImage}
-                      alt="Delete"
-                      className="w-6 h-6 cursor-pointer"
-                      onClick={() => deleteJobType(jobType?._id)}
-                    />
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="flex justify-center items-center">
-                <h1>No data received from database</h1>
-              </div>
-            )}
+                      <RingLoader />
+                    </td>
+                  </tr>
+                ) : jobTypes &&
+                  Array.isArray(jobTypes) &&
+                  jobTypes.length > 0 ? (
+                  jobTypes.map((jobType) => (
+                    <tr key={jobType?.jobTypeId} className="mt-4 text-xs">
+                      <td className="lg:w-1/4 px-2 py-1 lg:text-xl">
+                        {jobType?.jobTypeId}
+                      </td>
+                      <td className="lg:w-3/4 px-2 py-1 lg:text-xl">
+                        {jobType?.jobTypeName}
+                      </td>
+                      <td className="lg:w-1/4 px-2 py-1 lg:text-xl">
+                        <div
+                          className={`${
+                            jobType?.jobTypeStatus
+                              ? "bg-green-500 text-white p-4 lg:text-lg text-xs"
+                              : "bg-red-500 text-white p-4 lg:text-lg text-xs"
+                          } lg:w-16 lg:h-7 w-10 h-3 flex justify-center items-center rounded-lg shadow-lg`}
+                        >
+                          {jobType?.jobTypeStatus ? "Active" : "Inactive"}
+                        </div>
+                      </td>
+                      <td className="lg:w-3/4  px-2 py-1 flex">
+                        <img
+                          src={pencilImage}
+                          alt="Edit"
+                          className="lg:w-6 lg:h-6 w-3 h-3 cursor-pointer mr-2"
+                          onClick={() => {
+                            setUpdatedData(jobType);
+                            formik.setValues({
+                              jobTypeId: jobType.jobTypeId || "",
+                              jobTypeName: jobType.jobTypeName || "",
+                              jobTypeStatus: jobType.jobTypeStatus
+                                ? "true"
+                                : "false",
+                            });
+                          }}
+                        />
+                        <img
+                          src={trashImage}
+                          alt="Delete"
+                          className="lg:w-6 lg:h-6 w-3 h-3 cursor-pointer"
+                          onClick={() => deleteJobType(jobType?._id)}
+                        />
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="4" className="text-center py-4">
+                      <h1>No data received from database</h1>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
             <div className="line w-full mt-4">
               <div className="company-bottom-line w-full"></div>
             </div>
           </div>
+        </div>
+        <div className="side-bar absolute xl:top-[-40px] top-[-70px] left-[-15px]">
+          <SideBar isShowing={isSideBarVisible} />
         </div>
       </div>
     </div>
