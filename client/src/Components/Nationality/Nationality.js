@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import SideBar from "../SideBar/SideBar";
 import Header from "../Header/Header";
 import "../Company/Company.css"; // Ensure your CSS file is properly imported
 
 // Import your images
-import trashImage from "../../Assets/trash.png";
-import viewImage from "../../Assets/view.png";
-import pencilImage from "../../Assets/pencil.png";
+// import trashImage from "../../Assets/trash.png";
+// import viewImage from "../../Assets/view.png";
+// import pencilImage from "../../Assets/pencil.png";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 const Nationality = () => {
@@ -29,11 +29,15 @@ const Nationality = () => {
       console.log(values);
     },
   });
+  const [isSideBarVisible, setIsSideBarVisible] = useState(true);
+
+  const toggleSideBarVisibility = () => {
+    setIsSideBarVisible((prevState) => !prevState);
+  };
   return (
-    <div className="home-container custom-home-background w-screen h-full p-4 flex">
-      <SideBar />
-      <div className="right-sidebar-container w-10/12">
-        <Header />
+    <div className="home-container custom-home-background w-screen h-full p-4">
+      <Header toggleSideBarVisibility={toggleSideBarVisibility} />
+      <div className="right-sidebar-container w-full relative">
         <div className="projects-container h-2/4 bg-white mt-14 rounded-lg relative shadow-lg">
           <div className="h-20 w-11/12 custom-company-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
             <h1 className="text-white text-2xl font-bold">
@@ -152,8 +156,8 @@ const Nationality = () => {
         </div>
 
         {/* Nationalities Display Data Form  */}
-        <div className="company-container h-1/2 bg-white mt-14 rounded-lg relative shadow-lg">
-          <div className="h-20 w-11/12 custom-company-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
+        <div className="company-container h-2/3 bg-white mt-14 rounded-lg relative shadow-lg">
+          <div className="lg:h-20 h-14 w-11/12 custom-company-bg absolute lg:-top-6 -top-4 lg:left-14 left-4 rounded-lg flex justify-between items-center px-10">
             <h1 className="text-white text-2xl font-bold">
               Nationality Details:
             </h1>
@@ -171,6 +175,9 @@ const Nationality = () => {
               <div className="company-bottom-line w-full"></div>
             </div>
           </div>
+        </div>
+        <div className="side-bar absolute xl:top-[-40px] top-[-70px] left-[-15px]">
+          <SideBar isShowing={isSideBarVisible} />
         </div>
       </div>
     </div>
