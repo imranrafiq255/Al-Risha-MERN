@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import SideBar from "../SideBar/SideBar";
 import Header from "../Header/Header";
 import "../Company/Company.css";
-
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 // Import your images
 import trashImage from "../../Assets/trash.png";
 import viewImage from "../../Assets/view.png";
@@ -28,6 +29,22 @@ const Company = () => {
     companyPOCEmail: "",
     companyPOCPhoneNumber: "",
     companyStatus: false,
+  });
+
+  const validationSchema = Yup.object({
+    companyId: Yup.string()
+      .matches(/^[0-9]+$/, 'Company ID should be a number')
+      .required('Company ID is required'),
+    companyName: Yup.string().required('Company Name is required'),
+    companyAddress: Yup.string().required('Company Address is required'),
+    companyPOCName: Yup.string().required('POC Name is required'),
+    companyPOCEmail: Yup.string()
+      .email('Invalid email format')
+      .required('POC Email Address is required'),
+    companyPOCPhoneNumber: Yup.string()
+      .matches(/^[0-9]+$/, 'POC Phone Number should be a number')
+      .required('POC Phone Number is required'),
+    companyStatus: Yup.boolean().required('Company Status is required')
   });
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -538,9 +555,8 @@ const Company = () => {
                     </div>
                     <div className="w-2/12">
                       <div
-                        className={`${
-                          com.companyStatus ? "bg-green-500" : "bg-red-600"
-                        } text-white w-16 h-7 flex justify-center items-center rounded-lg shadow-lg`}
+                        className={`${com.companyStatus ? "bg-green-500" : "bg-red-600"
+                          } text-white w-16 h-7 flex justify-center items-center rounded-lg shadow-lg`}
                       >
                         {com.companyStatus ? "Active" : "Offline"}
                       </div>
@@ -604,9 +620,8 @@ const Company = () => {
                 <div className="w-1/2">
                   <h2 className="text-xl font-semibold">Status:</h2>
                   <span
-                    className={`px-3 py-1 rounded ${
-                      showCompany?.companyStatus ? "bg-green-500" : "bg-red-500"
-                    }`}
+                    className={`px-3 py-1 rounded ${showCompany?.companyStatus ? "bg-green-500" : "bg-red-500"
+                      }`}
                   >
                     {showCompany?.companyStatus ? "Active" : "Offline"}
                   </span>

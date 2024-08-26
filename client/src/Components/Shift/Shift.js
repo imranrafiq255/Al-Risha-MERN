@@ -1,104 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import SideBar from "../SideBar/SideBar";
 import Header from "../Header/Header";
-import trashImage from "../../Assets/trash.png";
-import viewImage from "../../Assets/view.png";
-import pencilImage from "../../Assets/pencil.png";
 
 const Shift = () => {
-  const [formData, setFormData] = useState({
-    shiftId: "",
-    shiftTime: "",
-    status: "", // Defaulting to "active" status
+  // Formik setup
+  const formik = useFormik({
+    initialValues: {
+      shiftId: "",
+      shiftTime: "",
+      shiftTimeStatus: "", 
+    },
+    validationSchema: Yup.object().shape({
+      shiftId: Yup.string()
+        .matches(/[0-9]/, 'Shift ID should be a number')
+        .required('Shift ID is required'),
+      shiftTime: Yup.string().required('Shift time is required'),
+      shiftTimeStatus: Yup.boolean().required('Status is required'), // Boolean validation
+    }),
+    onSubmit: (values) => {
+      console.log(values);
+      formik.resetForm();
+    },
   });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleStatusChange = (e) => {
-    setFormData({ ...formData, status: e.target.value });
-  };
-
-  // Dummy data for shift details
-  const [shifts] = useState([
-    {
-      shiftId: '1',
-      shiftTime: '7:00am - 4:00pm',
-      status: 'active',
-    },
-    {
-      shiftId: '2',
-      shiftTime: '8:00pm - 4:00am',
-      status: 'inactive',
-    },
-    {
-      shiftId: '3',
-      shiftTime: '5:00am - 6:00am',
-      status: 'active',
-    },
-    // Add more shifts as needed
-  ]);
-
-  const ShiftRow = ({ shift }) => {
-    const { shiftId, shiftTime, status } = shift;
-
-    const handleEdit = (shiftId) => {
-      console.log(`Editing shift: ${shiftId}`);
-      // Implement edit functionality here
-    };
-
-    const handleDelete = (shiftId) => {
-      console.log(`Deleting shift: ${shiftId}`);
-      // Implement delete functionality here
-    };
-
-    const handleView = (shiftId) => {
-      console.log(`Viewing shift details: ${shiftId}`);
-      // Implement view functionality here
-    };
-
-    return (
-      <>
-        <div className="flex mt-4 items-center">
-          <div className="w-1/6">{shiftId}</div>
-          <div className="w-2/6">{shiftTime}</div>
-          <div className="w-1/6">
-            <div
-              className={`${status === 'active' ? 'bg-green-400' : 'bg-red-600'
-                } text-white w-16 h-7 flex justify-center items-center rounded-lg shadow-lg`}
-            >
-              {status}
-            </div>
-          </div>
-          <div className="w-1/6 flex">
-            <img
-              src={viewImage}
-              alt="View"
-              className="w-7 h-8 cursor-pointer mr-2"
-              onClick={() => handleView(shiftId)}
-            />
-            <img
-              src={pencilImage}
-              alt="Edit"
-              className="w-6 h-6 cursor-pointer mr-2"
-              onClick={() => handleEdit(shiftId)}
-            />
-            <img
-              src={trashImage}
-              alt="Delete"
-              className="w-6 h-6 cursor-pointer"
-              onClick={() => handleDelete(shiftId)}
-            />
-          </div>
-        </div>
-        <div className="line w-full mt-4">
-          <div className="company-bottom-line w-full"></div>
-        </div>
-      </>
-    );
-  };
 
   return (
     <div className="home-container custom-home-background w-screen h-full p-4 flex">
@@ -109,9 +34,9 @@ const Shift = () => {
           <div className="h-20 w-11/12 custom-company-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
             <h1 className="text-white text-2xl font-bold">Shift Timings:</h1>
           </div>
-          <div className="projects-list flex flex-col pt-6 px-10">
-            {/* Shift Form Fields */}
+          <form onSubmit={formik.handleSubmit}>
             <div className="form-field-grid mb-1 grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 mt-16">
+
               {/* Shift ID */}
               <div className="mb-4">
                 <label htmlFor="shiftId" className="font-semibold block mb-2">
@@ -120,12 +45,18 @@ const Shift = () => {
                 <input
                   type="text"
                   id="shiftId"
-                  onChange={handleInputChange}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   name="shiftId"
                   placeholder="Enter Shift ID"
-                  value={formData.shiftId}
+                  value={formik.values.shiftId}
                   className="input-field px-3 py-2 w-full outline-none border-custom-class"
                 />
+                {formik.errors.shiftId && formik.touched.shiftId && (
+                  <div className="text-red-500 text-xs">
+                    {formik.errors.shiftId}
+                  </div>
+                )}
               </div>
 
               {/* Shift Timings */}
@@ -136,12 +67,18 @@ const Shift = () => {
                 <input
                   type="text"
                   id="shiftTime"
-                  onChange={handleInputChange}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   name="shiftTime"
                   placeholder="Enter Shift Time (e.g., 07:00am - 06:00pm)"
-                  value={formData.shiftTime}
+                  value={formik.values.shiftTime}
                   className="input-field px-3 py-2 w-full outline-none border-custom-class"
                 />
+                {formik.errors.shiftTime && formik.touched.shiftTime && (
+                  <div className="text-red-500 text-xs">
+                    {formik.errors.shiftTime}
+                  </div>
+                )}
               </div>
 
               {/* Status */}
@@ -151,9 +88,11 @@ const Shift = () => {
                   <label className="inline-flex items-center">
                     <input
                       type="radio"
-                      value="active"
-                      checked={formData.status === "active"}
-                      onChange={handleStatusChange}
+                      value="true"
+                      name="shiftTimeStatus"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      checked={formik.values.shiftTimeStatus === true}
                       className="form-radio h-4 w-4 text-custom-class"
                     />
                     <span className="ml-2">Active</span>
@@ -163,29 +102,43 @@ const Shift = () => {
                   <label className="inline-flex items-center">
                     <input
                       type="radio"
-                      value="inactive"
-                      checked={formData.status === "inactive"}
-                      onChange={handleStatusChange}
+                      value="false"
+                      name="shiftTimeStatus"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      checked={formik.values.shiftTimeStatus === false}
                       className="form-radio h-4 w-4 text-custom-class"
                     />
                     <span className="ml-2">Inactive</span>
                   </label>
                 </div>
+                {formik.errors.shiftTimeStatus && formik.touched.shiftTimeStatus && (
+                  <div className="text-red-500 text-xs">
+                    {formik.errors.shiftTimeStatus}
+                  </div>
+                )}
               </div>
+
             </div>
 
             {/* Button Container */}
             <div className="flex justify-center space-x-4">
               {/* Submit Button */}
-              <button className="submit-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-blue-500 hover:bg-blue-600">
+              <button
+                type="submit"
+                className="submit-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-blue-500 hover:bg-blue-600"
+              >
                 Submit
               </button>
               {/* Cancel Button */}
-              <button className="cancel-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-red-500 hover:bg-red-600">
+              <button
+                type="button" // Change to type="button" if it should not submit the form
+                className="cancel-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-red-500 hover:bg-red-600"
+              >
                 Cancel
               </button>
             </div>
-          </div>
+          </form>
         </div>
 
         {/* Shift Display Data Form  */}
@@ -205,9 +158,6 @@ const Shift = () => {
             <div className="line w-full mt-4">
               <div className="company-bottom-line w-full"></div>
             </div>
-            {shifts.map((shift) => (
-              <ShiftRow key={shift.shiftId} shift={shift} />
-            ))}
           </div>
         </div>
       </div>

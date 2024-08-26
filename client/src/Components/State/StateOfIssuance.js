@@ -25,7 +25,6 @@ const StateOfIssuance = () => {
     }),
     onSubmit: (values) => {
       console.log(values);
-
       formik.resetForm();
     },
   });

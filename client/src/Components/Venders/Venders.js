@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import SideBar from "../SideBar/SideBar";
-import Header from "../Header/Header";
-import "../Company/Company.css";
+import React from 'react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import SideBar from '../SideBar/SideBar';
+import Header from '../Header/Header';
+import '../Company/Company.css';
 
 // Import your images
 import trashImage from "../../Assets/trash.png";
@@ -9,114 +11,31 @@ import viewImage from "../../Assets/view.png";
 import pencilImage from "../../Assets/pencil.png";
 
 const Vendors = () => {
-  const [formData, setFormData] = useState({
-    vendorId: "",
-    vendorName: "",
-    vendorAddress: "",
-    vendorPhoneNumber: "",
-    vendorPOCName: "",
-    status: "", // Defaulting to "inactive" status
+  // Formik setup
+  const formik = useFormik({
+    initialValues: {
+      vendorId: '',
+      vendorName: '',
+      vendorAddress: '',
+      vendorPhoneNumber: '',
+      vendorPOCName: '',
+      status: '', // Use an empty string initially
+    },
+    validationSchema: Yup.object().shape({
+      vendorId: Yup.string()
+        .matches(/^[0-9]+$/, 'Vendor ID should be a number')
+        .required('Vendor ID is required'),
+      vendorName: Yup.string().required('Vendor name is required'),
+      vendorAddress: Yup.string().required('Vendor address is required'),
+      vendorPhoneNumber: Yup.string().required('Vendor phone number is required'),
+      vendorPOCName: Yup.string().required('Vendor POC name is required'),
+      status: Yup.string().oneOf(['active', 'inactive'], 'Vendor status is required').required('Vendor status is required'),
+    }),
+    onSubmit: (values) => {
+      console.log(values);
+      formik.resetForm();
+    },
   });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleStatusChange = (e) => {
-    setFormData({ ...formData, status: e.target.value });
-  };
-
-  // Dummy data for vendors
-  const [vendors] = useState([
-    {
-      vendorId: '1',
-      vendorName: 'Vendor A',
-      vendorAddress: '789 Elm St, Town, Country',
-      vendorPhoneNumber: '+1234567890',
-      vendorPOCName: 'John Doe',
-      status: 'Active',
-    },
-    {
-      vendorId: '2',
-      vendorName: 'Vendor B',
-      vendorAddress: '456 Pine St, City, Country',
-      vendorPhoneNumber: '+9876543210',
-      vendorPOCName: 'Jane Smith',
-      status: 'Inactive',
-    },
-    // Add more vendors as needed
-  ]);
-
-  const VendorRow = ({ vendor }) => {
-    const {
-      vendorId,
-      vendorName,
-      vendorAddress,
-      vendorPhoneNumber,
-      vendorPOCName,
-      status,
-    } = vendor;
-
-    const handleEdit = (vendorId) => {
-      console.log(`Editing vendor: ${vendorId}`);
-      // Implement edit functionality here
-    };
-
-    const handleDelete = (vendorId) => {
-      console.log(`Deleting vendor: ${vendorId}`);
-      // Implement delete functionality here
-    };
-
-    const handleView = (vendorId) => {
-      console.log(`Viewing vendor details: ${vendorId}`);
-      // Implement view functionality here
-    };
-
-    return (
-      <>
-        <div className="flex mt-4 items-center">
-          <div className="w-1/6">{vendorId}</div>
-          <div className="w-2/6">{vendorName}</div>
-          <div className="w-2/6">{vendorAddress}</div>
-          <div className="w-1/6">{vendorPhoneNumber}</div>
-          <div className="w-2/6">{vendorPOCName}</div>
-          <div className="w-1/6">
-            <div
-              className={`${
-                status === 'Active' ? 'bg-green-400' : 'bg-red-600'
-              } text-white w-16 h-7 flex justify-center items-center rounded-lg shadow-lg`}
-            >
-              {status}
-            </div>
-          </div>
-          <div className="w-1/6 flex">
-            <img
-              src={viewImage}
-              alt="View"
-              className="w-7 h-8 cursor-pointer mr-2"
-              onClick={() => handleView(vendorId)}
-            />
-            <img
-              src={pencilImage}
-              alt="Edit"
-              className="w-6 h-6 cursor-pointer mr-2"
-              onClick={() => handleEdit(vendorId)}
-            />
-            <img
-              src={trashImage}
-              alt="Delete"
-              className="w-6 h-6 cursor-pointer"
-              onClick={() => handleDelete(vendorId)}
-            />
-          </div>
-        </div>
-        <div className="line w-full mt-4">
-          <div className="company-bottom-line w-full"></div>
-        </div>
-      </>
-    );
-  };
 
   return (
     <div className="home-container custom-home-background w-screen h-full p-4 flex">
@@ -125,11 +44,11 @@ const Vendors = () => {
         <Header />
         <div className="projects-container h-2/3 bg-white mt-14 rounded-lg relative shadow-lg">
           <div className="h-20 w-11/12 custom-company-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
-            <h1 className="text-white text-2xl font-bold">Our Vendors:</h1>
+            <h1 className="text-white text-2xl font-bold">Add Vendor Details:</h1>
           </div>
-          <div className="projects-list flex flex-col pt-6 px-10">
-            {/* Vendor Form Fields */}
-            <div className="form-field-grid mb-1  grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 mt-16">
+          <form onSubmit={formik.handleSubmit}>
+            <div className="form-field-grid mb-1 grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 mt-16">
+
               {/* Vendor ID */}
               <div className="mb-4">
                 <label htmlFor="vendorId" className="font-semibold block mb-2">
@@ -138,12 +57,18 @@ const Vendors = () => {
                 <input
                   type="text"
                   id="vendorId"
-                  onChange={handleInputChange}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   name="vendorId"
                   placeholder="Enter Vendor ID"
-                  value={formData.vendorId}
+                  value={formik.values.vendorId}
                   className="input-field px-3 py-2 w-full outline-none border-custom-class"
                 />
+                {formik.errors.vendorId && formik.touched.vendorId && (
+                  <div className="text-red-500 text-xs">
+                    {formik.errors.vendorId}
+                  </div>
+                )}
               </div>
 
               {/* Vendor Name */}
@@ -154,12 +79,18 @@ const Vendors = () => {
                 <input
                   type="text"
                   id="vendorName"
-                  onChange={handleInputChange}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   name="vendorName"
                   placeholder="Enter Vendor Name"
-                  value={formData.vendorName}
+                  value={formik.values.vendorName}
                   className="input-field px-3 py-2 w-full outline-none border-custom-class"
                 />
+                {formik.errors.vendorName && formik.touched.vendorName && (
+                  <div className="text-red-500 text-xs">
+                    {formik.errors.vendorName}
+                  </div>
+                )}
               </div>
 
               {/* Vendor Address */}
@@ -170,12 +101,18 @@ const Vendors = () => {
                 <input
                   type="text"
                   id="vendorAddress"
-                  onChange={handleInputChange}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   name="vendorAddress"
                   placeholder="Enter Vendor Address"
-                  value={formData.vendorAddress}
+                  value={formik.values.vendorAddress}
                   className="input-field px-3 py-2 w-full outline-none border-custom-class"
                 />
+                {formik.errors.vendorAddress && formik.touched.vendorAddress && (
+                  <div className="text-red-500 text-xs">
+                    {formik.errors.vendorAddress}
+                  </div>
+                )}
               </div>
 
               {/* Vendor Phone Number */}
@@ -186,12 +123,18 @@ const Vendors = () => {
                 <input
                   type="tel"
                   id="vendorPhoneNumber"
-                  onChange={handleInputChange}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   name="vendorPhoneNumber"
                   placeholder="Enter Vendor Phone Number"
-                  value={formData.vendorPhoneNumber}
+                  value={formik.values.vendorPhoneNumber}
                   className="input-field px-3 py-2 w-full outline-none border-custom-class"
                 />
+                {formik.errors.vendorPhoneNumber && formik.touched.vendorPhoneNumber && (
+                  <div className="text-red-500 text-xs">
+                    {formik.errors.vendorPhoneNumber}
+                  </div>
+                )}
               </div>
 
               {/* Vendor POC (Point of Contact) Name */}
@@ -202,12 +145,18 @@ const Vendors = () => {
                 <input
                   type="text"
                   id="vendorPOCName"
-                  onChange={handleInputChange}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   name="vendorPOCName"
                   placeholder="Enter Vendor POC Name"
-                  value={formData.vendorPOCName}
+                  value={formik.values.vendorPOCName}
                   className="input-field px-3 py-2 w-full outline-none border-custom-class"
                 />
+                {formik.errors.vendorPOCName && formik.touched.vendorPOCName && (
+                  <div className="text-red-500 text-xs">
+                    {formik.errors.vendorPOCName}
+                  </div>
+                )}
               </div>
 
               {/* Status */}
@@ -218,8 +167,10 @@ const Vendors = () => {
                     <input
                       type="radio"
                       value="active"
-                      checked={formData.status === "active"}
-                      onChange={handleStatusChange}
+                      name="status"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      checked={formik.values.status === 'active'}
                       className="form-radio h-4 w-4 text-custom-class"
                     />
                     <span className="ml-2">Active</span>
@@ -230,28 +181,42 @@ const Vendors = () => {
                     <input
                       type="radio"
                       value="inactive"
-                      checked={formData.status === "inactive"}
-                      onChange={handleStatusChange}
+                      name="status"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      checked={formik.values.status === 'inactive'}
                       className="form-radio h-4 w-4 text-custom-class"
                     />
                     <span className="ml-2">Inactive</span>
                   </label>
                 </div>
+                {formik.errors.status && formik.touched.status && (
+                  <div className="text-red-500 text-xs">
+                    {formik.errors.status}
+                  </div>
+                )}
               </div>
             </div>
 
             {/* Button Container */}
             <div className="flex justify-center space-x-4">
               {/* Submit Button */}
-              <button className="submit-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-blue-500 hover:bg-blue-600">
+              <button
+                type="submit"
+                className="submit-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-blue-500 hover:bg-blue-600"
+              >
                 Submit
               </button>
               {/* Cancel Button */}
-              <button className="cancel-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-red-500 hover:bg-red-600">
+              <button
+                type="button"
+                className="cancel-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-red-500 hover:bg-red-600"
+                onClick={() => formik.resetForm()}
+              >
                 Cancel
               </button>
             </div>
-          </div>
+          </form>
         </div>
 
         {/* Vendors Display Data Form */}
@@ -274,9 +239,7 @@ const Vendors = () => {
             <div className="line w-full mt-4">
               <div className="company-bottom-line w-full"></div>
             </div>
-            {vendors.map((vendor) => (
-              <VendorRow key={vendor.vendorId} vendor={vendor} />
-            ))}
+            {/* Placeholder for vendor data rows */}
           </div>
         </div>
       </div>

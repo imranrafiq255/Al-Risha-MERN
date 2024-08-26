@@ -2,139 +2,33 @@ import React, { useState } from 'react';
 import SideBar from '../SideBar/SideBar';
 import Header from '../Header/Header';
 import '../Company/Company.css';
-
+import { useFormik } from "formik";
+import * as Yup from "yup";
 // Import your images
-import trashImage from '../../Assets/trash.png';
-import viewImage from '../../Assets/view.png';
-import pencilImage from '../../Assets/pencil.png';
+// import trashImage from '../../Assets/trash.png';
+// import viewImage from '../../Assets/view.png';
+// import pencilImage from '../../Assets/pencil.png';
 
 const Vehicle = () => {
-  const [formData, setFormData] = useState({
-    carTypeId: '',
-    carTypeName: '',
-    status: '', // Defaulting to "active" status
+  // Formik setup
+  const formik = useFormik({
+    initialValues: {
+      vehicleTypeId: "",
+      vehicleTypeName: "",
+      vehicleTypeStatus: "",
+    },
+    validationSchema: Yup.object().shape({
+      vehicleTypeId: Yup.string()
+        .matches(/[0-9]/, 'Vehicle type ID should be a number')
+        .required('Vehicle type ID is required'),
+      vehicleTypeName: Yup.string().required('Vehicle type name is required'),
+      vehicleTypeStatus: Yup.boolean().required("vehicle type status is required"),
+    }),
+    onSubmit: (values) => {
+      console.log(values);
+      formik.resetForm();
+    },
   });
-
-  const [vehicleTypes, setVehicleTypes] = useState([
-    {
-      carTypeId: '1',
-      carTypeName: 'Sedan',
-      status: 'Active',
-    },
-    {
-      carTypeId: '2',
-      carTypeName: '7 Seater Mini Van',
-      status: 'Inactive',
-    },
-    {
-      carTypeId: '3',
-      carTypeName: 'Bike',
-      status: 'Active',
-    },
-    {
-      carTypeId: '4',
-      carTypeName: 'Lamborghini',
-      status: 'Inactive',
-    },
-    // Add more vehicle types as needed
-  ]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleStatusChange = (e) => {
-    setFormData({ ...formData, status: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (formData.carTypeId) {
-      // Edit existing vehicle type
-      const updatedVehicleTypes = vehicleTypes.map((vehicleType) =>
-        vehicleType.carTypeId === formData.carTypeId ? { ...formData } : vehicleType
-      );
-      setVehicleTypes(updatedVehicleTypes);
-    } else {
-      // Add new vehicle type
-      const newVehicleType = { ...formData, carTypeId: String(vehicleTypes.length + 1) };
-      setVehicleTypes([...vehicleTypes, newVehicleType]);
-    }
-    setFormData({
-      carTypeId: '',
-      carTypeName: '',
-      status: 'active', // Resetting status to active
-    });
-  };
-
-  const handleEdit = (carTypeId) => {
-    const selectedVehicleType = vehicleTypes.find((vehicleType) => vehicleType.carTypeId === carTypeId);
-    setFormData({ ...selectedVehicleType });
-  };
-
-  const handleDelete = (carTypeId) => {
-    const updatedVehicleTypes = vehicleTypes.filter((vehicleType) => vehicleType.carTypeId !== carTypeId);
-    setVehicleTypes(updatedVehicleTypes);
-  };
-
-  const handleCancel = () => {
-    setFormData({
-      carTypeId: '',
-      carTypeName: '',
-      status: 'active', // Resetting status to active
-    });
-  };
-
-  const VehicleTypeRow = ({ vehicleType }) => {
-    const { carTypeId, carTypeName, status } = vehicleType;
-
-    const handleView = (carTypeId) => {
-      console.log(`Viewing vehicle type details: ${carTypeId}`);
-      // Implement view functionality here
-    };
-
-    return (
-      <>
-        <div className="flex mt-4 items-center">
-          <div className="w-1/4">{carTypeId}</div>
-          <div className="w-3/4">{carTypeName}</div>
-          <div className="w-1/4">
-            <div
-              className={`${
-                status === 'Active' ? 'bg-green-400' : 'bg-red-600'
-              } text-white w-16 h-7 flex justify-center items-center rounded-lg shadow-lg`}
-            >
-              {status}
-            </div>
-          </div>
-          <div className="w-1/4 flex">
-            <img
-              src={viewImage}
-              alt="View"
-              className="w-7 h-8 cursor-pointer mr-2"
-              onClick={() => handleView(carTypeId)}
-            />
-            <img
-              src={pencilImage}
-              alt="Edit"
-              className="w-6 h-6 cursor-pointer mr-2"
-              onClick={() => handleEdit(carTypeId)}
-            />
-            <img
-              src={trashImage}
-              alt="Delete"
-              className="w-6 h-6 cursor-pointer"
-              onClick={() => handleDelete(carTypeId)}
-            />
-          </div>
-        </div>
-        <div className="line w-full mt-4">
-          <div className="company-bottom-line w-full"></div>
-        </div>
-      </>
-    );
-  };
 
   return (
     <div className="home-container custom-home-background w-screen h-full p-4 flex">
@@ -145,92 +39,148 @@ const Vehicle = () => {
           <div className="h-20 w-11/12 custom-company-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
             <h1 className="text-white text-2xl font-bold">Add Vehicle Types:</h1>
           </div>
-          <div className="projects-list flex flex-col pt-6 px-10">
-            {/* Vehicle Type Form Fields */}
-            <form onSubmit={handleSubmit}>
-              <div className="form-field-grid mb-1 grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 mt-16">
-                {/* Car Type ID */}
-                <div className="mb-4">
-                  <label htmlFor="carTypeId" className="font-semibold block mb-2">
-                    Car Type ID
-                  </label>
-                  <input
-                    type="text"
-                    id="carTypeId"
-                    onChange={handleInputChange}
-                    name="carTypeId"
-                    placeholder="Enter Car Type ID"
-                    value={formData.carTypeId}
-                    className="input-field px-3 py-2 w-full outline-none border-custom-class"
-                  />
-                </div>
+          <form onSubmit={formik.handleSubmit}>
+            <div className="form-field-grid mb-1 grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 mt-16">
 
-                {/* Car Type Name */}
-                <div className="mb-4">
-                  <label htmlFor="carTypeName" className="font-semibold block mb-2">
-                    Car Type Name
-                  </label>
-                  <input
-                    type="text"
-                    id="carTypeName"
-                    onChange={handleInputChange}
-                    name="carTypeName"
-                    placeholder="Enter Car Type Name"
-                    value={formData.carTypeName}
-                    className="input-field px-3 py-2 w-full outline-none border-custom-class"
-                  />
-                </div>
-
-                {/* Status */}
-                <div className="mb-4">
-                  <label className="font-semibold block mb-2">Status</label>
-                  <div>
-                    <label className="inline-flex items-center">
-                      <input
-                        type="radio"
-                        value="Active"
-                        checked={formData.status === 'Active'}
-                        onChange={handleStatusChange}
-                        className="form-radio h-4 w-4 text-custom-class"
-                      />
-                      <span className="ml-2">Active</span>
-                    </label>
+              {/* Vehicle Type ID */}
+              <div className="mb-4">
+                <label htmlFor="vehicleTypeId" className="font-semibold block mb-2">
+                  Vehicle Type ID
+                </label>
+                <input
+                  type="text"
+                  id="vehicleTypeId"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  name="vehicleTypeId"
+                  placeholder="Enter Vehicle Type ID"
+                  value={formik.values.vehicleTypeId}
+                  className="input-field px-3 py-2 w-full outline-none border-custom-class"
+                />
+                {formik.errors.vehicleTypeId && formik.touched.vehicleTypeId && (
+                  <div className="text-red-500 text-xs">
+                    {formik.errors.vehicleTypeId}
                   </div>
-                  <div>
-                    <label className="inline-flex items-center">
-                      <input
-                        type="radio"
-                        value="Inactive"
-                        checked={formData.status === 'Inactive'}
-                        onChange={handleStatusChange}
-                        className="form-radio h-4 w-4 text-custom-class"
-                      />
-                      <span className="ml-2">Inactive</span>
-                    </label>
-                  </div>
-                </div>
+                )}
               </div>
 
-              {/* Button Container */}
-              <div className="flex justify-center space-x-4">
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  className="submit-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-blue-500 hover:bg-blue-600"
-                >
-                  Submit
-                </button>
-                {/* Cancel Button */}
-                <button
-                  type="button"
-                  onClick={handleCancel}
-                  className="cancel-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-red-500 hover:bg-red-600"
-                >
-                  Cancel
-                </button>
+              {/* Vehicle Type Name */}
+              <div className="mb-4">
+                <label htmlFor="vehicleTypeName" className="font-semibold block mb-2">
+                  Vehicle Type Name
+                </label>
+                <input
+                  type="text"
+                  id="vehicleTypeName"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  name="vehicleTypeName"
+                  placeholder="Enter Vehicle Type Name"
+                  value={formik.values.vehicleTypeName}
+                  className="input-field px-3 py-2 w-full outline-none border-custom-class"
+                />
+                {formik.errors.vehicleTypeName && formik.touched.vehicleTypeName && (
+                  <div className="text-red-500 text-xs">
+                    {formik.errors.vehicleTypeName}
+                  </div>
+                )}
               </div>
-            </form>
-          </div>
+
+              {/* Vehicle Type Status */}
+              {/* <div className="mb-4">
+                <label className="font-semibold block mb-2">Status</label>
+                <div>
+                  <label className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      value="true"
+                      name="vehicleTypeStatus"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      checked={formik.values.vehicleTypeStatus === true}
+                      className="form-radio h-4 w-4 text-custom-class"
+                    />
+                    <span className="ml-2">Active</span>
+                  </label>
+                </div>
+                <div>
+                  <label className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      value="false"
+                      name="vehicleTypeStatus"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      checked={formik.values.vehicleTypeStatus === false}
+                      className="form-radio h-4 w-4 text-custom-class"
+                    />
+                    <span className="ml-2">Inactive</span>
+                  </label>
+                </div>
+                {formik.errors.vehicleTypeStatus && formik.touched.vehicleTypeStatus && (
+                  <div className="text-red-500 text-xs">
+                    {formik.errors.vehicleTypeStatus}
+                  </div>
+                )}
+              </div> */}
+              {/* Vehicle Type Status */}
+<div className="mb-4">
+  <label className="font-semibold block mb-2">Status</label>
+  <div>
+    <label className="inline-flex items-center">
+      <input
+        type="radio"
+        value="true"
+        name="vehicleTypeStatus"
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        checked={formik.values.vehicleTypeStatus === "true"}
+        className="form-radio h-4 w-4 text-custom-class"
+      />
+      <span className="ml-2">Active</span>
+    </label>
+  </div>
+  <div>
+    <label className="inline-flex items-center">
+      <input
+        type="radio"
+        value="false"
+        name="vehicleTypeStatus"
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        checked={formik.values.vehicleTypeStatus === "false"}
+        className="form-radio h-4 w-4 text-custom-class"
+      />
+      <span className="ml-2">Inactive</span>
+    </label>
+  </div>
+  {formik.errors.vehicleTypeStatus && formik.touched.vehicleTypeStatus && (
+    <div className="text-red-500 text-xs">
+      {formik.errors.vehicleTypeStatus}
+    </div>
+  )}
+</div>
+
+            </div>
+
+            {/* Button Container */}
+            <div className="flex justify-center space-x-4">
+              {/* Submit Button */}
+              <button
+                type="submit"
+                className="submit-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-blue-500 hover:bg-blue-600"
+              > Submit
+              </button>
+              {/* Cancel Button */}
+              <button
+              className="cancel-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-red-500 hover:bg-red-600"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+
+
         </div>
 
         {/* Vehicle Type Display Data Form */}
@@ -249,9 +199,6 @@ const Vehicle = () => {
             <div className="line w-full mt-4">
               <div className="company-bottom-line w-full"></div>
             </div>
-            {vehicleTypes.map((vehicleType) => (
-              <VehicleTypeRow key={vehicleType.carTypeId} vehicleType={vehicleType} />
-            ))}
           </div>
         </div>
       </div>
