@@ -6,9 +6,9 @@ import Header from '../Header/Header';
 import '../Company/Company.css';
 
 // Import your images
-import trashImage from "../../Assets/trash.png";
-import viewImage from "../../Assets/view.png";
-import pencilImage from "../../Assets/pencil.png";
+// import trashImage from "../../Assets/trash.png";
+// import viewImage from "../../Assets/view.png";
+// import pencilImage from "../../Assets/pencil.png";
 
 const Vendors = () => {
   // Formik setup

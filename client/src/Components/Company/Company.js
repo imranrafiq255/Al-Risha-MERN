@@ -31,6 +31,7 @@ const Company = () => {
     companyStatus: false,
   });
 
+  
   const validationSchema = Yup.object({
     companyId: Yup.string()
       .matches(/^[0-9]+$/, 'Company ID should be a number')
@@ -46,6 +47,27 @@ const Company = () => {
       .required('POC Phone Number is required'),
     companyStatus: Yup.boolean().required('Company Status is required')
   });
+
+  const formik = useFormik({
+    initialValues: {
+      companyId: "",
+      companyName: "",
+      companyAddress: "",
+      companyPOCName: "",
+      companyPOCEmail: "",
+      companyPOCPhoneNumber: "",
+      companyStatus: "",
+    },
+    validationSchema,
+    onSubmit: (values) => {
+      if (updateCompany) {
+        updateCompanyHandler(values);
+      } else {
+        submitCompanyData(values);
+      }
+    }
+  });
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (updateCompany) {

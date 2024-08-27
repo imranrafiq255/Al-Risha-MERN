@@ -12,8 +12,8 @@ const Zone = () => {
       zoneId: "",
       zoneName: "",
       zoneState: "",
-      zoneAddress: "", // Not in the schema, but included here if you want to use it
-      zoneStatus: "", // false for inactive, true for active
+      zoneAddress: "", 
+      zoneStatus: "", 
     },
     validationSchema: Yup.object({
       zoneId: Yup.string()

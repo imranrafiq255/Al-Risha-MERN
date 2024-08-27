@@ -4,6 +4,11 @@ import {
   deleteJobTypeReducer,
   loadJobTypes,
   updateJobTypeReducer,
+  //Add Store
+  addStoreReducer,
+  loadStoresReducer,
+  deleteStoreReducer,
+  updateStoreReducer,
 } from "./Reducers/Reducers";
 
 const store = configureStore({
@@ -13,7 +18,14 @@ const store = configureStore({
     loadJobTypes: loadJobTypes,
     deleteJobTypeReducer: deleteJobTypeReducer,
     updateJobTypeReducer: updateJobTypeReducer,
+
+    //Store
+    addStore: addStoreReducer,
+    loadStores: loadStoresReducer,
+    deleteStore: deleteStoreReducer,
+    updateStore: updateStoreReducer,
   },
 });
+
 
 export default store;
