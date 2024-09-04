@@ -19,6 +19,9 @@ const addJobTypeReducer = createReducer(addJobTypeInitialValues, (builder) => {
     .addCase("ADD_JOB_TYPE_REQUEST_FAILURE", (state, action) => {
       state.addJobTypeLoading = false;
       state.addJobTypeError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.addJobTypeError = null;
     });
 });
 const loadJobTypesInitialState = {
@@ -37,6 +40,9 @@ const loadJobTypes = createReducer(loadJobTypesInitialState, (builder) => {
   builder.addCase("LOAD_JOB_TYPES_FAILURE", (state, action) => {
     state.loadJobTypesLoading = false;
     state.loadJobTypesError = action.payload;
+  });
+  builder.addCase("CLEAR_ERRORS", (state, action) => {
+    state.loadJobTypesError = null;
   });
 });
 
@@ -59,6 +65,9 @@ const deleteJobTypeReducer = createReducer(
       state.deleteJobTypeLoading = false;
       state.deleteJobTypeError = action.payload;
     });
+    builder.addCase("CLEAR_ERRORS", (state, action) => {
+      state.deleteJobTypeError = null;
+    });
   }
 );
 
@@ -80,6 +89,9 @@ const updateJobTypeReducer = createReducer(
     builder.addCase("UPDATE_JOB_TYPE_FAILURE", (state, action) => {
       state.updateJobTypeLoading = false;
       state.updateJobTypeError = action.payload;
+    });
+    builder.addCase("CLEAR_ERRORS", (state, action) => {
+      state.updateJobTypeError = null;
     });
   }
 );
@@ -110,6 +122,9 @@ const addZoneReducer = createReducer(addZoneInitialState, (builder) => {
     .addCase("ADD_ZONE_FAILURE", (state, action) => {
       state.addZoneLoading = false;
       state.addZoneError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.addZoneError = null;
     });
 });
 
@@ -132,6 +147,9 @@ const loadZonesReducer = createReducer(loadZonesInitialState, (builder) => {
     .addCase("LOAD_ZONES_FAILURE", (state, action) => {
       state.loadZonesLoading = false;
       state.loadZonesError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.loadZonesError = null;
     });
 });
 
@@ -154,6 +172,9 @@ const deleteZoneReducer = createReducer(deleteZoneInitialState, (builder) => {
     .addCase("DELETE_ZONE_FAILURE", (state, action) => {
       state.deleteZoneLoading = false;
       state.deleteZoneError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.deleteZoneError = null;
     });
 });
 
@@ -176,6 +197,9 @@ const updateZoneReducer = createReducer(updateZoneInitialState, (builder) => {
     .addCase("UPDATE_ZONE_FAILURE", (state, action) => {
       state.updateZoneLoading = false;
       state.updateZoneError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.updateZoneError = null;
     });
 });
 
@@ -207,6 +231,9 @@ const addVendorReducer = createReducer(addVendorInitialState, (builder) => {
     .addCase("ADD_VENDOR_FAILURE", (state, action) => {
       state.addVendorLoading = false;
       state.addVendorError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.addVendorError = null;
     });
 });
 
@@ -229,6 +256,9 @@ const loadVendorsReducer = createReducer(loadVendorsInitialState, (builder) => {
     .addCase("LOAD_VENDORS_FAILURE", (state, action) => {
       state.loadVendorsLoading = false;
       state.loadVendorsError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.loadVendorsError = null;
     });
 });
 
@@ -251,6 +281,9 @@ const deleteVendorReducer = createReducer(deleteVendorInitialState, (builder) =>
     .addCase("DELETE_VENDOR_FAILURE", (state, action) => {
       state.deleteVendorLoading = false;
       state.deleteVendorError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.deleteVendorError = null;
     });
 });
 
@@ -273,6 +306,9 @@ const updateVendorReducer = createReducer(updateVendorInitialState, (builder) =>
     .addCase("UPDATE_VENDOR_FAILURE", (state, action) => {
       state.updateVendorLoading = false;
       state.updateVendorError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.updateVendorError = null;
     });
 });
 
@@ -303,7 +339,11 @@ const addVehicleTypeReducer = createReducer(addVehicleTypeInitialState, (builder
     .addCase("ADD_VEHICLE_TYPE_FAILURE", (state, action) => {
       state.addVehicleTypeLoading = false;
       state.addVehicleTypeError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.addVehicleTypeError = null;
     });
+
 });
 
 // Load Vehicle Types Reducer
@@ -325,6 +365,9 @@ const loadVehicleTypesReducer = createReducer(loadVehicleTypesInitialState, (bui
     .addCase("LOAD_VEHICLE_TYPES_FAILURE", (state, action) => {
       state.loadVehicleTypesLoading = false;
       state.loadVehicleTypesError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.loadVehicleTypesError = null;
     });
 });
 
@@ -347,6 +390,9 @@ const deleteVehicleTypeReducer = createReducer(deleteVehicleTypeInitialState, (b
     .addCase("DELETE_VEHICLE_TYPE_FAILURE", (state, action) => {
       state.deleteVehicleTypeLoading = false;
       state.deleteVehicleTypeError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.deleteVehicleTypeError = null;
     });
 });
 
@@ -369,6 +415,9 @@ const updateVehicleTypeReducer = createReducer(updateVehicleTypeInitialState, (b
     .addCase("UPDATE_VEHICLE_TYPE_FAILURE", (state, action) => {
       state.updateVehicleTypeLoading = false;
       state.updateVehicleTypeError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.updateVehicleTypeError = null;
     });
 });
 
@@ -398,6 +447,9 @@ const addStoreReducer = createReducer(addStoreInitialState, (builder) => {
     .addCase("ADD_STORE_FAILURE", (state, action) => {
       state.addStoreLoading = false;
       state.addStoreError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.addStoreError = null;
     });
 });
 
@@ -420,6 +472,9 @@ const loadStoresReducer = createReducer(loadStoresInitialState, (builder) => {
     .addCase("LOAD_STORES_FAILURE", (state, action) => {
       state.loadStoresLoading = false;
       state.loadStoresError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.loadStoresError = null;
     });
 });
 
@@ -442,6 +497,9 @@ const deleteStoreReducer = createReducer(deleteStoreInitialState, (builder) => {
     .addCase("DELETE_STORE_FAILURE", (state, action) => {
       state.deleteStoreLoading = false;
       state.deleteStoreError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.deleteStoreError = null;
     });
 });
 
@@ -464,6 +522,9 @@ const updateStoreReducer = createReducer(updateStoreInitialState, (builder) => {
     .addCase("UPDATE_STORE_FAILURE", (state, action) => {
       state.updateStoreLoading = false;
       state.updateStoreError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.updateStoreError = null;
     });
 });
 
@@ -494,6 +555,9 @@ const addStateReducer = createReducer(addStateInitialState, (builder) => {
     .addCase("ADD_STATE_FAILURE", (state, action) => {
       state.addStateLoading = false;
       state.addStateError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.addStateError = null;
     });
 });
 
@@ -516,6 +580,9 @@ const loadStatesReducer = createReducer(loadStatesInitialState, (builder) => {
     .addCase("LOAD_STATES_FAILURE", (state, action) => {
       state.loadStatesLoading = false;
       state.loadStatesError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.loadStatesError = null;
     });
 });
 
@@ -538,6 +605,9 @@ const deleteStateReducer = createReducer(deleteStateInitialState, (builder) => {
     .addCase("DELETE_STATE_FAILURE", (state, action) => {
       state.deleteStateLoading = false;
       state.deleteStateError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.deleteStateError = null;
     });
 });
 
@@ -560,6 +630,9 @@ const updateStateReducer = createReducer(updateStateInitialState, (builder) => {
     .addCase("UPDATE_STATE_FAILURE", (state, action) => {
       state.updateStateLoading = false;
       state.updateStateError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.updateStateError = null;
     });
 });
 
@@ -590,6 +663,9 @@ const addShiftReducer = createReducer(addShiftInitialState, (builder) => {
     .addCase("ADD_SHIFT_FAILURE", (state, action) => {
       state.addShiftLoading = false;
       state.addShiftError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.addShiftError = null;
     });
 });
 
@@ -612,6 +688,9 @@ const loadShiftsReducer = createReducer(loadShiftsInitialState, (builder) => {
     .addCase("LOAD_SHIFTS_FAILURE", (state, action) => {
       state.loadShiftsLoading = false;
       state.loadShiftsError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.loadShiftsError = null;
     });
 });
 
@@ -634,6 +713,9 @@ const deleteShiftReducer = createReducer(deleteShiftInitialState, (builder) => {
     .addCase("DELETE_SHIFT_FAILURE", (state, action) => {
       state.deleteShiftLoading = false;
       state.deleteShiftError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.deleteShiftError = null;
     });
 });
 
@@ -656,6 +738,9 @@ const updateShiftReducer = createReducer(updateShiftInitialState, (builder) => {
     .addCase("UPDATE_SHIFT_FAILURE", (state, action) => {
       state.updateShiftLoading = false;
       state.updateShiftError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.updateShiftError = null;
     });
 });
 
@@ -686,6 +771,9 @@ const addSalaryReducer = createReducer(addSalaryInitialValues, (builder) => {
     .addCase("ADD_SALARY_FAILURE", (state, action) => {
       state.addSalaryLoading = false;
       state.addSalaryError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.addSalaryError = null;
     });
 });
 
@@ -708,6 +796,9 @@ const loadSalariesReducer = createReducer(loadSalariesInitialState, (builder) =>
     .addCase("LOAD_SALARIES_FAILURE", (state, action) => {
       state.loadSalariesLoading = false;
       state.loadSalariesError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.loadSalariesError = null;
     });
 });
 
@@ -730,6 +821,9 @@ const deleteSalaryReducer = createReducer(deleteSalaryInitialState, (builder) =>
     .addCase("DELETE_SALARY_FAILURE", (state, action) => {
       state.deleteSalaryLoading = false;
       state.deleteSalaryError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.deleteSalaryError = null;
     });
 });
 
@@ -752,6 +846,9 @@ const updateSalaryReducer = createReducer(updateSalaryInitialState, (builder) =>
     .addCase("UPDATE_SALARY_FAILURE", (state, action) => {
       state.updateSalaryLoading = false;
       state.updateSalaryError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.updateSalaryError = null;
     });
 });
 
@@ -783,6 +880,9 @@ const addProjectReducer = createReducer(addProjectInitialValues, (builder) => {
     .addCase("ADD_PROJECT_FAILURE", (state, action) => {
       state.addProjectLoading = false;
       state.addProjectError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.addProjectError = null;
     });
 });
 
@@ -805,6 +905,9 @@ const loadProjectsReducer = createReducer(loadProjectsInitialState, (builder) =>
     .addCase("LOAD_PROJECTS_FAILURE", (state, action) => {
       state.loadProjectsLoading = false;
       state.loadProjectsError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.loadProjectsError = null;
     });
 });
 
@@ -827,6 +930,9 @@ const deleteProjectReducer = createReducer(deleteProjectInitialState, (builder) 
     .addCase("DELETE_PROJECT_FAILURE", (state, action) => {
       state.deleteProjectLoading = false;
       state.deleteProjectError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.deleteProjectError = null;
     });
 });
 
@@ -849,6 +955,9 @@ const updateProjectReducer = createReducer(updateProjectInitialState, (builder) 
     .addCase("UPDATE_PROJECT_FAILURE", (state, action) => {
       state.updateProjectLoading = false;
       state.updateProjectError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.updateProjectError = null;
     });
 });
 
@@ -879,6 +988,9 @@ const addNocStatusReducer = createReducer(addNocStatusInitialValues, (builder) =
     .addCase("ADD_NOC_STATUS_FAILURE", (state, action) => {
       state.addNocStatusLoading = false;
       state.addNocStatusError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.addNocStatusError = null;
     });
 });
 
@@ -901,6 +1013,9 @@ const loadNocStatusesReducer = createReducer(loadNocStatusesInitialState, (build
     .addCase("LOAD_NOC_STATUSES_FAILURE", (state, action) => {
       state.loadNocStatusesLoading = false;
       state.loadNocStatusesError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.loadNocStatusesError = null;
     });
 });
 
@@ -923,6 +1038,9 @@ const deleteNocStatusReducer = createReducer(deleteNocStatusInitialState, (build
     .addCase("DELETE_NOC_STATUS_FAILURE", (state, action) => {
       state.deleteNocStatusLoading = false;
       state.deleteNocStatusError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.deleteNocStatusError = null;
     });
 });
 
@@ -945,6 +1063,9 @@ const updateNocStatusReducer = createReducer(updateNocStatusInitialState, (build
     .addCase("UPDATE_NOC_STATUS_FAILURE", (state, action) => {
       state.updateNocStatusLoading = false;
       state.updateNocStatusError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.updateNocStatusError = null;
     });
 });
 
@@ -976,6 +1097,9 @@ const addNationalityReducer = createReducer(addNationalityInitialValues, (builde
     .addCase("ADD_NATIONALITY_FAILURE", (state, action) => {
       state.addNationalityLoading = false;
       state.addNationalityError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.addNationalityError = null;
     });
 });
 
@@ -998,6 +1122,9 @@ const loadNationalitiesReducer = createReducer(loadNationalitiesInitialState, (b
     .addCase("LOAD_NATIONALITIES_FAILURE", (state, action) => {
       state.loadNationalitiesLoading = false;
       state.loadNationalitiesError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.loadNationalitiesError = null;
     });
 });
 
@@ -1020,6 +1147,9 @@ const deleteNationalityReducer = createReducer(deleteNationalityInitialState, (b
     .addCase("DELETE_NATIONALITY_FAILURE", (state, action) => {
       state.deleteNationalityLoading = false;
       state.deleteNationalityError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.deleteNationalityError = null;
     });
 });
 
@@ -1042,6 +1172,9 @@ const updateNationalityReducer = createReducer(updateNationalityInitialState, (b
     .addCase("UPDATE_NATIONALITY_FAILURE", (state, action) => {
       state.updateNationalityLoading = false;
       state.updateNationalityError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.updateNationalityError = null;
     });
 });
 
@@ -1072,6 +1205,9 @@ const addGuarantorReducer = createReducer(addGuarantorInitialValues, (builder) =
     .addCase("ADD_GUARANTOR_FAILURE", (state, action) => {
       state.addGuarantorLoading = false;
       state.addGuarantorError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.addGuarantorError = null;
     });
 });
 
@@ -1094,6 +1230,9 @@ const loadGuarantorsReducer = createReducer(loadGuarantorsInitialState, (builder
     .addCase("LOAD_GUARANTORS_FAILURE", (state, action) => {
       state.loadGuarantorsLoading = false;
       state.loadGuarantorsError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.loadGuarantorsError = null;
     });
 });
 
@@ -1116,6 +1255,9 @@ const deleteGuarantorReducer = createReducer(deleteGuarantorInitialState, (build
     .addCase("DELETE_GUARANTOR_FAILURE", (state, action) => {
       state.deleteGuarantorLoading = false;
       state.deleteGuarantorError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.deleteGuarantorError = null;
     });
 });
 
@@ -1138,6 +1280,9 @@ const updateGuarantorReducer = createReducer(updateGuarantorInitialState, (build
     .addCase("UPDATE_GUARANTOR_FAILURE", (state, action) => {
       state.updateGuarantorLoading = false;
       state.updateGuarantorError = action.payload;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.updateGuarantorError = null;
     });
 });
 
@@ -1168,6 +1313,9 @@ const addGenderReducer = createReducer(addGenderInitialValues, (builder) => {
     .addCase("ADD_GENDER_FAILURE", (state, action) => {
       state.addGenderLoading = false;
       state.addGenderError = action.payload.error;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.addGenderError = null;
     });
 });
 
@@ -1192,6 +1340,9 @@ const loadGendersReducer = createReducer(loadGendersInitialState, (builder) => {
     .addCase("LOAD_GENDERS_FAILURE", (state, action) => {
       state.loadGendersLoading = false;
       state.loadGendersError = action.payload.error;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.loadGendersError = null;
     });
 });
 
@@ -1214,6 +1365,9 @@ const updateGenderReducer = createReducer(updateGenderInitialState, (builder) =>
     .addCase("UPDATE_GENDER_FAILURE", (state, action) => {
       state.updateGenderLoading = false;
       state.updateGenderError = action.payload.error;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.updateGenderError = null;
     });
 });
 
@@ -1236,6 +1390,9 @@ const deleteGenderReducer = createReducer(deleteGenderInitialState, (builder) =>
     .addCase("DELETE_GENDER_FAILURE", (state, action) => {
       state.deleteGenderLoading = false;
       state.deleteGenderError = action.payload.error;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.deleteGenderError = null;
     });
 });
 
@@ -1265,6 +1422,9 @@ const addCompanyReducer = createReducer(addCompanyInitialState, (builder) => {
     .addCase("ADD_COMPANY_FAILURE", (state, action) => {
       state.addCompanyLoading = false;
       state.addCompanyError = action.payload.error;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.addCompanyError = null;
     });
 });
 
@@ -1287,6 +1447,9 @@ const loadCompaniesReducer = createReducer(loadCompaniesInitialState, (builder) 
     .addCase("LOAD_COMPANIES_FAILURE", (state, action) => {
       state.loadCompaniesLoading = false;
       state.loadCompaniesError = action.payload.error;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.loadCompaniesError = null;
     });
 });
 
@@ -1309,6 +1472,9 @@ const updateCompanyReducer = createReducer(updateCompanyInitialState, (builder) 
     .addCase("UPDATE_COMPANY_FAILURE", (state, action) => {
       state.updateCompanyLoading = false;
       state.updateCompanyError = action.payload.error;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.updateCompanyError = null;
     });
 });
 
@@ -1331,6 +1497,9 @@ const deleteCompanyReducer = createReducer(deleteCompanyInitialState, (builder) 
     .addCase("DELETE_COMPANY_FAILURE", (state, action) => {
       state.deleteCompanyLoading = false;
       state.deleteCompanyError = action.payload.error;
+    })
+    .addCase("CLEAR_ERRORS", (state, action) => {
+      state.deleteCompanyError = null;
     });
 });
 

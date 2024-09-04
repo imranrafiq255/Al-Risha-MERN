@@ -26,7 +26,7 @@ const Gendors = () => {
     onSubmit: (values) => {
       console.log(values);
       formik.resetForm();
-     
+
     }
   });
 
@@ -36,8 +36,10 @@ const Gendors = () => {
       <div className="right-sidebar-container w-10/12">
         <Header />
         <div className="projects-container h-2/4 bg-white mt-14 rounded-lg relative shadow-lg">
-          <div className="h-20 w-11/12 custom-company-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
-            <h1 className="text-white text-2xl font-bold">Our Genders:</h1>
+          <div className="lg:h-20 h-14 w-11/12 custom-company-bg absolute lg:-top-6 -top-3 lg:left-14 left-4 rounded-lg flex justify-between items-center px-10">
+            <h1 className="text-white lg:text-2xl text-lg text-center font-bold">
+              Add Genders:
+            </h1>
           </div>
           <form onSubmit={formik.handleSubmit}>
             <div className="form-field-grid mb-1 grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 mt-16">
@@ -69,7 +71,7 @@ const Gendors = () => {
                 <label htmlFor="gender" className="font-semibold block mb-2">
                   Gender
                 </label>
-                <input
+                <inpu
                   type="text"
                   id="gender"
                   onChange={formik.handleChange}
@@ -130,7 +132,7 @@ const Gendors = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="submit-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-green-500 hover:bg-green-600"
+                className="submit-btn lg:w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-green-500 hover:bg-green-600"
               >
                 Submit
               </button>
@@ -138,7 +140,7 @@ const Gendors = () => {
               <button
                 type="button"
                 onClick={() => formik.resetForm()}
-                className="cancel-btn w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-red-500 hover:bg-red-600"
+                className="cancel-btn lg:w-1/3 text-white px-3 py-2 mb-10 mt-4 rounded-lg text-xl bg-red-500 hover:bg-red-600"
               >
                 Cancel
               </button>
@@ -148,11 +150,11 @@ const Gendors = () => {
 
         {/* Genders Display Data Form */}
         <div className="company-container h-2/3 bg-white mt-14 rounded-lg relative shadow-lg">
-          <div className="h-20 w-11/12 custom-company-bg absolute -top-6 left-14 rounded-lg flex justify-between items-center px-10">
+          <div className="lg:h-20 w-11/12 custom-company-bg absolute lg:-top-6 -top-4 lg:left-14 left-4 rounded-lg flex justify-between items-center px-10">
             <h1 className="text-white text-2xl font-bold">Gender Details:</h1>
           </div>
           {/* Placeholder for displaying gender details */}
-          <div className="projects-list flex flex-col pt-20 px-10">
+          <div className="projects-list flex flex-col pt-20 lg:px-10 px-3">
             {/* Gender Headings */}
             <div className="flex mt-4 font-bold">
               <div className="w-1/6">Gender ID</div>
